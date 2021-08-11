@@ -1,0 +1,244 @@
+@import "../media.scss";
+
+.basketItemsContainer{
+    display: flex;
+    @include lg {flex-direction: column;}
+    .basketItemsContainer{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        margin: 0 auto;
+        padding-bottom: 10px;
+
+        @include lg { display: flex;
+            flex-direction: column;
+            align-items: center;}
+        @include md {display: flex;
+            flex-direction: column;
+            align-items: center;}
+        @include sm { display: flex;
+            flex-direction: column;
+            align-items: center; }
+
+        .basketItem{
+            position: relative;
+            display: flex;
+            width: 80%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #fff;
+            @include md {  
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            @include sm { 
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .ItemClose{
+                position: absolute;
+                margin-right: 2%;
+                cursor: pointer;
+                right: 0;
+                font-family: 'Montserrat', sans-serif;
+                color: #fff;
+                font-weight: bold;
+                background: #e0e0e0;
+                padding: 0.5em;
+                font-size: 0.75em;
+                display: inline-block;
+                border-radius: 20%;
+                line-height: 0.85;
+                -webkit-transition: all 0.25s linear;
+                -moz-transition: all 0.25s linear;
+                -ms-transition: all 0.25s linear;
+                -o-transition: all 0.25s linear;
+                transition: all 0.25s linear;
+                &:hover{
+                    background: #f30;
+                    font-family: 'Montserrat', sans-serif;
+                    color: #fff;
+                    font-weight: bold;
+                    padding: 0.5em;
+                    font-size: 0.75em;
+                }
+                a {
+                    text-decoration: none;
+                    &:hover{
+                        text-decoration: none;
+                    }
+                }
+            }
+            .ItemImg{
+                display: flex;
+                align-items: center;
+                img{
+                    height: auto;
+                    width: 100%;
+                    max-width: 210px;
+                }
+            }
+            .ItemContentContainer{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 100%;
+                margin-left: 15px;
+            }
+            .PriceContainer{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                @include md { 
+                    align-items: center;
+                    justify-content: space-evenly;
+                    width: 100%;
+                    margin-top: 10px;
+                }
+                @include sm { 
+                    align-items: center;
+                    justify-content: space-evenly;
+                    width: 100%;
+                    margin-top: 10px;
+                }
+                .ItemPrice{
+                    display: flex;
+                    flex-direction: column;
+                    .price{
+                        font-size: 18px;
+                        color: green;
+                        &:hover{
+                            cursor: default;
+                        }
+                    }
+                }
+            }
+            .CountPriceContainer{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                width: 90px;
+                .ChangeItemPrice{
+                    display: flex;
+                    align-items: center;
+                    a.addSubtract {
+                        position: relative;
+                        font-size: 12px;
+                        text-decoration: none;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #fff;
+                        font-weight: bold;
+                        background: rgba(119, 119, 119, 0.637);
+                        padding: 7px 15px;
+                        margin: 0 3% 0 3%;
+                        font-size: 0.75em;
+                        display: inline-block;
+                        border-radius: 20%;
+                        line-height: 0.85;
+                        cursor: pointer;
+                        -webkit-transition: all 0.25s linear;
+                        -moz-transition: all 0.25s linear;
+                        -ms-transition: all 0.25s linear;
+                        -o-transition: all 0.25s linear;
+                        transition: all 0.25s linear;
+                    }
+                    a.addSubtract:hover {
+                        background: #82ca9c;
+                        text-decoration: none;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #fff;
+                        font-weight: bold;
+                        padding: 7px 15px;
+                        margin: 0 3% 0 3%;
+                        font-size: 0.75em;
+                        cursor: pointer;
+                    }
+                }
+                .maxCountPrice{
+                    font-size: 22px;
+                    width: 110px;
+                    text-align: center;
+                    @include md { 
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    .basketItemsTotal{
+        // width: 500px;
+        width: 50%;
+        height: 200px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        top: 0;
+        right: 0;
+        margin-top: 10px;
+    
+        @include lg { width: 100%; margin-top: 10px; margin-bottom: 10px;}
+        @include md { width: 100%;  margin-top: 10px; }
+        @include sm { width: 100%;  margin-top: 10px; }
+        .TotalContainer{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            .totalCount,
+            .promocode{
+                display: flex;
+                align-items: center;
+                justify-content: space-between !important;
+                .totalCountPrice{
+                    font-size: 22px;
+                }
+            }
+            .promocode{
+                margin-top: 30px;
+            }
+            hr{
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            .btnBasket{
+                display: flex;
+                justify-content: center;
+                padding: 12px 50px;
+                color: #fff;
+                background-color: orange;
+                border: 1px solid orange;
+                border-radius: 5px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                text-decoration: none;
+                opacity: .7;
+                @include md { font-size: 11px; }
+                @include sm {font-size: 9px;}
+                &:hover{
+                    border: 1px solid #075b11;
+                    opacity: .7;
+                }
+            }
+        }
+    }
+
+    .basketStepperContainer{
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,.8);
+        z-index: 1;
+    }
+}

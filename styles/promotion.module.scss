@@ -1,0 +1,55 @@
+@import './media.scss';
+
+.banner_not_promotion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 10px;
+    img{
+        width: 50%;
+        height: auto;
+        @include md {width: 60%;}
+        @include sm { width: 80%; }
+    }
+    h3{
+        font-size: 28px;
+    }
+    p{
+        font-size: 18px;
+    }
+}
+
+.promotionContainer{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 10px;
+    .title{
+        font-size: 20px;
+        font-weight: 800;
+        color: rgb(17, 17, 17);
+        margin-bottom: 10px;
+        font-family: 'Work Sans', sans-serif;
+        @include md {font-size: 18px;}
+    }
+    .text{
+        width: 95%;
+        text-align: left;
+        margin: 0 auto;
+        font-size: 20px;
+        margin-bottom: 20px;
+        font-family: 'Work Sans', sans-serif;
+    }
+    img{
+        width: 80%;
+        height: auto;
+        @include md {width: 60%;}
+        @include sm { width: 80%; }
+    }
+}

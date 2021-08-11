@@ -1,0 +1,85 @@
+@import '../media.scss';
+
+.topTextContactUs{
+    &P{
+        margin-left: 0;
+    }
+}
+
+    .containerContactUsForm{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .formControl{
+            display: flex;
+            margin-top: 5%;
+            flex-direction: column;
+            align-items: flex-end;
+            .containerInput{
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 2%;
+                border-bottom: 0.3rem solid transparent;
+                transition: all 0.3s;
+                .txtArea{
+                    width: 700px;
+                    height: 200px;
+                    overflow: hidden;
+                    @include xl { width: 700px; height: 200px;}
+                    @include lg {  width: 500px; height: 200px;}
+                    @include md {  width: 500px; height: 150px;}
+                    @include sm {  width: 250px; height: 100px;}
+                    &:focus{
+                        border: 1px solid orange;
+                        border-radius: 5px;
+                        outline:none;
+                    }
+                }
+                .txtInput{
+                    width: 400px;
+                    margin-right: auto;
+                    @include xl { width: 400px; }
+                    @include lg { width: 400px; }
+                    @include md { width: 300px; }
+                    @include sm { width: 200px; }
+                    &:focus{
+                        border: 1px solid orange;
+                        border-radius: 5px;
+                        outline:none;
+                    }
+                }
+                & input, textarea{
+                    border: 1px solid;
+                    border-radius: 5px;
+                    padding: 10px;
+                    margin: 5px;
+                    border-color: #075b11;
+                    &::placeholder {
+                        color: rgba(83, 83, 83, 0.319);
+                    }
+                }
+            }
+            .btnContuctUS{
+                display: flex;
+                justify-content: center;
+                padding: 12px 50px;
+                color: #fff;
+                background-color: orange;
+                border: 2px solid orange;
+                border-radius: 5px;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                text-decoration: none;
+                width: 30%;
+                margin-bottom: 10%;
+                opacity: .7;
+                @include sm { margin-right: 10px; }
+                &:hover{
+                    color: #075b11;
+                    border: 2px solid #075b11;
+                    opacity: .7;
+                }
+            }
+        }
+    }

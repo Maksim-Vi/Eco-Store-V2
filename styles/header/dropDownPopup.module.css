@@ -1,0 +1,113 @@
+.Wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.divList{
+    background-color: rgb(255, 255, 255);
+    border-radius: 1%;
+    padding: 0; 
+    position: absolute;
+    margin-top: 5px;
+    left: 14%;
+    z-index: 1;
+    width: 600px;
+    height: 320px;
+    border: 1px solid #949494a2;
+}
+
+.ListContainer{
+    width: 43%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 1%;
+    justify-content: space-evenly;
+    border-right: 1px solid #075b11;
+    position: absolute;
+}
+
+.divListItem{
+    list-style-type: none;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    border-bottom: 1px solid #ffffff00;
+}
+
+.divListItem a{
+    text-decoration: none;
+    color: black;
+}
+
+.divListItem:hover{
+    cursor: pointer;
+    border-bottom: 1px solid #075b11;
+    touch-action: manipulation;
+}
+
+.listContainerNav_Item{
+   display: flex;
+   justify-content: space-around;
+}
+
+.listProductsTopPNav{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 300px;
+    max-width: 300px;
+    max-height: 320px;
+    height: 320px;
+}
+
+.title{
+    text-align: center;
+    font-size: 14px;
+}
+
+.itemContent{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    background-color: rgba(201, 201, 201, 0.123);
+    padding: 5px;
+    border: 1px solid #075b1100;
+    border-radius: 2px;
+}
+
+.itemContent img {
+    width: 100px;
+}
+
+.itemContent:hover,
+.itemContent img:hover{
+    cursor: pointer;
+}
+
+.itemContent:active{
+    border: 1px solid #075b116c;
+}
+
+.itemContent:hover p{
+    cursor: pointer;
+    color: #075b11;
+}
+
+.AndOther{
+    font-size: 12px;
+    z-index: 2;
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+}
+
+.AndOther:hover{
+    cursor: pointer;
+    color: #075b11;
+}
+

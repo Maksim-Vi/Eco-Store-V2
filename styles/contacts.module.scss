@@ -1,0 +1,51 @@
+@import './media.scss';
+
+.containerContactUs{
+    width: 100%;
+    height: 40vh;
+    max-width: 1200px;
+    padding:20px;
+    margin: 10px auto;
+    font-family: 'Work Sans', sans-serif;
+    margin-top: 2%;
+    margin-bottom: 5%;
+
+    .title{
+        font-family: 'Work Sans', sans-serif;  
+        font-size: 25px;
+    }
+
+    li{
+        font-size: 20px;
+    }
+
+    .phoneMenager strong,
+    .emailContactUs strong,
+    .HomeAdres strong,
+    .worksDay strong{
+        font-family: 'Work Sans', sans-serif;
+        font-size: 20px;
+    }
+
+    .phoneMenager ,
+    .emailContactUs ,
+    .HomeAdres,
+    .worksDay{
+        margin-top: 2%;
+
+    }
+
+    .HomeAdres{
+        margin-bottom: 5%;
+    }
+
+    .mapContactUs{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        width: 100%;
+        height: auto;
+    }
+    @include md {margin: 15px auto; margin-bottom: 25px;}
+}

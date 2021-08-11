@@ -1,0 +1,173 @@
+@import '../media.scss';
+
+.sectionProduct{
+    margin: 0 auto;
+    height: 105%;
+    background-color: #eaeaead9;
+    padding-bottom: 10px;
+    .ProductContainer{
+        width: 70%;
+        margin: 0 auto;
+        padding-top: 10px;
+        @include lg { width: 90%;}
+        .ContainerHeader{
+            display: flex;
+            flex-direction: row;
+            padding-top: 10px;
+            @include lg {  
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            & .CaruselProduct{
+                max-width: 80%;
+                width: 80%;
+                @include lg { width: 70%; margin-left: 5%;}
+            }
+        }
+        .TitleProduct{
+            display: flex;
+            flex-direction: column;
+            align-items: center;  
+            text-align: center;
+            width: 90%;
+            & h2{
+                margin-left: 5%;
+                font-size: 32px;
+                @include md { font-size: 26px;}
+            }
+
+            & .ProductBayCard{
+                padding: 20px;
+                width: 70%;
+                height: 40%;
+                margin-left: 5%;
+                // margin-top: 2%;
+                background: #fff;
+                border-radius: 10px;
+                @include xl { 
+                    height: 45%;
+                    margin-left: 0;
+                }
+                @include  sm{
+                    width: 100%;
+                }
+                @include xl_Plus { height: 100%;}
+                & .CardCode{
+                    text-align: center;
+                    margin-top: 2%;
+                    font-size: 12px;
+                }
+                & .CardPriceContainer{
+                    display: flex;
+                    justify-content: space-between;
+                    & .CardSale{
+                        font-size: 16px; 
+                        & span{
+                            color: rgba(128, 128, 128, 0.788);
+                        }
+                    }
+                    & .CardInStore{
+                        font-size: 16px;
+                        color: rgb(27, 155, 27);
+                    }
+                }
+            }
+
+            .CardBottomContainer{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 5%;
+                .CardBtn{
+                    border: 1px solid green;
+                    border-radius: 5px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    cursor: pointer;
+                    .BtnInBasket{
+                        display: block;
+                        margin-right: 5px;
+                    }
+                    & .BtnImg{
+                        width: 13px;
+                    }
+                    & span{
+                        color: green;
+                        font-size: 12px;
+                        margin-left: 1px;
+                        align-self: flex-end;
+                    }
+                    &:hover, &:active, &:focus{
+                        outline: none;
+                        border: 1px solid green;
+                    }
+                    &:active{
+                        transform: scale(0.98);
+                    }
+                }
+            }
+            .ListColorItem{
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                margin-top: 5%;
+                .colorContainerItem{
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    flex-direction: column;
+                    align-items: center;
+                    & span{
+                        font-size: 11px;
+                    }
+                }
+                & div{
+                    width: 45px;
+                    height: 45px;
+                    margin: 5px;
+                    border-radius: 10%;
+                    &:hover{
+                        transform: scale(1.02);
+                        cursor: pointer;
+                    }
+                }
+                .active{
+                    background: url('../../public/contentImg/succes.png');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 50%;
+                }
+            }
+        }
+
+        .ContainerMiddle{
+            margin-top: 3%;
+            & p{
+                padding: 10px;
+                text-align:justify;
+            }
+        }
+
+        .ContainerFooter{
+            margin-top: 3%;
+            & .SameProducts{
+                margin-top: 1%;
+                width: 100%;
+                height: 200px;
+                background: #fff;
+                border: 1px solid #e2e2e2;
+                border-radius: 5px;
+            }
+        }
+
+    }
+
+}
+
+
+
+

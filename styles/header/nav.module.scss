@@ -1,0 +1,100 @@
+@import "../media.scss";
+
+.container {
+    display: flex;
+    // justify-content: space-around;
+    margin-right: auto;
+    margin-left: auto;
+    flex-flow: row wrap; // строка многострочный
+    align-items: stretch; // растягиваются
+
+    @include lg {
+        font-size: 12px;
+    }
+
+    .link {
+        display: block;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: bold;
+        color: #191919;
+        padding: 0 30px 0 30px;
+        flex-shrink: 0;
+        font-family: 'Work Sans', sans-serif;
+
+        &:hover {
+            padding: 0 28px 0 28px;
+            border-left: 2px solid #075b11;
+            border-right: 2px solid #075b11;
+            color: #075b11;
+            background-color: transparent;
+            background-image: none;
+            vertical-align: middle;
+            text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        &:active {
+            color: #075b11;
+        }
+    }
+    .linkActive{
+        padding: 0 28px 0 28px;
+        border-left: 2px solid #075b11;
+        border-right: 2px solid #075b11;
+        color: #075b11;
+        background-color: transparent;
+        background-image: none;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    @include xl {
+        .link {
+            display: none;
+        }
+    }
+}
+
+
+
+
+.basketBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    width: 150px;
+    height: 30px;
+    margin-left: 30px;
+    border: none; 
+    outline: none;
+    background: linear-gradient(-360deg, #a2ffb545, #a7f3b6);
+    border: 1px solid rgb(39, 159, 39);
+    border-radius: 5px;
+    // padding: 7px 25px 7px 25px;
+    &:hover{
+        cursor: pointer;
+        border: 1px solid rgb(0, 101, 12);
+    }
+    @include xl { display: none; }
+    .basketImg{
+        &::before{
+            content: "";
+            position: absolute;
+            top: 5px;
+            background: url('./../../public/contentImg/basket.png');
+            background-size: contain;
+            display: flex;
+            width: 17px;
+            height: 17px;
+            margin-left: 5px;
+        }
+    }
+}

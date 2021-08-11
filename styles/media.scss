@@ -1,0 +1,45 @@
+$screen-iPhone5-max: 576px;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1170px;
+$screen-xl-max: 1171px;
+
+@mixin iPhone5 {
+    @media screen and (max-width: #{$screen-iPhone5-max}) {
+        @content;
+    }
+ }
+
+@mixin sm {
+    @media screen and (max-width: #{$screen-sm-min}) {
+        @content;
+    }
+ }
+ 
+ // Medium devices
+ @mixin md {
+    @media screen and (max-width: #{$screen-md-min}) {
+        @content;
+    }
+ }
+ 
+ // Large devices
+ @mixin lg {
+    @media screen and (max-width: #{$screen-lg-min}) {
+        @content;
+    }
+ }
+ 
+ // Extra large devices
+ @mixin xl {
+    @media screen and (max-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+@mixin xl_Plus {
+    @media screen and (min-width: #{$screen-xl-max}) {
+        @content;
+    }
+}

@@ -1,0 +1,66 @@
+@import './media.scss';
+
+.wrapper{
+    // width: 950px;
+    // @include lg {  width: 500px}
+    // @include md {  width: 500px}
+    // @include sm {  width: 300px}
+    .NPorUPWrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .NPorUPContainer{
+            display: flex;
+            flex-direction: column;
+            margin-right: auto;
+            width: 500px;
+            @include sm { width: 100%;}
+            .NameLastName {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                width: 480px;
+                .textFieldName{
+                    margin-right: 10px;
+                    width: 100%;
+                    @include md { width: 100%;}
+                }
+                @include md { width: 100%; flex-direction: column;}
+            }
+            .dataContainer {
+                display: flex; 
+                align-items: flex-start;
+                flex-direction:column;
+                width: 470px;
+                @include md { width: 100%;}
+            }
+        }
+    }
+}
+
+.card-header{
+    height: 30px;
+    text-align: center;
+}
+
+/* PayAmdMarch */
+
+.containerPayAmdMarch{
+    display: flex;
+    @include sm { flex-direction: column;}
+}
+
+
+@media screen and (max-width:450px){    
+    .card-header{
+        height: 50px;
+        text-align: center;
+    }
+
+    .MuiTextField-root p{
+        font-size: 0.35rem;
+    }
+    .MuiTextField-root label{
+        font-size: 0.50rem;
+    }
+}

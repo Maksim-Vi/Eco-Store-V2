@@ -1,0 +1,79 @@
+.containerShopPay{
+    width: 100%;
+    max-width: 1200px;
+    padding: 5px;
+    margin: 0 auto;
+    font-family: 'Work Sans', sans-serif;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    user-select: text;
+}
+
+.Shopping img, .Pay img{
+    /* border: 2px solid #28f44f; */
+    width: 4%;
+    margin: 1%;
+}
+.Shopping h3, .Pay h3{
+    display: flex;
+    align-items: center;
+    font-family: 'Work Sans', sans-serif;
+    color: #323232;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 3px 0;
+}
+
+.Shopping p {
+    font-size: 20px;
+}
+
+.Pay{
+    margin-top: 1%;
+}
+
+.strongTitle{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: rgb(53, 53, 53);
+}
+
+
+.strong {
+    font-size: 1.75rem;
+    text-transform: uppercase;
+    color: rgb(53, 53, 53);
+}
+
+
+@media (max-width:992px) {  
+    .containerShopPay{
+        padding: 15px;
+    }
+    .containerShopPay p{
+       font-size: 22px;
+    }
+    .Shopping h3, .Pay h3{
+        font-size: 24px;
+    }
+    .strong{
+        font-size: 20px;
+    }
+    .Shopping img, .Pay img{
+        width: 10%;
+        margin: 3%;
+    }
+}
+
+
+@media (max-width:610px) {  
+    .containerShopPay p{
+        text-align: start;
+    }
+    .Shopping p{
+        text-align: start;
+    }
+    .Shopping img, .Pay img{
+        width: 15%;
+    }
+}

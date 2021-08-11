@@ -1,0 +1,192 @@
+@import '../media.scss';
+
+
+.wrapper{
+    display: block;
+    .container{
+        display: contents;
+        max-width: 1400px;
+        height: 50vh;
+        margin: 0 auto;
+        padding: 0 15px;
+        @include xl {
+            max-width: none;
+        }
+        .topHead{
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
+            width: inherit;
+            height: 70px;
+            background-image: url('../../public/contentImg/header/bg2.png');
+            background-size: cover; 
+            @include xl {
+                max-width: none;
+                flex-direction: column-reverse;
+                justify-content: space-around;
+            }
+            @include md {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .contactsWrapper{
+                display: flex;
+                align-items: center;
+                margin-left: 5%;
+                .contactsContainer{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    font-family: 'Work Sans', sans-serif;
+                    @include sm { align-items: flex-start; }
+                    .number{
+                        color: #fff;
+                        font-size: 18px;
+                        text-decoration: none;
+                        @include xl {font-size: 18px;}
+                        @include md { font-size: 15px; }
+                        @include sm { font-size: 12px; }
+                    }
+                    .email{
+                        color: #fff;
+                        font-size: 18px;
+                        @include xl {font-size: 18px;} 
+                        @include md { font-size: 15px; }
+                        @include sm {font-size: 11px; } 
+                    }
+                }
+                .telegram{
+                    width: 35px;
+                    height: 35px;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    background-image: url("../../public/contentImg/sotial/telegram.png");
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                }
+            }
+            .social{
+                padding-right: 50px;
+                text-align: right;
+                @include xl{display: none;}
+                .image{
+                    width: 35px;
+                    margin-right: 15px;
+                    @include xl {
+                        width: 25px;
+                    }
+                }
+            }
+            .burgerNav{
+                display: none;
+                @include xl {
+                    display: block;
+                    position: absolute;
+                    right: 0;
+                    margin-right: 2%;
+                }
+            }
+            .vacationDay{
+                position: absolute;
+                right: 250px;
+                color: #fff;
+                font-size: 18px;
+                border: 1px solid;
+                padding: 10px;
+                @include xl { right: 130px; font-size: 14px; display: flex; text-align: center; border: none; width: 100px;}
+                @include md { position: inherit; margin-right: 100px;
+                    font-size: 11px;display: flex; text-align: center; border: none}
+                @include sm {}
+            }
+            .mobileBasletContainer{
+                display: none;
+                @include xl {
+                    display: flex;
+                    position: absolute;
+                    cursor: pointer;
+                    right: 75px;
+                }
+                @include md { right: 65px;}
+                @include sm { right: 62px;}
+                .LinkBasket{
+                    display: flex;
+                    align-items: center;
+                    color: ivory;
+                    text-decoration: none;
+                    position: relative;
+                    @include md { font-size: 12px;}
+                    @include sm { font-size: 11px;}
+                    &::before{
+                        content: "";
+                        top: 5px;
+                        background: url('./../../public/contentImg/unnamed.png');
+                        background-size: contain;
+                        display: flex;
+                        width: 35px;
+                        height: 35px;
+                        margin-left: 5px;
+                    }
+                    .basketCount{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        position: absolute;
+                        top: 0;
+                        right: -7px;
+                        width: 20px;
+                        height: 20px;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: lightcoral;
+                    }
+                }
+            }
+        }
+    }
+
+    .middleHead{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 1400px;
+        height: 12.5vh;
+        margin: 0 auto;
+        @include xl {
+            max-width: none;
+            flex-direction: column;
+        }
+        .logo{
+            max-width: 100%;
+            height: 100%;
+            padding: 15px;
+            margin-right: 5%;
+            cursor: pointer;
+            @include xl { 
+                height: 80%;
+                margin: 0 3% 0 3%; }
+            @include lg { height: 75%; }
+            // @include md { height: 60%; }
+            // @include sm { height: 60%; }
+        }
+        .text {
+            font-family: 'Work Sans', sans-serif;
+            text-transform: uppercase;
+            font-size: 36px;    
+            color: rgb(32, 32, 32);
+            @include xl { font-size: 32px; }
+            @include lg { font-size: 30px; }
+            @include md { font-size: 24px; }
+            @include sm { font-size: 18px; text-align: center;}
+            .textEco{
+                color: #075b11;
+                font-family: 'Work Sans', sans-serif;
+            }
+            
+        }
+       
+    }
+}
+
+

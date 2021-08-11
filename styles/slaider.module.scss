@@ -1,0 +1,207 @@
+@import './media.scss';
+
+%slider_control {
+    // background-color: #ddd;
+    //height: inherit; // принимает значение родителя
+    height: inherit;
+    overflow: hidden;
+    position: relative;
+    width: inherit; // принимает значение родителя
+    // -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    // -moz-box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    // -o-box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    // box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    @include xl {height: inherit}
+    @include lg {height: inherit}
+    @include md {height: inherit}
+    @include sm {height: inherit}
+}
+
+%carousel_control {
+    font-size: 50px;
+    height: 40px;
+    line-height: 35px;
+    position: absolute;
+    bottom: 0%;
+    text-align: center;
+    width: 50px;
+    height: 100%;
+    color: #3a4ba2;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    @include sm {width: 17px;}
+}
+
+// ----------------- 1 Slider
+.standartView{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
+    @include lg { width: 100%;}
+    .wrapper {
+        margin: 5px auto 0;
+        margin-bottom: -5px;
+        position: relative;
+        // max-width: 1400px;
+        max-height: auto; // or 450 - 500px
+        width: 100%;
+        height: auto;
+        @include xl {  width: 900px;height: 350px; width: 100%; height: auto;}
+        @include lg {  width: 750px;height: 300px; width: 100%; height: auto;}
+        @include md {  width: 100%;height: auto; }
+        @include sm {  width: 100%;height: auto; }
+            .slider {
+                @extend %slider_control;
+                .slides{
+                    height: inherit; // принимает значение родителя
+                    width: inherit; // принимает значение родителя
+                    .slide{
+                        height: inherit; // принимает значение родителя
+                        width: inherit; // принимает значение родителя
+                        cursor: pointer;
+                    }
+                }
+            }
+    }
+}
+
+.fullScreenableNode{
+    position: fixed;
+    top: 0;left: 0;right: 0;bottom: 0;
+    z-index: 999;
+    background-color: #000000c2;
+    .close{
+        position: absolute;
+        z-index: 1;
+        right: 15px;
+        top: 15px;
+        width: 25px;
+        height: 25px;
+        background-image: url('../public/contentImg/exit.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        @include sm { right: 5px; top: 10px;}
+    }
+   
+    .wrapper {
+        position: relative;
+        width: 1024px;
+        height: auto;
+        margin: 0 auto;
+        transform: translate(0px, 20px);
+        @include xl {  width: 800px; height: auto;  transform: translate(0px, 80px);}
+        @include lg {  width: 750px; height: auto;  transform: translate(0px, 80px);}
+        @include md {  width: 100%;height: auto; transform: translate(0px, 100px); }
+        @include sm {  width: 100%;height: auto; transform: translate(0px, 150px); top: 90px; }
+            .slider {
+                @extend %slider_control;
+                .slides{
+                    height: inherit; // принимает значение родителя
+                    width: inherit; // принимает значение родителя
+                    .slide{
+                        height: inherit; // принимает значение родителя
+                        width: inherit; // принимает значение родителя
+                        cursor: pointer;
+                    }
+                }
+            }
+    }
+    
+}
+
+.homeSliderWrapper{
+    width: 100%;
+    height: auto;
+    .carousel_Dots{
+        bottom: 30px;
+        @include lg {bottom: -1%;}
+        @include md { bottom: -3%; }
+        @include sm { bottom: -3.5%; }
+    }
+    .wrapper {
+        margin: 5px auto 0;
+        margin-bottom: -5px;
+        position: relative;
+        // max-width: 1400px;
+        max-height: auto; // or 450 - 500px
+        width: 100%;
+        height: auto;
+        @include xl {  width: 900px;height: 350px; width: 100%; height: auto;}
+        @include lg {  width: 750px;height: 300px; width: 100%; height: auto;}
+        @include md {  width: 100%;height: auto; }
+        @include sm {  width: 100%;height: auto; }
+            .slider {
+                @extend %slider_control;
+                .slides{
+                    height: inherit; // принимает значение родителя
+                    width: inherit; // принимает значение родителя
+                    .slide{
+                        height: inherit; // принимает значение родителя
+                        width: inherit; // принимает значение родителя
+                    }
+                }
+            }
+    }
+}
+
+//------------------ Dots
+.carousel_Dots{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 0;
+    @include lg {bottom: -1%;}
+    @include md { bottom: -3%; }
+    @include sm { bottom: -3.5%; }
+    li{
+        display: inline-block;
+        margin: 0 5px;
+    }
+    .carousel_Dot{
+        color: #3a4ba2;
+        cursor: pointer;
+        display: block;
+        font-size: 35px;
+        @include sm { font-size: 28px;}
+            &:hover{
+                color: #aaaaaa;
+            }
+    }
+    .carousel_Dot_Active{
+        color: #aaaaaa;
+    }
+
+}
+
+//------------------Button
+.carousel_control_Prev {
+    left: 0%;
+    @extend %carousel_control;
+    &:hover{
+        color: #aaaaaa;
+        background: none;
+        border: none;
+    }
+}
+
+.carousel_control_Next {
+    right: 0%;
+    @extend %carousel_control;
+    &:hover{
+        color: #aaaaaa;
+        background: none;
+        border: none;
+    }
+}

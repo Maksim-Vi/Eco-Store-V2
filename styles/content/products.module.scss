@@ -1,0 +1,122 @@
+@import '../media.scss';
+
+.contentProductContainer{
+    width: 90%;
+    margin: 0 auto;
+    .title{
+        font-size: 14px;
+    }
+}
+
+.CardContainer{
+    .Card{
+        display: inline-block;
+        padding: 20px;
+        width: 33.333%;
+        will-change: transform;
+        transform: scale(1);
+        will-change: transition;
+        transition: 0.2s;
+        @include xl { width: 50%; }
+        @include lg { width: 50%; }
+        @include md { width: 100%; }
+        .CardItem{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            background: #fff;
+            margin: 0 20px 20px 0;
+            text-decoration: none;
+            color: #474747;
+            .CardCode{
+                display: block;
+                float: left;
+                font-size: 10%;
+            }
+            .CardImage{
+                width: 100%;
+                cursor: pointer;
+            }
+            .CardPriceContainer{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 5%;
+                font-size: 22px;
+                .CardSale{
+                    font-size: 16px; 
+                    & span{
+                        color: rgba(128, 128, 128, 0.788);
+                    }
+                }
+                .CardInStore{
+                    color: rgb(27, 155, 27);
+                }
+            }
+            .CardBottomContainer{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 3%;
+                .CardBtn{
+                    border: 1px solid green;
+                    border-radius: 5px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    cursor: pointer;
+                    z-index: 10;
+                    .BtnInBasket{
+                        display: none;
+                        margin-right: 5px;
+                        @include lg { display: block; }
+                    }
+                    & .BtnImg{
+                        width: 13px;
+                    }
+                    & span{
+                        color: green;
+                        font-size: 12px;
+                        margin-left: 1px;
+                        align-self: flex-end;
+                    }
+                    &:hover, &:active, &:focus{
+                        outline: none;
+                        border: 1px solid green;
+                    }
+                    &:active{
+                        transform: scale(0.98);
+                    }
+                }
+            }
+            .CardTitleText{
+                font-size: 1.1vw;
+                white-space: nowrap;
+                @include xl { font-size: 1.3vw; }
+                @include lg { font-size: 1.4vw; }
+                @include md { font-size: 3vw; }
+            }
+        }
+        &:hover{
+            will-change: transform;
+            transform: scale(1.02);
+            will-change: transition;
+            transition: 0.2s;
+            & .CardBottomContainer .CardBtn .BtnInBasket{
+                display: block;
+            }
+        }
+    }
+}
+
+.inLineBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

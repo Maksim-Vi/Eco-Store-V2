@@ -1,0 +1,100 @@
+@import './media.scss';
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 50px 0 50px;
+    height: 25vh;
+    background-color: #c0c5c8;
+    @include md {text-align: center; flex-direction: column;   height: 55vh;}
+    @include sm {height: 75vh;}
+    .logoFooter {
+        margin-right: 5%;   
+        & img{
+            height: 125px;
+            padding: 20px;
+            margin: 0 10% 0 10%;
+            @include xl {height: 120px;}
+            @include lg {height: 80px;}
+        }
+    }
+    .navFooter{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: -30px;
+        // flex-direction: column;
+        & a{
+            color: rgb(61, 61, 61);
+            padding: 5px;
+            text-decoration: none;
+        }
+        & a:hover{
+            color: rgb(39, 159, 39);
+        }
+        .navLink{
+            display: flex;
+            flex-direction: column;
+            @include md {text-align: start; margin-left: 10%;}
+        }
+    }
+    .desc{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        p{
+            color: rgb(61, 61, 61);
+            padding: 10px;
+            @include md {text-align: center;}
+            @include sm { padding: 5px; }
+        }
+    }
+    .vacationDay{
+        text-align: center;
+        font-size: 18px;
+        color: #0a8b31;
+        @include md {text-align: center;}
+        @include sm { padding: 5px; }
+    }
+    .worksDay{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: rgb(61, 61, 61);
+        padding: 10px;
+        @include md {text-align: center;}
+        @include sm { padding: 5px; }
+    }
+    .socialFooter{
+        padding-right: 50px;
+        text-align: right;
+        @include xl{padding-right: 0;}
+        @include lg {display: flex; flex-direction: column; margin-bottom: 10px;  }
+        @include md {flex-direction: row;}
+        .image{
+            width: 35px;
+            margin-right: 15px;
+            @include xl {
+                width: 25px;
+            }
+            @include lg {margin: 5px;}
+            @include sm {margin: 30px; }
+        }
+    }
+}
+
+.footerBottom{
+    background-color: black;
+    width: 100%;
+    text-align: center;
+    & p {
+        margin: 0;
+        padding: 15px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-style: italic;
+    }
+}
