@@ -72,13 +72,14 @@ apiRoute.post(async (req, res) => {
     }
 
     let INSERT_PRODUCTS = `INSERT INTO products(sale, salePrice, name, category, price, images, inStock, countInStock, DescProductId, DescProductTableId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription)  VALUES(?, ?, ?)`
+    let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
     let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
 
     const descProduct = await sql_query(INSERT_DESC, [
         body.nameDescription,
         body.descriptionD,
-        imagesDescUrl.length === 0 ? '' : imagesUrl.join(' , ')
+        imagesDescUrl.length === 0 ? '' : imagesUrl.join(' , '),
+        body.ImgData,
     ])
 
     const descProductTable = await sql_query(INSERT_DESC_TABLE, [

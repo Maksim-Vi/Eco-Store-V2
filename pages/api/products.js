@@ -1,4 +1,3 @@
-import axios from "axios";
 import { db } from "../../database_connection";
 import { authenticated } from "../../utility/middlware";
 
@@ -23,9 +22,11 @@ export default authenticated(async function getProducts(req, res) {
                 } 
                 if(newData.imagesDescription !== ''){
                     let images = product['imagesDescription'].split(' , ')
-                    newData['imagesDescription'] = images
+                    newData['imagesDescription'] = images                    
                 }
-
+                
+                newData['ImgData'] = eval("(" + newData.ImgData + ")")
+           
                 newData['sale'] = newData.sale === 0 ? false : true
                 newData['inStock'] = newData.inStock === 0 ? false : true
                

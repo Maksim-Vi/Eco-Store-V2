@@ -14,7 +14,8 @@ let initialState = {
     descriptionProductTabs:{
         nameDescription: '',
         descriptionD: '',
-        descriptionImages: []
+        descriptionImages: [],
+        ImgData: {},
     },
     descriptionTableTabs:{
         typeName:'',
@@ -50,7 +51,8 @@ const productsReducer = (state = initialState, action) =>{
                 ...state, 
                 descriptionProductTabs:{
                     ...state.descriptionProductTabs, 
-                    descriptionImages: action.img
+                    descriptionImages: action.data.img,
+                    ImgData: action.data.ImgData,
                 }
             }
         } 
@@ -79,7 +81,8 @@ const productsReducer = (state = initialState, action) =>{
                 descriptionProductTabs:{
                     nameDescription: action.data.nameDescription,
                     descriptionD: action.data.description,
-                    descriptionImages: action.data.imagesDescription
+                    descriptionImages: action.data.imagesDescription,
+                    ImgData: action.data.ImgData,
                 },
                 descriptionTableTabs:{
                     typeName:action.data.typeName,
@@ -107,7 +110,8 @@ const productsReducer = (state = initialState, action) =>{
                 descriptionProductTabs:{
                     nameDescription: '',
                     descriptionD: '',
-                    descriptionImages: []
+                    descriptionImages: [],
+                    ImgData: {}
                 },
                 descriptionTableTabs:{
                     typeName:'',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, CardContent, Card, TextField, Grid, Typography } from '@material-ui/core'
+import { makeStyles, CardContent, Card, TextField, Grid, Typography, FormControl, InputLabel, Input } from '@material-ui/core'
 import ImageUploading from 'react-images-uploading';
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +34,7 @@ export const AddImages = () => {
 
     const dispatch = useDispatch()
     let descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
-
+    let [desc, setDesc] = React.useState([]);
     let [sendData, setSendData] = React.useState(false);
 
     const [images, setImages] = React.useState([]);
@@ -42,41 +42,73 @@ export const AddImages = () => {
 
     const onChange = (imageList, addUpdateIndex) => {
         let imgData = []
-        if(images.length > 0){
+        let ImgDataDesc = []
+        if(images.length > 0 && imageList.length === images.length){
             imageList.forEach((img, index) => {
                 if(addUpdateIndex[0] === index){
                     let newDataImg = {
-                        url: images[addUpdateIndex[0]].url,
+                        url: images[addUpdateIndex[0]].url ? images[addUpdateIndex[0]].url : '',
                         isNew: true,
                         data_url: img.data_url,
                         file: img.file
                     }
+                    
                     imgData.push(newDataImg)
                 } else {
                     imgData.push(img)
-                }  
+                } 
+
+                ImgDataDesc.push({
+                    id: index,
+                    imgName:  desc[index] ? desc[index].imgName : "",
+                    count: desc[index] ? desc[index].count : ""
+                })
+
             })
         } else {
-            imageList.forEach(img => {
+            imageList.forEach((img,index) => {
                 let newDataImg = {
                     isNew: true,
                     data_url: img.data_url,
                     file: img.file
                 }
+
+                ImgDataDesc.push({
+                    id: index,
+                    imgName:  desc[index] ? desc[index].imgName : "",
+                    count: desc[index] ? desc[index].count : ""
+                })
+                
                 imgData.push(newDataImg)
             })
         }
-
+        setDesc(ImgDataDesc)
         setImages(imgData)
     };
 
+    let onRemove = (index) =>{
+        setDesc(desc.map(item => {
+            if(item.id !== index ){
+                return item
+            }
+        }))
+    }
+
+    let setImgDesc = (event,index) =>{
+        setDesc(desc.map(item => {
+            if(item.id === index ){
+                return  {...item, [event.target.name] : event.target.value} 
+            } else {
+                return item
+            }
+        }))
+    }
+
     let uploadImages = () =>{
-        // let imgData = []
-        // images.forEach(img => {
-        //     imgData.push(img.file)
-        // })
-        //setSendData(true)
-        dispatch(setImagesDescriptionProductData(images))
+        dispatch(setImagesDescriptionProductData({
+            img: images,
+            ImgData: desc,
+        }))
     }
 
     React.useEffect(()=>{
@@ -91,13 +123,12 @@ export const AddImages = () => {
             })
             setImages(data)
         }
+        if(descriptionProductTabs.ImgData.length > 0){
+            setDesc(descriptionProductTabs.ImgData)
+        }
     },[])
 
-    // React.useEffect(()=>{
-    //     if(descriptionProductTabs.descriptionImages.length > 0){
-    //         setSendData(true)
-    //     }
-    // },[])
+    console.log(images, desc);
 
     return (
         <Card className={classes.CardWrapper}>
@@ -116,7 +147,9 @@ export const AddImages = () => {
                         onImageUpload,
                         onImageRemoveAll,
                         onImageUpdate,
-                        onImageRemove,
+                        onImageRemove = () => {
+                            onRemove()
+                        },
                         isDragging,
                         dragProps,
                     }) => (
@@ -142,25 +175,23 @@ export const AddImages = () => {
                                     img = image.data_url
                                 }
 
-                                console.log('ANSWER img', img);
-
                                 return (
                                     <div key={index} className={`image-item ${classes.ContainerAddedItem}`}>
                                         <img src={img} alt="" width="150" />
                                         <div className={`image-item ${classes.ContainerBtn}`}>
                                             <Button variant="contained" color="primary" style={{ marginRight: '10px', marginLeft: '10px' }} onClick={() => onImageUpdate(index)}>Изменить</Button>
                                             &nbsp;
-                                            <Button variant="contained" color="primary" onClick={() => onImageRemove(index)}>Удалить</Button>
+                                            <Button variant="contained" color="primary" onClick={() => {onImageRemove(index)}}>Удалить</Button>
                                         </div>
 
                                         <Grid container spacing={3} wrap="wrap">
                                             <Grid item md={3} sm={4} xs={12}>
-                                                <TextField fullWidth label="Название" margin="normal" name="Name"
-                                                    onChange={() => { }} type="Name" value={''} variant="outlined" />
+                                                <TextField fullWidth label="Название" margin="normal" name="imgName"
+                                                    onChange={(e) => { setImgDesc(e,index) }} type="imgName" value={desc[index].imgName} variant="outlined" />
                                             </Grid>
                                             <Grid item md={3} sm={4} xs={12}>
-                                                <TextField fullWidth label="Количество" margin="normal" name="Count"
-                                                    onChange={() => { }} type="Count" value={''} variant="outlined" />
+                                                <TextField fullWidth label="Количество" margin="normal" name="count"
+                                                    onChange={(e) => { setImgDesc(e,index) }} type="count" value={desc[index].count} variant="outlined" />
                                             </Grid>
                                         </Grid>
                                     </div>

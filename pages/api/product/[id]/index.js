@@ -25,6 +25,8 @@ export default authenticated(async function getProductById(req, res) {
                 nameDescription: response[0].nameDescription,
                 description: response[0].description,
                 imagesDescription: response[0].imagesDescription.split(' , '),
+                imgData: response[0].imgData,
+                            
                 typeName: response[0].typeName,
                 countPeople: response[0].countPeople,
                 features: response[0].features,

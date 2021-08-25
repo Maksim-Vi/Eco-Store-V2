@@ -14,7 +14,7 @@ export const SET_SRM_DESCRIPTION_PRODUCT_TABS_DATA = 'SRM/SET_SRM_DESCRIPTION_PR
 export  const setDescriptionProductTabsData = (data) => ({ type: SET_SRM_DESCRIPTION_PRODUCT_TABS_DATA, data })
 
 export const SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA = 'SRM/SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA'
-export  const setImagesDescriptionProductData = (img) => ({ type: SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA, img })
+export  const setImagesDescriptionProductData = (data) => ({ type: SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA, data })
 
 export const SET_SRM_DESCRIPTION_TABLE_TABS_DATA = 'SRM/SET_SRM_DESCRIPTION_TABLE_TABS_DATA'
 export  const setDescriptionTableTabsData = (data) => ({ type: SET_SRM_DESCRIPTION_TABLE_TABS_DATA, data })

@@ -62,8 +62,11 @@ export default function AddProduct(props) {
             price: genetalTabs.price,
             sale: genetalTabs.sale === true ? 1 : 0,
             salePrice: genetalTabs.salePrice,
+            
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
+            ImgData: descriptionProductTabs.ImgData,
+           
             typeName:descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
             features:descriptionTableTabs.features,
@@ -102,7 +105,6 @@ export default function AddProduct(props) {
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         }
-       
     }
 
     return (

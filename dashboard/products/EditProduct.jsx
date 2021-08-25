@@ -94,9 +94,13 @@ export default function EditProduct(props) {
             Images: Images,
             sale: genetalTabs.sale === true ? 1 : 0,
             salePrice: genetalTabs.salePrice,
+
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
             descriptionImages: descriptionProductTabs.descriptionImages,
+            imgName: descriptionProductTabs.imgName,
+            imgCountInStock: descriptionProductTabs.imgCountInStock,
+            
             typeName:descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
             features:descriptionTableTabs.features,
@@ -136,7 +140,6 @@ export default function EditProduct(props) {
     React.useEffect(()=>{
         products.forEach(product => {
             if(product.id === props.productId){
-                console.log(`ANSWER`, product);
                 dispatch(editProductTabs(product))
             }
         })
