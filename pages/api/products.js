@@ -18,7 +18,15 @@ export default authenticated(async function getProducts(req, res) {
                 let newData = product
                 if(newData.images !== ''){
                     let images = product['images'].split(' , ')
-                    newData['images'] = images
+                    let data = []
+                    images.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    newData['images'] = data
                 } 
                 if(newData.imagesDescription !== ''){
                     let images = product['imagesDescription'].split(' , ')

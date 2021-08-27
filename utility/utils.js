@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 export const deleteAndUpload = (arr,imagesFile) =>{
+    debugger
     let images = []
     if(arr.length > 0){
         arr.forEach(img=>{

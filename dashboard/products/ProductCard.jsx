@@ -47,7 +47,7 @@ const ProductCard = ({ openEditCard, product, ...rest }) => {
             <CardContent>
                 {product.images !== ''
                     ? <Box className={classes.boxWrapper}>
-                        <Avatar className={classes.Avatar} alt="Product" src={`${product.images[0].split('public')[1]}`} variant="square" />
+                        <Avatar className={classes.Avatar} alt="Product" src={`${product.images[0].url.split('public')[1]}`} variant="square" />
                     </Box>
                     : <Box className={classes.boxWrapper}>
                         <Avatar className={classes.Avatar} alt="Product" src={``} variant="square" />

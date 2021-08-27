@@ -24,11 +24,11 @@ const AddImagesDesc = ({ setImages, images }) => {
 
     const onChange = (imageList, addUpdateIndex) => {
         let imgData = []
-        if(createImages.length > 0){
+        if(createImages.length > 0  && imageList.length === images.length){
             imageList.forEach((img, index) => {
                 if(addUpdateIndex[0] === index){
                     let newDataImg = {
-                        url: createImages[addUpdateIndex[0]].url,
+                        url: createImages[addUpdateIndex[0]].url ? createImages[addUpdateIndex[0]].url : '',
                         isNew: true,
                         data_url: img.data_url,
                         file: img.file
@@ -55,15 +55,7 @@ const AddImagesDesc = ({ setImages, images }) => {
 
     React.useEffect(()=>{
         if(images.length > 0){
-            let data = []
-            images.forEach(img=>{
-                data.push({
-                    url: img,
-                    data_url: img,
-                    isNew: false
-                })
-            })
-            setCreateImages(data)
+            setCreateImages(images)
         }
     },[])
 

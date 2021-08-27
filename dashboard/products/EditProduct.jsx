@@ -15,7 +15,6 @@ import axios from 'axios';
 import { getCookie } from '../../components/common/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProductTabs, resetProductTabs, setProducts } from '../../redux/reducers/SRM/products/action';
-import { ClearProductsTabs, EditProductsTabs } from '../utilits/products/ProductsUtils';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -98,9 +97,8 @@ export default function EditProduct(props) {
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
             descriptionImages: descriptionProductTabs.descriptionImages,
-            imgName: descriptionProductTabs.imgName,
-            imgCountInStock: descriptionProductTabs.imgCountInStock,
-            
+            ImgData: descriptionProductTabs.ImgData,
+                        
             typeName:descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
             features:descriptionTableTabs.features,
@@ -112,29 +110,38 @@ export default function EditProduct(props) {
         const formData = new FormData();
         if(Images.length > 0){
             Images.forEach((img)=>{
-                formData.append('images', img.file);
+                if(img.file){
+                    formData.append('images', img.file);
+                }
             })
         }
       
         if(descriptionProductTabs.descriptionImages.length > 0){
             descriptionProductTabs.descriptionImages.forEach((img)=>{
-                formData.append('imagesDesc', img.file);
+                if(img.file){
+                    formData.append('imagesDesc', img.file);
+                }
             })
         }
         
         formData.append('product', JSON.stringify(data));
 
-        let res = await axios.put(`${URL}/createProduct`,formData, {
+        let res = await axios.put(`${URL}/createProduct`, formData , {
             headers: { 
                 'authorization': cookie,
                 'Accept': 'application/json', 
                 'content-type': 'multipart/form-data' 
             },
+            onUploadProgress: (event) => {
+                console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+            },
         })
 
-        console.log(`ANSWER`, res);
         
-        //props.closeDialog()
+        if(res.status === 200){
+            dispatch(setProducts(res.data.products))
+            props.closeDialog()
+        } 
     }
 
     React.useEffect(()=>{
