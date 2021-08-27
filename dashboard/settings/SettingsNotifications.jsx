@@ -31,8 +31,8 @@ const SettingsNotifications = (props) => {
     <form {...props}>
       <Card>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          subheader="На этой вкладке можно применять разные настройки для CRM"
+          title="Настройки"
         />
         <Divider />
         <CardContent>

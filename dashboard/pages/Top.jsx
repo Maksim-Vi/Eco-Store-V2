@@ -1,11 +1,11 @@
 import React from 'react';
-import {Container,Grid} from '@material-ui/core';
+import {CardHeader, Container,Grid} from '@material-ui/core';
  
   
 const Top = () => (
     <Container maxWidth={false}>
-     <Grid container spacing={3}>
-      <h2>hello top</h2>
+      <Grid container spacing={3}>
+        <CardHeader subheader="На этой вкладке можно отредактировать топ товары с главной страницы сайта" title="Топ товаров"/>
       </Grid>
     </Container>
 );

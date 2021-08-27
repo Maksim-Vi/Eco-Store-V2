@@ -1,11 +1,12 @@
 import {
+    CardHeader,
     Container,
     Grid
 } from '@material-ui/core';
 
 const Account = () => (
     <Container maxWidth="lg">
-        <h2>Account dashboard</h2>
+        <CardHeader subheader="На этой вкладке можно отредактировать аккаунт в CRM" title="Аккаунт"/>
         <Grid
             container
             spacing={3}

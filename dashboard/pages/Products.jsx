@@ -1,5 +1,6 @@
 import {
   Box,
+  CardHeader,
   Container,
   Grid
 } from '@material-ui/core';
@@ -46,6 +47,7 @@ const Product = () => {
   return (
     <>
     <Container maxWidth={false}>
+    <CardHeader subheader="На этой вкладке можно отредактировать или добавить товар" title="Товары"/>
       <ProductListToolbar openDialog={()=>{handleClickOpen()}}/>
       <Box sx={{ pt: 3 }}>
         <Grid container spacing={3}>
