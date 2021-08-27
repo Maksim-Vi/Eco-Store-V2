@@ -70,7 +70,7 @@ export const AddImages = () => {
                 let newDataImg = {
                     isNew: true,
                     data_url: img.data_url,
-                    file: img.file
+                    file: img.file,
                 }
 
                 ImgDataDesc.push({
@@ -113,22 +113,14 @@ export const AddImages = () => {
 
     React.useEffect(()=>{
         if(descriptionProductTabs.descriptionImages.length > 0){
-            let data = []
-            descriptionProductTabs.descriptionImages.forEach(img=>{
-                data.push({
-                    url: img,
-                    data_url: img,
-                    isNew: false
-                })
-            })
-            setImages(data)
+            setImages(descriptionProductTabs.descriptionImages)
         }
         if(descriptionProductTabs.ImgData.length > 0){
             setDesc(descriptionProductTabs.ImgData)
         }
+        console.log(images, desc);
     },[])
 
-    console.log(images, desc);
 
     return (
         <Card className={classes.CardWrapper}>
@@ -187,11 +179,15 @@ export const AddImages = () => {
                                         <Grid container spacing={3} wrap="wrap">
                                             <Grid item md={3} sm={4} xs={12}>
                                                 <TextField fullWidth label="Название" margin="normal" name="imgName"
-                                                    onChange={(e) => { setImgDesc(e,index) }} type="imgName" value={desc[index].imgName} variant="outlined" />
+                                                    onChange={(e) => { setImgDesc(e,index) }} type="imgName" 
+                                                    value={desc[index] !== undefined ? desc[index].imgName : ''} 
+                                                    variant="outlined" />
                                             </Grid>
                                             <Grid item md={3} sm={4} xs={12}>
                                                 <TextField fullWidth label="Количество" margin="normal" name="count"
-                                                    onChange={(e) => { setImgDesc(e,index) }} type="count" value={desc[index].count} variant="outlined" />
+                                                    onChange={(e) => { setImgDesc(e,index) }} type="count" 
+                                                    value={desc[index] !== undefined ? desc[index].count : 0} 
+                                                    variant="outlined" />
                                             </Grid>
                                         </Grid>
                                     </div>

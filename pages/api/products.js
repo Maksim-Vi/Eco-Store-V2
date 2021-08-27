@@ -22,7 +22,15 @@ export default authenticated(async function getProducts(req, res) {
                 } 
                 if(newData.imagesDescription !== ''){
                     let images = product['imagesDescription'].split(' , ')
-                    newData['imagesDescription'] = images                    
+                    let data = []
+                    images.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    newData['imagesDescription'] = data                    
                 }
                 
                 newData['ImgData'] = eval("(" + newData.ImgData + ")")

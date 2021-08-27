@@ -1,19 +1,17 @@
-
-
 import React from 'react'
 import DashboardMain from '../../dashboard/DashboardMain'
-import DashboardContent from '../../dashboard/pages/Dashboard'
+import TopContainer from '../../dashboard/pages/Top'
 import { getCookie } from '../../components/common/session';
 
-export default function Dashboard() {
+export default function Top() {
     return (
         <DashboardMain title="Dashboard Login">
-            <DashboardContent />
+            <TopContainer />
         </DashboardMain>
     )
 }
 
-Dashboard.getInitialProps = async (ctx) => {
+Top.getInitialProps = async (ctx) => {
    
     let cookie = getCookie('auth', ctx.req)
 

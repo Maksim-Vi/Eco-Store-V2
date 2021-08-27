@@ -24,6 +24,12 @@ export const items = [
         id: uuid()
     },
     {
+        href: '/AdminPanel/Top',
+        icon: FormatListBulletedIcon,
+        title: 'Top',
+        id: uuid()
+    },
+    {
         href: '/AdminPanel/Account',
         icon: AccountBoxIcon,
         title: 'Account',

@@ -55,7 +55,7 @@ apiRoute.put((req, res) => {
 
 apiRoute.post(async (req, res) => {
     let body = JSON.parse(req.body.product)
-
+       
     let imagesUrl = []
     let imagesDescUrl = []
 
@@ -75,11 +75,13 @@ apiRoute.post(async (req, res) => {
     let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
     let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
 
+    
+
     const descProduct = await sql_query(INSERT_DESC, [
         body.nameDescription,
         body.descriptionD,
         imagesDescUrl.length === 0 ? '' : imagesUrl.join(' , '),
-        body.ImgData,
+        JSON.stringify(body.ImgData),
     ])
 
     const descProductTable = await sql_query(INSERT_DESC_TABLE, [
