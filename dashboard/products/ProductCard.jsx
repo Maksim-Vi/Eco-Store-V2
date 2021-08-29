@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     Avatar: {
-        maxWidth: '100px',
-        maxHeight: '100px',
+        maxWidth: '200px',
+        maxHeight: '200px',
         width:'100%',
         height:'100%'
     },

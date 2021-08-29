@@ -25,9 +25,10 @@ export default function Products({products}) {
 }
 
 Products.getInitialProps = async (ctx) => {
-   
-    let cookie = getCookie('auth', ctx.req)
     let products = []
+
+    let cookie = getCookie('auth', ctx.req)
+
 
     if(!cookie){
         ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
@@ -39,7 +40,7 @@ Products.getInitialProps = async (ctx) => {
             headers: { 'authorization': cookie},
         })
         products = await res.json()
-    }
+    }  
     
     return {products:products}
 }

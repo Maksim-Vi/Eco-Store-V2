@@ -38,7 +38,7 @@ export const AddImages = () => {
     let [sendData, setSendData] = React.useState(false);
 
     const [images, setImages] = React.useState([]);
-    const maxNumber = 69;
+    const maxNumber = 8;
 
     const onChange = (imageList, addUpdateIndex) => {
         let imgData = []

@@ -14,14 +14,14 @@ export default function Dashboard() {
 }
 
 Dashboard.getInitialProps = async (ctx) => {
-   
+    
     let cookie = getCookie('auth', ctx.req)
 
     if(!cookie){
         ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
         ctx.res.end();
         return;
-    }
-    
+    } 
+     
     return {data:{}}
 }

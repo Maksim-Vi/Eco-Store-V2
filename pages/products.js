@@ -13,9 +13,11 @@ const Products = ({ items }) => {
 
 Products.getInitialProps = async () => {
     let URL = process.env.SERVER_URL
-
+    let json = []
+    
     const res = await fetch(`${URL}/products`)
-    const json = await res.json()
+    json = await res.json()
+
     return { items: json }
 }
 

@@ -18,6 +18,9 @@ const upload = multer({
             cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname)
         }
     }),
+    limits: {
+        fileSize: 1025 * 1025 * 6
+    },
 });
 
 const apiRoute = nextConnect({
@@ -29,7 +32,6 @@ const apiRoute = nextConnect({
     },
 });
 
-// apiRoute.use(upload.array('images'))
 apiRoute.use(upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]))
 
 apiRoute.put(async (req, res) => {
@@ -39,43 +41,152 @@ apiRoute.put(async (req, res) => {
     let imgUrl = deleteAndUpload(body.Images, req.files.images)
     let imgDescUrl = deleteAndUpload(body.descriptionImages, req.files.imagesDesc)
        
-    try{
-        let UPDATE_DESC = 'UPDATE descriptionproducts SET nameDescription = ?, description = ?, imagesDescription = ?, ImgData = ? WHERE id = ?'
+    let UPDATE_DESC = 'UPDATE descriptionproducts SET nameDescription = ?, description = ?, imagesDescription = ?, ImgData = ? WHERE id = ?'
+    await sql_query(UPDATE_DESC,[
+        body.nameDescription, 
+        body.descriptionD, 
+        imgDescUrl.length === 0 ? '' : imgDescUrl.join(' , '), 
+        ImgData,
+        body.DescProductId
+    ]).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js PUT req, UPDATE desc: Something was wrong! ${err}` })
+    })
     
-        const descProduct = await sql_query(UPDATE_DESC,[
-            body.nameDescription, 
-            body.descriptionD, 
-            imgDescUrl.length === 0 ? '' : imgDescUrl.join(' , '), 
-            ImgData,
-            body.id
-        ])
+    let UPDATE_DESC_TABLE = 'UPDATE descriptionproductstables SET typeName = ?, countPeople = ?, features = ?, eco = ?, equipment = ?, structure = ? WHERE id = ?'
+    await sql_query(UPDATE_DESC_TABLE, [
+        body.typeName,
+        body.countPeople,
+        body.features,
+        body.eco,
+        body.equipment,
+        body.structure,
+        body.DescProductTableId
+    ]).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js PUT req, UPDATE descTabs: Something was wrong! ${err}` })
+    })
+
+
+    let UPDATE_PRODUCTS = 'UPDATE products SET sale = ?, salePrice = ?, name = ?, category = ?, price = ?, images = ?, inStock = ?, countInStock = ? WHERE id = ?'  
+    await sql_query(UPDATE_PRODUCTS, [
+        body.sale, 
+        body.salePrice, 
+        body.name, 
+        body.category, 
+        body.price, 
+        imgUrl.length === 0 ? '' : imgUrl.join(' , '), 
+        body.inStock, 
+        body.countInStock, 
+        body.id
+    ]).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js PUT req, UPDATE products: Something was wrong! ${err}` })
+    })
+
+    let SELECT = `
+        SELECT *, t1.id id 
+        FROM products t1 
+        LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
+        LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
+
+    const response = await db.query(SELECT).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js PUT req, SELECT products: Something was wrong! ${err}` })
+    })
+    await db.end()
+
+    let productsData = []
+    response.forEach(product => {
+        let newData = product
+        if (newData.images !== '') {
+            let images = product['images'].split(' , ')
+            let data = []
+            images.forEach(img=>{
+                data.push({
+                    url: img,
+                    data_url: img,
+                    isNew: false
+                })
+            })
+            newData['images'] = data
+        } 
+        if (newData.imagesDescription !== '') {
+            let images = product['imagesDescription'].split(' , ')
+            let data = []
+            images.forEach(img=>{
+                data.push({
+                    url: img,
+                    data_url: img,
+                    isNew: false
+                })
+            })
+            newData['imagesDescription'] = data
+        }
+
+        newData['sale'] = newData.sale === 0 ? false : true
+        newData['inStock'] = newData.inStock === 0 ? false : true
         
-        let UPDATE_DESC_TABLE = 'UPDATE descriptionproductstables SET typeName = ?, countPeople = ?, features = ?, eco = ?, equipment = ?, structure = ? WHERE id = ?'
+        productsData.push(newData)
+    });
 
-        const descProductTable = await sql_query(UPDATE_DESC_TABLE, [
-            body.typeName,
-            body.countPeople,
-            body.features,
-            body.eco,
-            body.equipment,
-            body.structure,
-            body.DescProductTableId
-        ])
+    res.status(200).json({ messages: 'success', products: productsData });     
+});
 
+apiRoute.post(async (req, res) => {
+    let body = JSON.parse(req.body.product)
+    let ImgData = JSON.stringify(body.ImgData)
+
+    let imagesUrl = []
+    let imagesDescUrl = []
+
+    if (req.files.images !== undefined) {
+        req.files.images.forEach(file => {
+            imagesUrl.push(file.path.replace('public/', ''))
+        })
+    }
+
+    if (req.files.imagesDesc !== undefined) {
+        req.files.imagesDesc.forEach(file => {
+            imagesDescUrl.push(file.path.replace('public/', ''))
+        })
+    }
+
+    let INSERT_PRODUCTS = `INSERT INTO products(sale, salePrice, name, category, price, images, inStock, countInStock, DescProductId, DescProductTableId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
+    let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
+
+    const descProduct = await sql_query(INSERT_DESC, [
+        body.nameDescription,
+        body.descriptionD,
+        imagesDescUrl.length === 0 ? '' : imagesDescUrl.join(' , '),
+        ImgData,
+    ]).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js POST req, INSERT desc: Something was wrong! ${err}` })
+    })
     
-        let UPDATE_PRODUCTS = 'UPDATE products SET sale = ?, salePrice = ?, name = ?, category = ?, price = ?, images = ?, inStock = ?, countInStock = ? WHERE id = ?'
-       
-        await sql_query(UPDATE_PRODUCTS, [
-            body.sale, 
-            body.salePrice, 
-            body.name, 
-            body.category, 
-            body.price, 
-            imgUrl.length === 0 ? '' : imgUrl.join(' , '), 
-            body.inStock, 
-            body.countInStock, 
-            body.id
-        ])
+    const descProductTable = await sql_query(INSERT_DESC_TABLE, [
+        body.typeName,
+        body.countPeople,
+        body.features,
+        body.eco,
+        body.equipment,
+        body.structure
+    ]).catch((err)=>{
+        res.status(500).json({ message: `createProduct.js POST req, INSERT descTabs: Something was wrong! ${err}` })
+    })
+
+    if (descProduct.insertId > 0 && descProductTable.insertId > 0) {
+        await sql_query(INSERT_PRODUCTS, [
+            body.sale,
+            body.salePrice,
+            body.name,
+            body.category,
+            body.price,
+            imagesUrl.length === 0 ? '' : imagesUrl.join(' , '),
+            body.inStock,
+            body.countInStock,
+            descProduct.insertId,
+            descProductTable.insertId,
+        ]).catch((err)=>{
+            res.status(500).json({ message: `createProduct.js POST req, INSERT products: Something was wrong! ${err}` })
+        })
 
         let SELECT = `
             SELECT *, t1.id id 
@@ -83,7 +194,9 @@ apiRoute.put(async (req, res) => {
             LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
             LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
 
-        const response = await db.query(SELECT)
+        const response = await db.query(SELECT).catch((err)=>{
+            res.status(500).json({ message: `createProduct.js POST req, SELECT products: Something was wrong! ${err}` })
+        })
         await db.end()
 
         let productsData = []
@@ -121,97 +234,7 @@ apiRoute.put(async (req, res) => {
         });
 
         res.status(200).json({ messages: 'success', products: productsData });
-    } catch(err){
-        res.status(500).json({ message: `something was wrong! ${err}` })
-    }
-     
-});
-
-apiRoute.post(async (req, res) => {
-    let body = JSON.parse(req.body.product)
-       
-    let imagesUrl = []
-    let imagesDescUrl = []
-
-    if (req.files.images !== undefined) {
-        req.files.images.forEach(file => {
-            imagesUrl.push(file.path.replace('public/', ''))
-        })
-    }
-
-    if (req.files.imagesDesc !== undefined) {
-        req.files.imagesDesc.forEach(file => {
-            imagesDescUrl.push(file.path.replace('public/', ''))
-        })
-    }
-
-    let INSERT_PRODUCTS = `INSERT INTO products(sale, salePrice, name, category, price, images, inStock, countInStock, DescProductId, DescProductTableId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
-    let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
-
-    
-
-    const descProduct = await sql_query(INSERT_DESC, [
-        body.nameDescription,
-        body.descriptionD,
-        imagesDescUrl.length === 0 ? '' : imagesUrl.join(' , '),
-        JSON.stringify(body.ImgData),
-    ])
-
-    const descProductTable = await sql_query(INSERT_DESC_TABLE, [
-        body.typeName,
-        body.countPeople,
-        body.features,
-        body.eco,
-        body.equipment,
-        body.structure
-    ])
-
-    if (descProduct.insertId > 0 && descProductTable.insertId > 0) {
-        await sql_query(INSERT_PRODUCTS, [
-            body.sale,
-            body.salePrice,
-            body.name,
-            body.category,
-            body.price,
-            imagesUrl.length === 0 ? '' : imagesUrl.join(' , '),
-            body.inStock,
-            body.countInStock,
-            descProduct.insertId,
-            descProductTable.insertId,
-        ])
-
-        let SELECT = `
-            SELECT *, t1.id id 
-            FROM products t1 
-            LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
-            LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
-
-        const response = await db.query(SELECT)
-        await db.end()
-
-        let productsData = []
-        response.forEach(product => {
-            let newData = product
-            if (newData.images !== '') {
-                let images = product['images'].split(' , ')
-                newData['images'] = images
-            } 
-            if (newData.imagesDescription !== '') {
-                let images = product['imagesDescription'].split(' , ')
-                newData['imagesDescription'] = images
-            }
-
-            newData['sale'] = newData.sale === 0 ? false : true
-            newData['inStock'] = newData.inStock === 0 ? false : true
-            
-            productsData.push(newData)
-        });
-
-        res.status(200).json({ messages: 'success', products: productsData });
-    } else {
-        res.status(500).json({ message: `something was wrong!` })
-    }
+    } 
 });
 
 export default authenticated(apiRoute);

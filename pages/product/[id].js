@@ -17,10 +17,12 @@ const ProductPageId = ({item}) => {
 
 ProductPageId.getInitialProps = async (ctx) => {
     let URL = process.env.SERVER_URL
-    const res = await fetch(`${URL}/product/${ctx.query.id}`)
-    const json = await res.json()
-
-    return { item: json }
+    let json = []
+    
+    let res = await fetch(`${URL}/product/${ctx.query.id}`)
+    json = await res.json()
+    
+    return { item: json || [] }
 }
 
 export default ProductPageId

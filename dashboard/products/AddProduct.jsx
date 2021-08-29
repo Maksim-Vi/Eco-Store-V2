@@ -53,20 +53,47 @@ export default function AddProduct(props) {
 
     let saveProduct  = async () => {
         let cookie = getCookie('auth')
+
+        let images = []
+        if(Images.length > 0){
+            Images.forEach(img=>{
+                let imgData = {
+                    isNew: img.isNew,
+                    file: img.file
+                }
+                images.push(imgData)
+            })
+        }
+
+        let imagesDesc = []
+        if(descriptionProductTabs.descriptionImages.length > 0){
+            Images.forEach(img=>{
+                let imgData = {
+                    isNew: img.isNew,
+                    file: img.file
+                }
+                imagesDesc.push(imgData)
+            })
+        }
         
         let data = {
+            id: props.productId,
+            DescProductId: genetalTabs.DescProductId,
+            DescProductTableId: genetalTabs.DescProductTableId,
             name: genetalTabs.name,
             inStock: genetalTabs.inStock  === true ? 1 : 0,
             countInStock:  genetalTabs.countInStock,
             category: genetalTabs.category,
             price: genetalTabs.price,
+            Images: images,
             sale: genetalTabs.sale === true ? 1 : 0,
             salePrice: genetalTabs.salePrice,
-            
+
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
+            descriptionImages: imagesDesc,
             ImgData: descriptionProductTabs.ImgData,
-           
+                        
             typeName:descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
             features:descriptionTableTabs.features,
@@ -100,6 +127,8 @@ export default function AddProduct(props) {
                 console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
             },
         })
+
+        console.log('ANSWER data', res);
         
         if(res.status === 200){
             dispatch(setProducts(res.data.products))

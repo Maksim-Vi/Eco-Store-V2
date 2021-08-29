@@ -21,7 +21,7 @@ Account.getInitialProps = async (ctx) => {
         ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
         ctx.res.end();
         return;
-    }
+    } 
     
     return {data:{}}
 }

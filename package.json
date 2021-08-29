@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "nextSSR": "nodemon server.js",
-    "build": "next build && next export",
-    "start": "cross-env NODE_ENV=production node server.js",
+    "next": "nodemon server.js",
+    "build": "next build",
+
+    "developStart": "cross-env NODE_ENV=development next start",
+    "productionStart": "cross-env NODE_ENV=production node server.js",
+
     "serverProd": "npm run start --prefix server",
-    "serverDev": "npm run server --prefix server",
-    "development": "concurrently \"npm run nextSSR\" \"npm run serverDev\"",
     "production": "concurrently \"npm run start\" \"npm run serverProd\""
   },
   "dependencies": {

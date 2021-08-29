@@ -25,15 +25,19 @@ const Home = ({ items, popular }) => {
 
 Home.getInitialProps = async () => {
     let URL = process.env.SERVER_URL
+
+    let productsJson = []
+    let popularJson = []
+
     let products = await fetch(`${URL}/products`)
     let popular = await fetch(`${URL}/popular`)
 
-    let productsJson = await products.json()
-    let popularJson = await popular.json()
+    productsJson = await products.json()
+    popularJson = await popular.json()
 
     return { 
-        items: productsJson || [],
-        popular: popularJson || []
+        items: productsJson,
+        popular: popularJson
     }
 }
 

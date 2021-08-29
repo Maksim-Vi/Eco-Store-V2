@@ -1,7 +1,6 @@
 import fs from 'fs';
 
 export const deleteAndUpload = (arr,imagesFile) =>{
-    debugger
     let images = []
     if(arr.length > 0){
         arr.forEach(img=>{
@@ -29,4 +28,14 @@ export const deleteAndUpload = (arr,imagesFile) =>{
     }
 
     return images
+}
+
+export const deleteImageIfErr = (arr) =>{
+    if(arr.length > 0){
+        arr.forEach(img=>{
+            if(img !== undefined){
+                fs.unlinkSync(String(img))
+            }
+        })
+    }
 }
