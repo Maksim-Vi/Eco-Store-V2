@@ -119,7 +119,7 @@ apiRoute.put(async (req, res) => {
             })
             newData['imagesDescription'] = data
         }
-
+        newData['ImgData'] = eval("(" + newData.ImgData + ")")
         newData['sale'] = newData.sale === 0 ? false : true
         newData['inStock'] = newData.inStock === 0 ? false : true
         
@@ -227,6 +227,7 @@ apiRoute.post(async (req, res) => {
                 newData['imagesDescription'] = data
             }
 
+            newData['ImgData'] = eval("(" + newData.ImgData + ")")
             newData['sale'] = newData.sale === 0 ? false : true
             newData['inStock'] = newData.inStock === 0 ? false : true
             
