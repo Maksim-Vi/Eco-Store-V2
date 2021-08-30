@@ -12,19 +12,16 @@ import { addedCountItem } from '../common/utilits';
 const ListProduct = (props) => {
 
     let dispatch = useDispatch()
-    let URL = process.env.SERVER_URL
     
     return (
         <li className={s.Card}>
-            <Card
-                variant="outlined"
-                className={s.CardItem}>
+            <Card variant="outlined" className={s.CardItem}>
                 <CardContent>
                         <Typography className={s.CardCode} color="textSecondary" gutterBottom>
                             код товара 100{props.item.id}
                         </Typography>
                         <Link href={{ pathname: `/product/${props.item.id}`, query: { name: 'test' } }} as={`/product/${props.item.id}`} >
-                            <img className={s.CardImage} src={`${URL}/${props.item.image}`} alt="item" />
+                            <img className={s.CardImage} src={`${props.item.images[0].url.split('public')[1]}`} alt="item" />
                         </Link>
                         <Typography className={s.CardTitleText} variant="body2" component="h2" >
                             {props.item.name}

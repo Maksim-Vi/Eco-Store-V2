@@ -11,6 +11,37 @@ export default authenticated(async function getProductById(req, res) {
                            WHERE p.id = ?`
             const response = await sql_query(SELECT, req.query.id)
 
+            let images = []
+            let imagesDesc = []
+
+            response.forEach(product => {
+                let newData = product
+                if(newData.images !== ''){
+                    let img = product['images'].split(' , ')
+                    let data = []
+                    img.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    images = data 
+                } 
+                if(newData.imagesDescription !== ''){
+                    let img = product['imagesDescription'].split(' , ')
+                    let data = []
+                    img.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    imagesDesc = data                  
+                }
+            });
+
             let product = {
                 id: response[0].id,
                 sale: response[0].sale === 0 ? false : true,
@@ -18,14 +49,14 @@ export default authenticated(async function getProductById(req, res) {
                 name: response[0].name,
                 category: response[0].category,
                 price: response[0].price,
-                images: response[0].images.split(' , '),
+                images: images,
                 inStock: response[0].inStock === 0 ? false : true,
                 countInStock: response[0].countInStock,
 
                 nameDescription: response[0].nameDescription,
                 description: response[0].description,
-                imagesDescription: response[0].imagesDescription.split(' , '),
-                imgData: response[0].imgData,
+                imagesDescription: imagesDesc,
+                ImgData: eval("(" +  response[0].ImgData + ")"),
                             
                 typeName: response[0].typeName,
                 countPeople: response[0].countPeople,
@@ -68,7 +99,38 @@ export default authenticated(async function getProductById(req, res) {
 
             let productsData = []
             response.forEach(product => {
-                productsData.push(product)
+                let newData = product
+                if(newData.images !== ''){
+                    let images = product['images'].split(' , ')
+                    let data = []
+                    images.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    newData['images'] = data
+                } 
+                if(newData.imagesDescription !== ''){
+                    let images = product['imagesDescription'].split(' , ')
+                    let data = []
+                    images.forEach(img=>{
+                        data.push({
+                            url: img,
+                            data_url: img,
+                            isNew: false
+                        })
+                    })
+                    newData['imagesDescription'] = data                    
+                }
+                
+                newData['ImgData'] = eval("(" + newData.ImgData + ")")
+           
+                newData['sale'] = newData.sale === 0 ? false : true
+                newData['inStock'] = newData.inStock === 0 ? false : true
+               
+                productsData.push(newData)
             });
 
             return res.status(200).json({ messages: 'delete success', products: productsData });

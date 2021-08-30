@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React,{useState} from 'react';
 import Slaider from '../header/carusel/Slaider';
 
@@ -5,6 +6,10 @@ import Slaider from '../header/carusel/Slaider';
 class CaruselProduct extends React.Component{
     constructor(props) {
         super(props);
+
+        this.state={
+            CaruselImage: []
+        }
         this.CaruselImage = []
         this.settingsCmponent = {
             value: 'cycle',
@@ -16,36 +21,36 @@ class CaruselProduct extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.filterImageCarusel()
+    }
+
     componentWillUnmount(){
         this.CaruselImage = []
     }
 
-    shouldComponentUpdate(prevProps){
+    shouldComponentUpdate(prevProps, prevState){
         if(this.props.item !== prevProps.item) return true
+        if(this.props.CaruselImage !== prevState.CaruselImage) return true
 
         return false
 
     }
 
     filterImageCarusel = () =>{
-        let URL = process.env.SERVER_URL
-        if(this.props.item.image !== null){
-            this.CaruselImage.push({ "id": 1, "img": `${URL}/${ this.props.item.image}` })
-        } 
-        if(this.props.item.image1 !== null){
-            this.CaruselImage.push({ "id": 2, "img": `${URL}/${ this.props.item.image1}` })
-        } 
-        if(this.props.item.image2 !== null){
-            this.CaruselImage.push({ "id": 3, "img": `${URL}/${ this.props.item.image2}` })
-        } 
-        if(this.props.item.image3 !== null){
-            this.CaruselImage.push({ "id": 4, "img": `${URL}/${ this.props.item.image3}` })
-        }
+        let imgCarusel = []
+        _.forEach(this.props.item.images,(img,index) => {
+            if(img.url !== undefined && img.url !== ''){
+                imgCarusel.push({ "id": index+ 1, "img": `${img.url.split('public')[1]}` })
+            }
+        })
+        this.setState({CaruselImage: imgCarusel})
     }
    
     render() {
-        this.filterImageCarusel()
-        return <Slaider image={this.CaruselImage} settingsCmponent={this.settingsCmponent} />
+        if(this.state.CaruselImage.length === 0) return null
+        
+        return <Slaider image={this.state.CaruselImage} settingsCmponent={this.settingsCmponent} />
     }
 }
 

@@ -40,19 +40,17 @@
             & .ProductBayCard{
                 padding: 20px;
                 width: 70%;
-                height: 40%;
+                height: auto;
                 margin-left: 5%;
                 // margin-top: 2%;
                 background: #fff;
                 border-radius: 10px;
                 @include xl { 
-                    height: 45%;
                     margin-left: 0;
                 }
                 @include  sm{
                     width: 100%;
                 }
-                @include xl_Plus { height: 100%;}
                 & .CardCode{
                     text-align: center;
                     margin-top: 2%;
@@ -121,9 +119,21 @@
                     height: 100%;
                     flex-direction: column;
                     align-items: center;
-                    & span{
-                        font-size: 11px;
+                    .img{
+                        width: 70px;
+                        height: auto;
                     }
+                    .textContainer{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        width: 100%;
+                        & span{
+                            font-size: 11px;
+                        }
+                    }
+                    
                 }
                 & div{
                     width: 45px;

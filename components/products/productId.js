@@ -8,6 +8,7 @@ import { addItemToBasket } from '../../redux/reducers/basket-reducer';
 import s from '../../styles/content/product.module.scss'
 import { addedCountItem } from '../common/utilits';
 import ABS from '../common/abs';
+import ProductsImgData from './productsImgData';
 
 const ProductId = (props) => {
     
@@ -78,31 +79,7 @@ const ProductId = (props) => {
                                 </button>
                             </div>
                         </div>
-                        { false
-                        ?<div className={s.ListColorItem}>
-                            <div className={s.colorContainerItem}>
-                                <div className={s.active} style={{ backgroundColor: 'red', border: '1px solid #800000' }}></div>
-                                <span>red</span>
-                            </div>
-                            <div className={s.colorContainerItem}>
-                                <div style={{ backgroundColor: 'yellow', border: '1px solid #FFA500' }}></div>
-                                <span>yellow</span>
-                            </div>
-                            <div className={s.colorContainerItem}>
-                                <div style={{ backgroundColor: 'white', border: '1px solid black' }}></div>
-                                <span>white</span>
-                            </div>
-                            <div className={s.colorContainerItem}>
-                                <div style={{ backgroundColor: 'green', border: '1px solid #008000' }}></div>
-                                <span>green</span>
-                            </div>
-                            <div className={s.colorContainerItem}>
-                                <div style={{ backgroundColor: 'blue', border: '1px solid #00008B' }}></div>
-                                <span>blue</span>
-                            </div>
-                        </div>
-                        : null
-                        }
+                        <ProductsImgData item={props.item}/>
                     </div>
                 </div>
                 <div className={s.ContainerMiddle}>
