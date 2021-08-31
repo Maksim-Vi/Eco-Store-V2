@@ -2,23 +2,26 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import FolderIcon from '@material-ui/icons/Folder';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Image from './components/Image';
+import Text from './components/Text';
+import Button from './components/Button';
+import { useSelector } from 'react-redux';
+import AddTop from './components/addTopProduct/AddTop';
+import DrawerBottomTop from './components/DrawerBottom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display:'flex',
         alignItems: 'center',
         justifyContent:'center',
-        flexDirection:'columm',
-        maxWidth: 752,
+        flexDirection:'column',
+        width: '100%',
         backgroundColor: theme.palette.background.paper,
+        '& .MuiListItem-root': {
+            width: '70%',
+        }
     },
+   
 }));
 
 function generate(element) {
@@ -31,29 +34,38 @@ function generate(element) {
 
 export default function TopCard() {
     const classes = useStyles();
-    const [dense, setDense] = React.useState(false);
-    const [secondary, setSecondary] = React.useState(false);
+
+    const top = useSelector(state => state.CRM_top.top)
+    const products = useSelector(state => state.CRM_products.products)
+
+    const [openDrower, setOpenDrower] = React.useState(false);
+    
+    const toggleDrawer = (type,event) => {
+        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpenDrower(type);
+    };
 
     return (
-        <List dense={dense} className={classes.root}>
-            {generate(
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <FolderIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary="Single-line item"
-                        secondary={secondary ? 'Secondary text' : null}
-                    />
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>,
-            )}
+        <>
+        <List dense={false} className={classes.root}>
+            {top.length > 0 
+                ? top.map(item=>{
+                    return (
+                        <ListItem key={item.id} className={classes.container}>
+                            <Image url={item.url}/>
+                            <Text text={item.text}/>
+                            <Button toggleDrawer={toggleDrawer}/>
+                        </ListItem>
+                    )
+                })
+                : <AddTop />
+            }
         </List>
+        {openDrower === true &&
+            <DrawerBottomTop open={openDrower} toggleDrawer={toggleDrawer} products={products}/>
+        }
+        </>
     );
 }

@@ -16,6 +16,7 @@ import { persistReducer } from 'redux-persist'
 import userReducer from "./reducers/SRM/user/user-reducer";
 import { setToken } from "./reducers/SRM/user/action";
 import productsReducer from "./reducers/SRM/products/products-reducer";
+import topReducer from "./reducers/SRM/top/top-reducer";
 
 const persistConfig = {
   key: 'state',
@@ -33,7 +34,8 @@ let reducers = combineReducers({
   answerForm: AnswerFormReducer,
 
   CRM_user: userReducer,
-  CRM_products: productsReducer
+  CRM_products: productsReducer,
+  CRM_top: topReducer,
 }
 );
 
