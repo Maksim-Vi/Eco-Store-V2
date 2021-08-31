@@ -35,12 +35,15 @@ const ContactUs = (props) => {
         props.postFormStore(token, values.name, values.email, values.subject)
         message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
         window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
-        gtag.event({
-            action: 'submit_form',
-            category: 'ContactUs',
-            label: values.name,
-        })
-        e.target.reset();
+
+        if( process.env.NODE_ENV === 'production'){
+            gtag.event({
+                action: 'submit_form',
+                category: 'ContactUs',
+                label: values.name,
+            })
+            e.target.reset();
+        }
     }
 
     React.useEffect(() => {

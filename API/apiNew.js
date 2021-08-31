@@ -19,10 +19,20 @@ export const postSignInApi = async (email,password)  => {
 
 export const postFormStoreApi = async (token,firstName,Email,subject,phone)  => { 
     try {
-        let response= await fetch(`${URL}/MainLink/form`, {
+        // let response= await fetch(`${URL}/MainLink/form`, {
+        //     method: "POST",
+        //     body: JSON.stringify({firstName,Email,subject,phone}),
+        //     headers: {"Content-type": "application/json; charset=UTF-8"}
+        // })
+        // return await response.json()
+
+        let response= await fetch(`${URL}/contactForm`, {
             method: "POST",
             body: JSON.stringify({firstName,Email,subject,phone}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
         })
         return await response.json()
         
@@ -35,11 +45,22 @@ export const postFormStoreApi = async (token,firstName,Email,subject,phone)  => 
 
 export const postFormStoreBasketApi = async (firstName,Email,phone,promocode,pay,post,postInfo,items) => { 
     try {
-        let response= await fetch(`${URL}/StoreBasket/form`, {
-            method: "POST",
-            body: JSON.stringify({firstName,phone,Email,promocode,pay,post,postInfo,items}),
-            headers: {"Content-type": "application/json; charset=UTF-8"}
-        })
+        // let response= await fetch(`${URL}/StoreBasket/form`, {
+        //     method: "POST",
+        //     body: JSON.stringify({firstName,phone,Email,promocode,pay,post,postInfo,items}),
+        //     headers: {"Content-type": "application/json; charset=UTF-8"}
+        // })
+        // return await response
+
+        let response= await fetch(`${URL}/contactFormOrder`, {
+                method: "POST",
+                body: JSON.stringify({firstName,phone,Email,promocode,pay,post,postInfo,items}),
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            })
+
         return await response
         
     } catch (error) {

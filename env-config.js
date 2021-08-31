@@ -16,4 +16,7 @@ module.exports = {
   'process.env.MYSQL_PASSWORD': 'root',
   'process.env.jwtSecret':'Eco-Choice store kay! 167413ec-040f-45af-95e2-20fede0b7894',
 
+
+  'process.env.EMAIL_NODEMAILER': prod ? 'maksdev01panel@gmail.com' : 'maksdev01panel@gmail.com',
+  'process.env.EMAIL_PASSWORD':  prod ? 'Vfrcbv1996!' : 'Vfrcbv1996!',
 }
