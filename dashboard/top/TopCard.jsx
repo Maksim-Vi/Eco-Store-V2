@@ -24,13 +24,6 @@ const useStyles = makeStyles((theme) => ({
    
 }));
 
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
 
 export default function TopCard() {
     const classes = useStyles();
@@ -53,14 +46,17 @@ export default function TopCard() {
             {top.length > 0 
                 ? top.map(item=>{
                     return (
-                        <ListItem key={item.id} className={classes.container}>
-                            <Image url={item.url}/>
-                            <Text text={item.text}/>
-                            <Button toggleDrawer={toggleDrawer}/>
-                        </ListItem>
+                        <>
+                            {top.length !== 4 && <AddTop  toggleDrawer={toggleDrawer}/>}
+                            <ListItem key={item.id} className={classes.container}>
+                                <Image url={item.url}/>
+                                <Text text={item.text}/>
+                                <Button toggleDrawer={toggleDrawer}/>
+                            </ListItem>
+                        </>
                     )
                 })
-                : <AddTop />
+                : <AddTop  toggleDrawer={toggleDrawer}/>
             }
         </List>
         {openDrower === true &&

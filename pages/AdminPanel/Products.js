@@ -7,6 +7,7 @@ import DashboardMain from '../../dashboard/DashboardMain'
 import ProductsContent from '../../dashboard/pages/Products'
 import { setProducts } from '../../redux/reducers/SRM/products/action'
 import { setTop } from '../../redux/reducers/SRM/top/action'
+import { checkisVerifyToken } from '../../utility/middlware'
 
 export default function Products({products,top}) {
     
@@ -37,13 +38,34 @@ Products.getInitialProps = async (ctx) => {
         ctx.res.end();
         return;
     } else {
+
+        let isVerify = checkisVerifyToken(cookie)
+        if(isVerify === false){
+            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
+            ctx.res.end();
+            return
+        }
+
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/products`,{
-            headers: { 'authorization': cookie},
+            headers: {
+                'authorization': cookie,
+                'isCrm': true
+            },
         })
+       
         const res2 = await fetch(`${URL}/popular`,{
-            headers: {'authorization': cookie},
+            headers: {
+                'authorization': cookie,
+                'isCrm': true
+            },
         })
+        
+        if(res.status === 500 || res.status === 401 || res2.status === 500 || res2.status === 401){
+            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
+            ctx.res.end();
+            return;
+        }
 
         top = await res2.json()
         products = await res.json()

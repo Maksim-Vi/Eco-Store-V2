@@ -5,6 +5,7 @@ import { getCookie } from '../../components/common/session';
 import { useDispatch } from 'react-redux';
 import { setTop } from '../../redux/reducers/SRM/top/action';
 import { setProducts } from '../../redux/reducers/SRM/products/action';
+import { checkisVerifyToken } from '../../utility/middlware';
 
 export default function Top({top,products}) {
 
@@ -35,14 +36,34 @@ Top.getInitialProps = async (ctx) => {
         ctx.res.end();
         return;
     } else{
+
+        let isVerify = checkisVerifyToken(cookie)
+        if(isVerify === false){
+            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
+            ctx.res.end();
+            return
+        }
+
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/popular`,{
-            headers: {'authorization': cookie},
+            headers: {
+                'authorization': cookie,
+                'isCrm': true
+            },
         })
         
         const res2 = await fetch(`${URL}/products`,{
-            headers: { 'authorization': cookie},
+            headers: {
+                'authorization': cookie,
+                'isCrm': true
+            },
         })
+
+        if(res.status === 500 || res.status === 401 || res2.status === 500 || res2.status === 401){
+            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
+            ctx.res.end();
+            return;
+        }
 
         top = await res.json()
         products = await res2.json()

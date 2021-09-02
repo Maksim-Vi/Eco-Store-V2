@@ -18,16 +18,45 @@ const useStyles = makeStyles({
     },
     checkMark:{
         marginLeft: 20
+    },
+    save:{
+        display: 'block',
+        marginLeft:'auto'
     }
 });
 
 export default function DrawerBottomTop(props) {
     const classes = useStyles();
-    let [selected,setSelected] = React.useState(false)
 
-    let handleCheked = () =>{
+    let [selected,setSelected] = React.useState(false)
+    let [popularItems, setPopularItems] = React.useState([])
+
+    let handleCheked = (item) =>{
         setSelected(!selected)
+        let isSelect = !selected
+       
+        let data = {
+            id: item.id,
+            url: item.images[0].url
+        }
+        if(popularItems.length > 0){
+            popularItems.forEach(i=>{
+                if(i.id !== item.id && isSelect){
+                    setPopularItems([...popularItems,data])
+                }else if(i.id === item.id && !isSelect) {
+                    let newData = []
+                    newData = popularItems.filter(i=> i.id !== item.id)
+                    setPopularItems(newData)
+                }
+            })
+        } else {
+            setPopularItems([...popularItems,data])
+        }
+        
+        
     }
+
+    console.log(`ANSWER`, popularItems);
 
     let list = () => {
         return (
@@ -38,6 +67,9 @@ export default function DrawerBottomTop(props) {
                 role="presentation"
                 onKeyDown={(e) => { props.toggleDrawer(false,e) }}
             >
+                <Button className={classes.save}  variant="contained" color="primary" onClick={()=>{props.toggleDrawer(false)}}>
+                    сохранить 
+                </Button>
                 {props.products.length > 0 &&
                     props.products.map(item=>{
                         return (
@@ -46,7 +78,7 @@ export default function DrawerBottomTop(props) {
                                 <ListItemText primary={item.name} />
                                 <Button  variant="contained" 
                                         color="primary" 
-                                        onClick={()=>{handleCheked()}}>
+                                        onClick={()=>{handleCheked(item)}}>
                                     для выбора товара в топ нажмите на кнопку
                                 </Button>
                                 <FormControlLabel className={classes.checkMark}

@@ -9,9 +9,9 @@ export const setCookie = (key, value) => {
 };
 
 export const removeCookie = (key) => {
-    console.log(key, process.browser);
   if (process.browser) {
     cookie.remove(key, {});
+    sessionStorage.removeItem(storageName)
   }
 };
 

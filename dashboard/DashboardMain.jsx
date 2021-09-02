@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { AuchContext } from '../components/common/Context/context.hook';
-import Preloader from '../components/common/preloader/Preloader'
 import Head from "next/head";
 import DashboardSidebar from './layoutsDashbord/DashboardSidebar';
 import DashboardNavbar from './layoutsDashbord/DashboardNavbar';
 import { Container, makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useRouter } from 'next/router'
+import { checkisVerifyToken } from '../utility/middlware';
+import { getCookie } from '../components/common/session';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,23 +30,13 @@ const useStyles = makeStyles((theme) => ({
 const DashboardMain = ({ children, titleHome = 'Main Dashboard' }) => {
 
   const classes = useStyles();
-  // let auch = useContext(AuchContext)
-  // let router = useRouter()
+   
   const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
     setOpen(!open);
   };
-
-  // useEffect(() => {
-  //   if (!auch.isAuthorization) {
-  //     router.replace('/AdminPanel/SignIn')
-  //   }
-  // }, [])
-
-  // if(!auch.isAuthorization){
-  //   return <Preloader />
-  // } else {
+ 
   return (
     <div className={classes.root}>
       <CssBaseline />

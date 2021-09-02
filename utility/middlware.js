@@ -1,18 +1,34 @@
 import { verify } from "jsonwebtoken";
+import { useRouter } from "next/router";
+import { removeCookie } from "../components/common/session";
 
-export const authenticated = (fn) => async (req, res) => {  
-  if(req.method === 'GET'){
+export const authenticated = (fn) => async (req, res) => {
+  let isCrm = req.headers.iscrm ? req.headers.iscrm : false
+  
+  if(req.method === 'GET' && !isCrm){
     return await fn(req, res)
   } else {
     verify(req.headers.authorization, process.env.jwtSecret, async function(err, decoded) {
       if(!err && decoded){
-        console.log(`ANSWER VERIFY is good`);
+        console.log(`VERIFY is good`);
         return await fn(req, res)
       }
-      console.log(`ANSWER VERIFY is invalid`);
-      res.status(401).json({message: 'Sorry Token is invalid'})
+      console.log(`VERIFY is invalid`);
+      removeCookie('auth')
+      return res.status(401).json({message: 'Sorry Token is invalid'})
     });
   }
- 
 }
   
+export const checkisVerifyToken = (token) => {
+  let isVer = false
+  console.log(`ANSWER`, token);
+  verify(token, process.env.jwtSecret, async function(err, decoded) {
+    if(!err && decoded){
+      isVer = true
+    } else {
+      isVer = false
+    }
+  });
+  return  isVer
+}
