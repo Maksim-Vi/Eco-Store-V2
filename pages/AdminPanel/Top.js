@@ -14,28 +14,30 @@ export default function Top({top,products}) {
     useEffect(() => {
         if(top.length > 0){
             dispatch(setTop(top))
+        }
+        if(products.length > 0){
             dispatch(setProducts(products))
         }
     }, [])
 
     return (
         <DashboardMain title="Dashboard Login">
-            <TopContainer />
+            <TopContainer top={top} products={products}/>
         </DashboardMain>
     )
 }
 
 Top.getInitialProps = async (ctx) => {
-    let top = []
     let products = []
-    
+    let top = []
+
     let cookie = getCookie('auth', ctx.req)
 
     if(!cookie){
         ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
         ctx.res.end();
         return;
-    } else{
+    } else {
 
         let isVerify = checkisVerifyToken(cookie)
         if(isVerify === false){
@@ -45,32 +47,32 @@ Top.getInitialProps = async (ctx) => {
         }
 
         let URL = process.env.SERVER_URL
-        const res = await fetch(`${URL}/popular`,{
+        const res = await fetch(`${URL}/products`,{
+            headers: {
+                'authorization': cookie,
+                'isCrm': true
+            },
+        })
+       
+        const res2 = await fetch(`${URL}/populars`,{
             headers: {
                 'authorization': cookie,
                 'isCrm': true
             },
         })
         
-        const res2 = await fetch(`${URL}/products`,{
-            headers: {
-                'authorization': cookie,
-                'isCrm': true
-            },
-        })
-
         if(res.status === 500 || res.status === 401 || res2.status === 500 || res2.status === 401){
             ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
             ctx.res.end();
             return;
         }
 
-        top = await res.json()
-        products = await res2.json()
-    }
+        top = await res2.json()
+        products = await res.json()
+    }  
     
     return {
-        top: top || [],
-        products:products || []
+        products:products,
+        top:top
     }
 }

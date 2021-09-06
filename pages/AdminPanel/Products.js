@@ -54,7 +54,7 @@ Products.getInitialProps = async (ctx) => {
             },
         })
        
-        const res2 = await fetch(`${URL}/popular`,{
+        const res2 = await fetch(`${URL}/populars`,{
             headers: {
                 'authorization': cookie,
                 'isCrm': true

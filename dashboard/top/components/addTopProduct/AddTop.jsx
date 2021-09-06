@@ -5,12 +5,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '30%',
         marginLeft: 'auto',
-        [theme.breakpoints.down('sm')]: {
-            width: '100%',
-            fontSize: '9px',
-        },
+        fontSize: '14px',
         [theme.breakpoints.down('md')]: {
-            fontSize: '9px',
+            width: '100%',
         },
     },
    

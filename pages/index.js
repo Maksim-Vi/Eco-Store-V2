@@ -30,7 +30,7 @@ Home.getInitialProps = async () => {
     let popularJson = []
 
     let products = await fetch(`${URL}/products`)
-    let popular = await fetch(`${URL}/popular`)
+    let popular = await fetch(`${URL}/populars`)
 
     productsJson = await products.json()
     popularJson = await popular.json()

@@ -8,7 +8,6 @@ import {
     makeStyles,
     Typography
 } from '@material-ui/core';
-import { getProductByIdSelector } from '../../redux/reducers/SRM/products/selector';
 
 const useStyles = makeStyles((theme) => ({
     cardContainer: {

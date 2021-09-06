@@ -12,17 +12,17 @@ export const authenticated = (fn) => async (req, res) => {
       if(!err && decoded){
         console.log(`VERIFY is good`);
         return await fn(req, res)
+      } else {
+        console.log(`VERIFY is invalid`);
+        removeCookie('auth')
+        return res.status(401).json({message: 'Sorry Token is invalid'})
       }
-      console.log(`VERIFY is invalid`);
-      removeCookie('auth')
-      return res.status(401).json({message: 'Sorry Token is invalid'})
     });
   }
 }
   
 export const checkisVerifyToken = (token) => {
   let isVer = false
-  console.log(`ANSWER`, token);
   verify(token, process.env.jwtSecret, async function(err, decoded) {
     if(!err && decoded){
       isVer = true
