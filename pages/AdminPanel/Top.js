@@ -50,6 +50,7 @@ Top.getInitialProps = async (ctx) => {
         const res = await fetch(`${URL}/products`,{
             headers: {
                 'authorization': cookie,
+                'Accept': 'application/json',
                 'isCrm': true
             },
         })
@@ -57,6 +58,7 @@ Top.getInitialProps = async (ctx) => {
         const res2 = await fetch(`${URL}/populars`,{
             headers: {
                 'authorization': cookie,
+                'Accept': 'application/json',
                 'isCrm': true
             },
         })

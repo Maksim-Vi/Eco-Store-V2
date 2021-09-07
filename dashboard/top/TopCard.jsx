@@ -79,14 +79,17 @@ const TopCard = ({ top, products }) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
+        
         setOpenDrower(type);
     };
 
     let addTextPopular = (id, text) => {
         let data = []
         popularItems.forEach(i => {
+            let checkIsNewItem = (topArr.find(item => item.id === id)) ? false : true
+            console.log(`ANSWE`, checkIsNewItem, topArr,id);
             if (i.id === id) {
-                let newData = { id: i.id, text: text, image: i.image , isNew: true}
+                let newData = { id: i.id, text: text, image: i.image , isNew: checkIsNewItem}
                 data.push(newData)
             } else {
                 data.push(i)
@@ -105,9 +108,11 @@ const TopCard = ({ top, products }) => {
                 },
             })
 
+            console.log(res.data);
             if (res.status === 200) {
-                dispatch(setTop([res.data.tops]))
-                setTopArr([res.data.tops])
+                dispatch(setTop(res.data.tops))
+                setTopArr(res.data.tops)
+                setPopularItems(res.data.tops)
             }
         }
     }
@@ -128,25 +133,25 @@ const TopCard = ({ top, products }) => {
     }
 
     React.useEffect(() => {
-        console.log(`RENDER`);
         if (top.length > 0) {
             setPopularItems(top)
             setTopArr(top)
         }
     }, [])
 
+    //topArr.length === 0 && popularItems.length > 0 && popularItems.length <= 4
     return (
         <Grid container spacing={3}>
             <Grid className={classes.gridButtonContainer} item xs={12}>
                 <AddTop toggleDrawer={toggleDrawer} />
                 {popularItems.length > 0 &&
-                    <Button className={classes.save} variant="contained" color="primary" onClick={() => { deleteAll() }}>
-                        удалить все
-                    </Button>
-                }
-                {topArr.length === 0 && popularItems.length > 0 &&
                     <Button className={classes.save} variant="contained" color="primary" onClick={() => { savePopularAll() }}>
                         сохранить
+                    </Button>
+                }
+                {popularItems.length > 0 &&
+                    <Button className={classes.save} variant="contained" color="secondary" onClick={() => { deleteAll() }}>
+                        удалить все
                     </Button>
                 }
             </Grid>
@@ -158,7 +163,7 @@ const TopCard = ({ top, products }) => {
                             <ListItem key={item.id} className={classes.container}>
                                 <Image url={item.image} />
                                 <Text id={item.id} text={item.text} addTextPopular={addTextPopular} />
-                                <ButtonsList item={item} top={topArr}/>
+                                <ButtonsList item={item} top={topArr} setTopArr={setTopArr} setPopularItems={setPopularItems}/>
                             </ListItem>
                         )
                     })
@@ -176,9 +181,4 @@ const TopCard = ({ top, products }) => {
     );
 }
 
-export default React.memo(TopCard,(props, nextProps)=> {
-    if(props.top === nextProps.top) {
-        // don't re-render/update
-        return true
-    }
-})
+export default TopCard

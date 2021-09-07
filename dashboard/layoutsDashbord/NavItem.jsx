@@ -13,8 +13,8 @@ const NavItem = () => {
       {items.map((item, index) => {
         let Icon = item.icon
         return (
-          <Link  href={item.href} as={item.href}>
-            <ListItem button key={(item.id + index).toString()}>
+          <Link key={item.id} href={item.href} as={item.href}>
+            <ListItem button>
               <ListItemIcon>{Icon && (<Icon size="20" />)}</ListItemIcon>
               <ListItemText primary={item.title} />
             </ListItem>

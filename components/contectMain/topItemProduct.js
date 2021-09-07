@@ -8,8 +8,8 @@ const TopItemProduct = (props) =>{
         <Link href={{pathname: `/product/${props.item.id}`}} as={`/product/${props.item.id}`} >
             <div className={stl.contentContainer}>
                 <div className={stl.itemContent}>
-                    <img src={`${URL}/${props.item.image}`} alt="item popular" />
-                    <span><p>{props.item.text1} {props.item.text2} <br />{props.item.text3}</p></span>
+                    <img src={`${props.item.image}`} alt="item popular" />
+                    <span><p>{props.item.text}</p></span>
                 </div>
             </div>  
         </Link>

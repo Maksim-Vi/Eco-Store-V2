@@ -1,19 +1,28 @@
 import { sql_query } from "../../database_connection";
+import { authenticated } from "../../utility/middlware";
 
-export default async function getPopular(req, res) {
+export default authenticated(async function getPopular(req, res) {
     switch (req.method) {
         case 'GET': {
             const tops = await sql_query('select * from tops').catch((err) => {
                 res.status(500).json({ message: `popular.js GET req, SELECT desc: Something was wrong! ${err}` })
             })
 
-            return res.end(JSON.stringify(tops));
+            let data = []
+            tops.forEach(top => {
+                data.push({id: top.id, text: top.text, image: top.image , isNew: false})
+            });
+
+            return res.end(JSON.stringify(data));
         }
         case 'POST': {
-            let INSERT = `INSERT INTO tops (image, text) VALUES ?`
+            await sql_query('TRUNCATE TABLE tops').catch((err) => {
+                res.status(500).json({ message: `popular.js DELETE req, DELETE desc: Something was wrong! ${err}` })
+            })
 
+            let INSERT = `INSERT INTO tops (id, image, text) VALUES ?`
             await sql_query(INSERT, [
-                req.body.map(popular => [popular.image, popular.text])
+                req.body.map(popular => [popular.id, popular.image, popular.text])
             ]).catch((err) => {
                 res.status(500).json({ message: `popular.js POST req, INSERT desc: Something was wrong! ${err}` })
             })
@@ -22,11 +31,16 @@ export default async function getPopular(req, res) {
                 res.status(500).json({ message: `popular.js GET req, SELECT desc: Something was wrong! ${err}` })
             })
 
-            return res.status(200).json({ messages: 'success add popular items', tops: tops});
+            let data = []
+            tops.forEach(top => {
+                data.push({id: top.id, text: top.text, image: top.image , isNew: false})
+            });
+
+            return res.status(200).json({ messages: 'success add popular items', tops: data});
         }
         case 'DELETE': {
             await sql_query('TRUNCATE TABLE tops').catch((err) => {
-                return res.status(500).json({ message: `popular.js DELETE req, DELETE desc: Something was wrong! ${err}` })
+                res.status(500).json({ message: `popular.js DELETE req, DELETE desc: Something was wrong! ${err}` })
             })
 
             return res.status(200).json({ messages: 'success delete all items popular' });
@@ -35,5 +49,4 @@ export default async function getPopular(req, res) {
             return res.status(500).json({ message: `Sorry but you use ${req.method} request!` })
         }
     }
-
-}
+})

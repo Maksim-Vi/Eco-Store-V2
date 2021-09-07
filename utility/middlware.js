@@ -1,6 +1,4 @@
 import { verify } from "jsonwebtoken";
-import { useRouter } from "next/router";
-import { removeCookie } from "../components/common/session";
 
 export const authenticated = (fn) => async (req, res) => {
   let isCrm = req.headers.iscrm ? req.headers.iscrm : false
@@ -14,7 +12,6 @@ export const authenticated = (fn) => async (req, res) => {
         return await fn(req, res)
       } else {
         console.log(`VERIFY is invalid`);
-        removeCookie('auth')
         return res.status(401).json({message: 'Sorry Token is invalid'})
       }
     });
