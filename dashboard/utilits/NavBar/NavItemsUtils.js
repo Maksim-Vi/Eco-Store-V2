@@ -14,31 +14,31 @@ export const items = [
     {
         href: '/AdminPanel/Dashboard',
         icon: DashboardIcon,
-        title: 'Dashboard',
+        title: 'Доска',
         id: uuid()
     },
     {
         href: '/AdminPanel/Products',
         icon: FormatListBulletedIcon,
-        title: 'Products',
+        title: 'Товары',
         id: uuid()
     },
     {
         href: '/AdminPanel/Top',
         icon: FormatListBulletedIcon,
-        title: 'Top',
+        title: 'Топ товары',
         id: uuid()
     },
     {
         href: '/AdminPanel/Account',
         icon: AccountBoxIcon,
-        title: 'Account',
+        title: 'Аккаунт',
         id: uuid()
     },
     {
         href: '/AdminPanel/Settings',
         icon: SettingsIcon,
-        title: 'Settings',
+        title: 'Настройки',
         id: uuid()
     }
 ];

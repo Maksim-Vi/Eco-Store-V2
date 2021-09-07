@@ -106,7 +106,7 @@ export default function DashboardSidebar({ open, handleDrawer }) {
       <Divider />
       <NavItem />
       <Divider />
-      <Link href="/" as={'/'}><Button color="inherit" onClick={()=>{Logout()}}>logout</Button></Link>
+      <Link href="/" as={'/'}><Button color="inherit" onClick={()=>{Logout()}}>выйти</Button></Link>
     </Drawer>
   );
 }

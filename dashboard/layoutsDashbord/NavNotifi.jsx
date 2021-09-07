@@ -52,8 +52,8 @@ const NavNorifi = () => {
                 <NotificationsIcon />
             </Badge>
         </IconButton>
-        <Link href="/AdminPanel/Register" as={'/AdminPanel/Register'}><Button color="inherit" >Register</Button></Link>
-        <Link href="/" as={'/'}><Button color="inherit" onClick={()=>{Logout()}}>logout</Button></Link>
+        <Link href="/AdminPanel/Register" as={'/AdminPanel/Register'}><Button color="inherit" >регистрация</Button></Link>
+        <Link href="/" as={'/'}><Button color="inherit" onClick={()=>{Logout()}}>выйти</Button></Link>
     </div>
   );
 };
