@@ -7,9 +7,9 @@ import { useAuch } from '../components/common/Context/auth.hook';
 import { AuchContext, AuchContextItem } from '../components/common/Context/context.hook';
 import { useItemstoDescPopular } from '../components/common/Context/items.hook';
 import { useStore } from '../redux/redux-store';
-// import { PersistGate } from 'redux-persist/integration/react'
-// import {PersistGate as PersistGateClient} from 'redux-persist/integration/react'
-// import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import {PersistGate as PersistGateClient} from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 import * as gtag from '../lib/gtag'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -30,8 +30,8 @@ function MyApp({ Component, pageProps }) {
   //   persistor.persist()
   // })
   
-  // const persistor = persistStore(store)
-  // const PersistGate = isServer ? PersistGateServer : PersistGateClient
+  const persistor = persistStore(store)
+  //const PersistGate = isServer ? PersistGateServer : PersistGateClient
 
   const { itemsProduct, itemsProductPatchId, id, itemPopular, itemsStore } = useItemstoDescPopular()
   const { login, logout, token, userID } = useAuch()
@@ -62,11 +62,11 @@ function MyApp({ Component, pageProps }) {
         <AuchContextItem.Provider value={{ itemsProduct, itemsProductPatchId, id, itemPopular, itemsStore }}>
           <ToastProvider>
             <Provider store={store}>
-              {/* <PersistGate loading={null} persistor={persistor}>
+              <PersistGate loading={null} persistor={persistor}>
                 <Component {...pageProps} /> 
-              </PersistGate> */}
+              </PersistGate>
               <CssBaseline />
-              <Component {...pageProps} /> 
+              {/* <Component {...pageProps} />  */}
             </Provider>
           </ToastProvider>
         </AuchContextItem.Provider>

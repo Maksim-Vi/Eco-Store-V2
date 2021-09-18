@@ -8,40 +8,58 @@ import BasketForm from './BasketForm/basketForm';
 import PayAndMarch from './BasketForm/basketPayAndMerch'
 import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
-import { addItemToProduct, clearFullForm, postFormBasket } from '../../../redux/reducers/form-reducer';
+import { addItemToProduct, postFormBasket } from '../../../redux/reducers/form-reducer';
 import { uniqBy } from 'lodash';
 import { removeAllItemStore } from '../../../redux/reducers/basket-reducer';
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '75%',
-    left: '10%',
-    top: '5%',
-    zIndex: '10',
-    position: 'relative',
-    [theme.breakpoints.down('sm')]: {
-      top: '5%',
-      left: '3%',
-      width: '93%',
+    // width: '75%',
+    // left: '10%',
+    // top: '5%',
+    // zIndex: '10',
+    // position: 'relative',
+    // [theme.breakpoints.down('sm')]: {
+    //   top: '5%',
+    //   left: '3%',
+    //   width: '93%',
+    // },
+    margin: 20,
+    '& .MuiPaper-root':{
+      backgroundColor: '#ececec',
+      padding: '20px 0 20px 0',
     },
     '& .MuiStepper-vertical': {
       borderRadius: '10px',
-      [theme.breakpoints.down('sm')]: {
-        overflowY: 'scroll',
-        height: '500px',
-        '&::-webkit-scrollbar': {
-          width: '0.1em'
-        },
-        '&::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(0,0,0,.1)',
-          outline: '1px solid slategrey'
-        }
-      },
+      // [theme.breakpoints.down('sm')]: {
+      //   overflowY: 'scroll',
+      //   height: '500px',
+      //   '&::-webkit-scrollbar': {
+      //     width: '0.1em'
+      //   },
+      //   '&::-webkit-scrollbar-track': {
+      //     '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+      //   },
+      //   '&::-webkit-scrollbar-thumb': {
+      //     backgroundColor: 'rgba(0,0,0,.1)',
+      //     outline: '1px solid slategrey'
+      //   }
+      // },
       '& .MuiStepConnector-root': {
-       flex: 'none'
+        display: 'none',
+        flex: 'none',
+        borderColor: '#ececec'
+      }
+    },
+    '& .MuiStepContent-root':{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingLeft: 0,
+      border: 'none',
+      '& .MuiCollapse-root':{
+        width: '100%',
       }
     }
   },
@@ -92,11 +110,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Заполнить форму заказа. *Имя; *Телефон; Email',
-    'Заполнить форму для получения. *Способ доставки; *Способ оплаты; *Данные (в случае отправки почтой)'];
+  return ['Заполнить форму заказа', //*Имя; *Телефон; Email
+    'Заполнить форму для получения']; //*Способ доставки; *Способ оплаты; *Данные (в случае отправки почтой)
 }
 
 const CreateOrder = ({ setCreateOrder }) => {
+  let isOldRender = false
+  
   const classes = useStyles();
 
   const dispatch = useDispatch()
@@ -125,11 +145,11 @@ const CreateOrder = ({ setCreateOrder }) => {
     removeAllToasts()
     addToast(mes, { appearance: 'success', autoDismiss: true })
   }
+
   let error = (mes) => {
     removeAllToasts()
     addToast(mes, { appearance: 'error', autoDismiss: true })
   }
-
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -152,28 +172,55 @@ const CreateOrder = ({ setCreateOrder }) => {
     setCreateOrder(false)
   };
 
-  return (
-    <div className={classes.root}>
-      <span className={classes.ItemClose} onClick={() => { setCreateOrder(false) }}>{
-        <p>&times;</p>
-      }</span>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              <div>
-                {index === 0
-                  ? <BasketForm handleNext={handleNext} />
-                  : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
-                }
-              </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-    </div>
-  );
+  const oldRenderData = () =>{
+    return (
+      <div className={classes.root}>
+        <span className={classes.ItemClose} onClick={() => { setCreateOrder(false) }}>{
+          <p>&times;</p>
+        }</span>
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((label, index) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+              <StepContent>
+                <div>
+                  {index === 0
+                    ? <BasketForm handleNext={handleNext} />
+                    : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
+                  }
+                </div>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+    );
+  }
+
+  let newRender = () =>{
+    return (
+      <div className={classes.root}>
+        <h3>Заказ № 1836217</h3>
+        <p>Спасибо что выбрали именно нас!</p>
+        <Divider />
+         <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((label, index) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+              <StepContent>
+                  {index === 0
+                    ? <BasketForm handleNext={handleNext} />
+                    : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
+                  }
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+    )
+  }
+
+  return (isOldRender ? oldRenderData() : newRender())
 }
 
 export default CreateOrder

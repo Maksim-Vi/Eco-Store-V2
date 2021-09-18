@@ -1,4 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core'
+import { Button, makeStyles, TextField } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,11 +9,12 @@ import s from '../../../../styles/basketForm.module.scss'
 const useStyles = makeStyles((theme) => ({
     button: {
       display: 'flex',
-      marginRight: 'auto',
+      width:'50%',
+      marginBottom: 30,
       [theme.breakpoints.down('sm')]: {
+        width: '100%',
         padding:'6px 50px',
         fontSize: '12px',
-        marginLeft: '30px'
       },
     },
   }));
@@ -87,9 +88,9 @@ const BasketForm = (props) => {
     }, [errors])
 
     return (
-        <form className={s.FormContainer} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.FormContainer} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
 
-            <div className={s.containerInput} style={{ marginRight: 'auto' }}>
+            {/* <div className={s.containerInput} style={{ marginRight: 'auto' }}>
                 <input type="contactUS"
                     className={s.txtInput}
                     name="name" id="name"
@@ -119,7 +120,36 @@ const BasketForm = (props) => {
                     ref={register({required: false, pattern: /^\S+@\S+$/i})}
                     value={formLocalData.email}
                     onChange={(e) => { setDataForm(e) }} />
-            </div>
+            </div>  */}
+            <TextField className={s.containerInput} 
+                        id="standard-basic" 
+                        label="* Введите Ваше имя" 
+                        name="name" id="name"
+                        placeholder="Введите Ваше имя"
+                        ref={register({ required: true, minLength:1, maxLength: 20 })}
+                        value={formLocalData.name}
+                        onChange={(e) => { setDataForm(e) }}
+            />
+
+            <TextField  className={s.containerInput} 
+                        id="standard-basic" 
+                        label="* +38(0xx)xxx-xx-xx" 
+                        name="phone" id="phone"
+                        placeholder="+38(0xx)xxx-xx-xx"
+                        ref={register({required: "2) вы не ввели телефон", pattern: /^[\+]?\d{2,}?[-\s\.]?[(]?\d{2,}[)]?[-\s\.]?\d{2,}?[-\s\.]?\d{2,}[-\s\.]?\d{0,9}$/im})} 
+                        value={formLocalData.phone}
+                        onChange={(e) => { setDataForm(e) }}
+            />
+            
+            <TextField className={s.containerInput} 
+                        id="standard-basic" 
+                        label="Введите Ваш email"
+                        name="email" id="email"
+                        placeholder="Введите Ваш email"
+                        ref={register({required: false, pattern: /^\S+@\S+$/i})}
+                        value={formLocalData.email}
+                        onChange={(e) => { setDataForm(e) }} 
+            />
 
             <Button
                 variant="contained"

@@ -1,60 +1,78 @@
 @import './media.scss';
 
+//old
+//.FormContainer{
+    // display: flex;
+    // // margin-top: 5%;
+    // flex-direction: column;
+    // align-items: flex-end;
+    // .containerInput {
+    //     display: flex;
+    //     flex-direction: column;
+    //     margin-bottom: 2%;
+    //     border-bottom: 0.3rem solid transparent;
+    //     transition: all 0.3s;
+    //     .txtArea{
+    //         width: 700px;
+    //         height: 200px;
+    //         overflow: hidden;
+    //         @include xl { width: 700px; height: 200px;}
+    //         @include lg {  width: 500px; height: 200px;}
+    //         @include md {  width: 500px; height: 150px;}
+    //         @include sm {  width: 300px; height: 100px;}
+    //         &:focus{
+    //             border: 1px solid orange;
+    //             border-radius: 5px;
+    //             outline:none;
+    //         }
+    //     }
+    //     .txtInput{
+    //         width: 400px;
+    //         margin-right: auto;
+    //         @include xl { width: 400px; }
+    //         @include lg { width: 400px; }
+    //         @include md { width: 300px; }
+    //         @include sm {width: 100%; margin-left: 13px; }
+    //         &:focus{
+    //             border: 1px solid orange;
+    //             border-radius: 5px;
+    //             outline:none;
+    //         }
+    //     }
+    //     & input, textarea{
+    //         border: 1px solid;
+    //         border-radius: 5px;
+    //         padding: 10px;
+    //         margin: 5px;
+    //         border-color: #075b11;
+    //         &::placeholder {
+    //             color: rgba(83, 83, 83, 0.319);
+    //         }
+    //     }
+    //     &.error input,
+    //     &.error textarea {
+    //         border: solid 1px red ;
+    //     }
+
+    //     &.error span {
+    //         color: red;
+    //     }
+    // }
+//}
+
+// new
 .FormContainer{
     display: flex;
-    margin-top: 5%;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    align-items: flex-end;
-    .containerInput {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 2%;
-        border-bottom: 0.3rem solid transparent;
-        transition: all 0.3s;
-        .txtArea{
-            width: 700px;
-            height: 200px;
-            overflow: hidden;
-            @include xl { width: 700px; height: 200px;}
-            @include lg {  width: 500px; height: 200px;}
-            @include md {  width: 500px; height: 150px;}
-            @include sm {  width: 300px; height: 100px;}
-            &:focus{
-                border: 1px solid orange;
-                border-radius: 5px;
-                outline:none;
-            }
-        }
-        .txtInput{
-            width: 400px;
-            margin-right: auto;
-            @include xl { width: 400px; }
-            @include lg { width: 400px; }
-            @include md { width: 300px; }
-            @include sm {width: 100%; margin-left: 13px; }
-            &:focus{
-                border: 1px solid orange;
-                border-radius: 5px;
-                outline:none;
-            }
-        }
-        & input, textarea{
-            border: 1px solid;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 5px;
-            border-color: #075b11;
-            &::placeholder {
-                color: rgba(83, 83, 83, 0.319);
-            }
-        }
-        &.error input,
-        &.error textarea {
-            border: solid 1px red ;
-        }
-
-        &.error span {
-            color: red;
-        }
+    width: 100%;
+    .containerInput{
+        width: 50%;
+        margin: 20px;
+            @include xl { width: 50%; }
+            @include lg { width: 50%; }
+            @include md { width: 70%; }
+            @include sm { width: 100%; }
     }
 }

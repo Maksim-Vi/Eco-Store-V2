@@ -1,53 +1,106 @@
 @import './media.scss';
 
+// .wrapper{
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: column;
+//     width: 100%;
+//     // width: 950px;
+//     // @include lg {  width: 500px}
+//     // @include md {  width: 500px}
+//     // @include sm {  width: 300px}
+//     .NPorUPWrapper{
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         .NPorUPContainer{
+//             display: flex;
+//             flex-direction: column;
+//             margin-right: auto;
+//             width: 500px;
+//             @include sm { width: 100%;}
+//             .NameLastName {
+//                 display: flex;
+//                 align-items: flex-start;
+//                 justify-content: space-between;
+//                 width: 480px;
+//                 .textFieldName{
+//                     margin-right: 10px;
+//                     width: 100%;
+//                     @include md { width: 100%;}
+//                 }
+//                 @include md { width: 100%; flex-direction: column;}
+//             }
+//             .dataContainer {
+//                 display: flex; 
+//                 align-items: flex-start;
+//                 flex-direction:column;
+//                 width: 470px;
+//                 @include md { width: 100%;}
+//             }
+//         }
+//     }
+// }
+
+// .card-header{
+//     height: 30px;
+//     text-align: center;
+// }
+
+// /* PayAmdMarch */
+
+// .containerPayAmdMarch{
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     width: 70%;
+//     @include sm { flex-direction: column;}
+// }
+
 .wrapper{
-    // width: 950px;
-    // @include lg {  width: 500px}
-    // @include md {  width: 500px}
-    // @include sm {  width: 300px}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    .containerPayAmdMarch{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 60%;
+        @include sm { width: 100%; flex-direction: column;}
+        .howPay, .howDelivery{
+            width: 45%;
+            @include sm { width: 100%;}
+        }
+    }
+
     .NPorUPWrapper{
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
+        width: 100%;
         .NPorUPContainer{
             display: flex;
             flex-direction: column;
-            margin-right: auto;
-            width: 500px;
+            width:57%;
             @include sm { width: 100%;}
-            .NameLastName {
+            .NameLastName{
                 display: flex;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: space-between;
-                width: 480px;
-                .textFieldName{
-                    margin-right: 10px;
-                    width: 100%;
-                    @include md { width: 100%;}
+                width: 100%;
+                @include sm {flex-direction: column;}
+                .textFieldName, .textFieldLastName{
+                    width: 45%;
+                    @include sm { width: 100%;}
                 }
-                @include md { width: 100%; flex-direction: column;}
-            }
-            .dataContainer {
-                display: flex; 
-                align-items: flex-start;
-                flex-direction:column;
-                width: 470px;
-                @include md { width: 100%;}
             }
         }
     }
-}
 
-.card-header{
-    height: 30px;
-    text-align: center;
-}
-
-/* PayAmdMarch */
-
-.containerPayAmdMarch{
-    display: flex;
-    @include sm { flex-direction: column;}
 }
 
 

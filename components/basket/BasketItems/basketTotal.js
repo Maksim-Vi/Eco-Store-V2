@@ -12,7 +12,6 @@ const BasketTotal = ({setCreateOrder,itemsAll}) => {
     const [promoCode, setPromoCode] = React.useState(form.promocode)
 
     let hendlerNextStepOrder = () =>{
-        console.log(`ANSWER`, promoCode);
         dispatch(setPromocode(promoCode))
         setCreateOrder(true)
     }

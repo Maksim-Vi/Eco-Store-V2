@@ -10,14 +10,19 @@ import { useForm } from 'react-hook-form';
 const useStyles = makeStyles((theme) => ({
     button: {
         display: 'flex',
-        marginRight: 'auto',
+        alignItems: 'center',
+        marginTop: 20,
         [theme.breakpoints.down('sm')]: {
+            width: '100%',
             padding: '6px 10px',
             fontSize: '12px'
         },
     },
     actionsContainer: {
         display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
         [theme.breakpoints.down('sm')]: {
             display: 'flex',
             alignItems: 'center',
@@ -30,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         [theme.breakpoints.down('sm')]: {
             display: 'flex',
-            // flexDirection: 'column',
+            flexDirection: 'column',
             alignItems: 'center',
-            marginRight: 'auto',
+            width: '100%',
         },
         '&.makeStyles-button-7': {
             fontSize: '9px'
@@ -122,22 +127,24 @@ const PayAndMarch = (props) => {
         <div className={s.wrapper}>
             <form className={s.containerPayAmdMarch} onSubmit={handleSubmit(onSubmit)}>
 
-                <TextField id="standard-select-currency"
-                    select
-                    label="Способ оплаты"
-                    helperText="Пожалуйста, выбирите способ оплаты"
-                    value={currency}
-                    onChange={handleChangePay} >
-            
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
+                <TextField  className={s.howPay}
+                            id="standard-select-currency"
+                            select
+                            label="Способ оплаты"
+                            helperText="Пожалуйста, выбирите способ оплаты"
+                            value={currency}
+                            onChange={handleChangePay} >
+                    
+                            {currencies.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
 
                 </TextField>
 
-                <TextField  id="standard-select-delivery"
+                <TextField  className={s.howDelivery}
+                            id="standard-select-delivery"
                             select
                             label="Способ доставки"
                             helperText="Пожалуйста, выбирите способ доставки"
@@ -150,10 +157,9 @@ const PayAndMarch = (props) => {
                         </MenuItem>
                     ))}
 
-                </TextField>
-
-                    
+                </TextField>    
             </form>
+
             <div className={s.NPorUPWrapper}>
                 {delivery === 'Новой почтой' || delivery === 'Укр почтой' || currency === 'Наложенный платёж'
                     ? <NPorUP register={register} control={control}/>

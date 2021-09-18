@@ -70,6 +70,7 @@
                     font-size: 0.75em;
                 }
                 a {
+                    color: #000;
                     text-decoration: none;
                     &:hover{
                         text-decoration: none;
@@ -177,13 +178,14 @@
     .basketItemsTotal{
         // width: 500px;
         width: 50%;
-        height: 200px;
+        height: 210px;
         padding: 20px;
         background: #fff;
         border-radius: 10px;
         top: 0;
         right: 0;
         margin-top: 10px;
+        margin-bottom: 30px;
     
         @include lg { width: 100%; margin-top: 10px; margin-bottom: 10px;}
         @include md { width: 100%;  margin-top: 10px; }

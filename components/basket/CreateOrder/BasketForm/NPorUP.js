@@ -58,7 +58,7 @@ const NPorUP = (props) => {
                     name="post_LastName"
                     placeholder="Фамилия"
                     id="margin-dense"
-                    className={s.textFieldName}
+                    className={s.textFieldLastName}
                     margin="dense"
                     onChange={chengeHendler}
                     value={postInfoPeople.post_LastName}
