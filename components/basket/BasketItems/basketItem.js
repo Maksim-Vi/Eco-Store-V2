@@ -15,10 +15,11 @@ const BasketItem = (props) => {
                <a href="#delete" className={s.remove}>&times;</a>
             }</span>
             <div className={s.ItemImg}>
-                <img src={`${URL}/${props.item.image}`} alt='img' />
+                <img src={`${props.item.images[0].url.split('public')[1]}`} alt='img' />
             </div>
             <div className={s.ItemContentContainer}>
                 <h3>{props.item.name}</h3>
+                <h4>Цвет: голубой</h4>
                 <span className={s.articl}>Артикул: 1000{props.item.id}</span>
                 <div className={s.PriceContainer}>
                     <div className={s.ItemPrice}>
