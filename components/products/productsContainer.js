@@ -11,6 +11,7 @@ import { setStore } from '../../redux/reducers/store-reducer';
 import { setFilter } from '../../redux/reducers/filter-reducer';
 import { sortBy } from '../common/utilits';
 import ABS from '../common/abs';
+import BuyMenuItem from './component/BuyMenu/BuyMenuItem';
 
 const ProductsContainer = ({items}) => {
 
@@ -19,9 +20,13 @@ const ProductsContainer = ({items}) => {
     const filter = useSelector(state => state.filter)
 
     const [value, setValue] = React.useState(0);
+    const [openBuyMenu, setOpenBuyMenu] = React.useState({
+        isOpen: false,
+        item: {}
+    })
     const [inLine, setInLine] = React.useState(false)
 
-    const handleChange = (event, newValue) => {
+    let handleChange = (newValue) => {
         setValue(newValue);
         if(newValue === 0){
             dispatch(setFilter('all'))
@@ -31,6 +36,14 @@ const ProductsContainer = ({items}) => {
             dispatch(setFilter('cheap'))
         }
     };
+
+    let hendlerOpenBuyMenu = (item) =>{
+        setOpenBuyMenu({isOpen: true,item: item})
+    }
+
+    let hendlerCloseBuyMenu = () =>{
+        setOpenBuyMenu({isOpen: false,item: {}})
+    }
 
     useEffect(() => {
         dispatch(setStore(items))
@@ -62,12 +75,17 @@ const ProductsContainer = ({items}) => {
                     [`${s.inLineBlock}`]: inLine === true
                 })}>
                     {items.length > 0
-                        ? <>{sortBy(items,filter.Filter).map(item => { return <ListProduct key={item.id} item={item} /> })}</>
+                        ? <>{sortBy(items,filter.Filter).map(item => { 
+                                return <ListProduct key={item.id} item={item} OpenBuyMenu={hendlerOpenBuyMenu}/> 
+                            })}
+                        </>
                         : null
                     }
 
                 </ul>
             </div>
+            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item}/>}
+
             <ABS slotId={'1045'} width={100} height={100} />
         </section>
     )

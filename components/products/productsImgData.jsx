@@ -21,8 +21,6 @@ const ProductsImgData = (props) => {
         }
     }, [])
 
-    console.log(ImgDesc);
-
     return (
         <>
             {ImgDesc.length !== 0 
@@ -30,10 +28,10 @@ const ProductsImgData = (props) => {
                    {ImgDesc.map((item, index)=>{
                        return (
                         <div key={index} className={s.colorContainerItem}>
-                            <img className={s.img} src={`${item.url.split('public')[1]}`} alt="item" />
+                            <img className={s.img} src={`${item.url.split('public')[1]}`} alt="item" onClick={()=>{props.hendlerOpenBuyMenu(props.item)}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
-                                <span>{item.count}шт.</span>
+                                <span>{item.count} шт</span>
                             </div>
                            
                         </div> 

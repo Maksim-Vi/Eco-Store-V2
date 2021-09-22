@@ -1,8 +1,17 @@
 module.exports = {
     productionBrowserSourceMaps: true,
     distDir: 'build',
-}
+    webpack: (config, { isServer }) => {
+        // Fixes npm packages that depend on `fs` module
+        if (!isServer) {
+            config.node = {
+                fs: 'empty'
+            }
+        }
 
+        return config
+    }
+}
 
 return {
     "/": { page: "/" },
@@ -11,7 +20,7 @@ return {
     "/payement-and-delivery": { page: "/payement-and-delivery" },
     "/contacts": { page: "/contacts" },
     "/basket": { page: "/basket" },
-    "/promotions":{page:"/promotions"},
+    "/promotions": { page: "/promotions" },
 
     //"/product/1": { page: "/product/[id]", query: { id: '1' }},
     // "/product/2": { page: "/product/[id]", query: { id: '2' }},

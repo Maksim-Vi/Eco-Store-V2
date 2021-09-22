@@ -8,24 +8,25 @@ import Link from "next/link";
 import { addItemToBasket } from '../../redux/reducers/basket-reducer';
 import { useDispatch } from 'react-redux';
 import { addedCountItem } from '../common/utilits';
+import { Avatar } from '@material-ui/core';
 
 const ListProduct = (props) => {
 
-    let dispatch = useDispatch()
-    
+    //let dispatch = useDispatch()
+
     return (
         <li className={s.Card}>
             <Card variant="outlined" className={s.CardItem}>
                 <CardContent>
-                        <Typography className={s.CardCode} color="textSecondary" gutterBottom>
-                            код товара 100{props.item.id}
-                        </Typography>
-                        <Link href={{ pathname: `/product/${props.item.id}`, query: { name: 'test' } }} as={`/product/${props.item.id}`} >
-                            <img className={s.CardImage} src={`${props.item.images[0].url.split('public')[1]}`} alt="item" />
-                        </Link>
-                        <Typography className={s.CardTitleText} variant="body2" component="h2" >
-                            {props.item.name}
-                        </Typography>
+                    <Typography className={s.CardCode} color="textSecondary" gutterBottom>
+                        код товара 100{props.item.id}
+                    </Typography>
+                    <Link href={{ pathname: `/product/${props.item.id}`, query: { name: 'test' } }} as={`/product/${props.item.id}`} >
+                        <Avatar variant="square" className={s.CardImage} src={`${props.item.images[0].url.split('public')[1]}`} alt="item" />
+                    </Link>
+                    <Typography className={s.CardTitleText} variant="body2" component="h2" >
+                        {props.item.name}
+                    </Typography>
                     <div className={s.CardPriceContainer}>
                         {props.item.sale
                             ? <Typography className={s.CardSale} variant="body2" component="p">
@@ -51,15 +52,14 @@ const ListProduct = (props) => {
                                     ? (props.item.price - props.item.salePrice)
                                     : props.item.price
                                 }грн
-                                </span>
+                            </span>
                         </Typography>
-
-                        <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => { dispatch(addItemToBasket(props.item)) }}>
-                            <p className={s.BtnInBasket}>в корзину</p>
+                        {/* dispatch(addItemToBasket(props.item)) */}
+                        <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => {props.OpenBuyMenu(props.item)}}>
+                            <p className={s.BtnInBasket} style={{ display: open === true ? 'block' : '' }}>в корзину</p>
                             <img className={s.BtnImg} src="/contentImg/products/buy2.png" alt="" />
-                            <span>{addedCountItem(props.itemBasket,props.item.id) > 0 && `(${addedCountItem(props.itemBasket,props.item.id)})`}</span>
+                            <span>{addedCountItem(props.itemBasket, props.item.id) > 0 && `(${addedCountItem(props.itemBasket, props.item.id)})`}</span>
                         </button>
-
                     </div>
                 </CardContent>
             </Card>
@@ -69,7 +69,7 @@ const ListProduct = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-      itemBasket: state.basket.items,
+        itemBasket: state.basket.items,
     };
 };
 

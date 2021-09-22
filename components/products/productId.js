@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import CaruselProduct from '../../components/products/productCarusel';
 import ProductTable from '../../components/products/productTable';
-import { addItemToBasket } from '../../redux/reducers/basket-reducer';
 import s from '../../styles/content/product.module.scss'
 import { addedCountItem } from '../common/utilits';
 import ABS from '../common/abs';
 import ProductsImgData from './productsImgData';
+import BuyMenuItem from './component/BuyMenu/BuyMenuItem'
 
 const ProductId = (props) => {
     
@@ -21,6 +21,19 @@ const ProductId = (props) => {
         equipment: '',
         structure: ''
     })
+    let [selectedImgData,setSelectedImgData] = useState()
+    const [openBuyMenu, setOpenBuyMenu] = React.useState({
+        isOpen: false,
+        item: {}
+    })
+
+    let hendlerOpenBuyMenu = (item) =>{
+        setOpenBuyMenu({isOpen: true,item: item})
+    }
+
+    let hendlerCloseBuyMenu = () =>{
+        setOpenBuyMenu({isOpen: false,item: {}})
+    }
 
     useEffect(()=>{
         setTableData({
@@ -31,6 +44,7 @@ const ProductId = (props) => {
             equipment: props.item.equipment,
             structure: props.item.structure
         })
+        setSelectedImgData(props.item)
     },[])
     
 
@@ -72,14 +86,14 @@ const ProductId = (props) => {
                                     </span>
                                 </Typography>
 
-                                <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={()=>{dispatch(addItemToBasket(props.item))}}>
+                                <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => {hendlerOpenBuyMenu(props.item)}}>
                                     <p className={s.BtnInBasket}>в корзину</p>
                                     <img className={s.BtnImg} src="/contentImg/products/buy2.png" alt="buy" />
                                     <span>{addedCountItem(props.itemBasket,props.item.id) > 0 && `(${addedCountItem(props.itemBasket,props.item.id)})`}</span>
                                 </button>
                             </div>
                         </div>
-                        <ProductsImgData item={props.item}/>
+                        <ProductsImgData item={props.item} hendlerOpenBuyMenu={hendlerOpenBuyMenu}/>
                     </div>
                 </div>
                 <div className={s.ContainerMiddle}>
@@ -98,6 +112,9 @@ const ProductId = (props) => {
                         </div> */}
                 </div>
             </div>
+
+            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item}/>}
+
         </section>)
 }
 

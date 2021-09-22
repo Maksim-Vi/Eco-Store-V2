@@ -27,10 +27,20 @@ const BasketContent = (props) => {
     )
 }
 
+let sortBasketItem = (items) =>{
+    return uniqBy(items, i=>{
+        if(i.ImgDesc.id !== ''){
+            return i.id && i.ImgDesc.id
+        } else {
+            return i.id
+        }
+    })
+}
 
 let mapStateToProps = (state) =>{
     return {
-        itemsSort: uniqBy(state.basket.items, i=>i.id),
+        // itemsSort: uniqBy(state.basket.items, i=>i.id),
+        itemsSort: sortBasketItem(state.basket.items),
         itemsAll: state.basket.items
     }
 }

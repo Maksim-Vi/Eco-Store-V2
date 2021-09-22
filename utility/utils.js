@@ -39,3 +39,23 @@ export const deleteImageIfErr = (arr) =>{
         })
     }
 }
+
+export const checkIsHaveDopDesc = (checkId,item,allItemsBasket) =>{
+    if(checkId !== ''){
+        return countImgData(allItemsBasket, item.ImgDesc.id)
+    } else {
+        return count(allItemsBasket, item.id)
+    }
+}
+
+export const count = (item, itemId) => {
+    return item.reduce((count, item) => {
+        return count + (item.id === itemId ? 1 : 0)
+    }, 0)
+}
+
+export const countImgData = (item, itemId) => {
+    return item.reduce((count, item) => {
+        return count + (item.ImgDesc.id === itemId ? 1 : 0)
+    }, 0)
+}

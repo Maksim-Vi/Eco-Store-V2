@@ -3,6 +3,7 @@
 .contentProductContainer{
     width: 90%;
     margin: 0 auto;
+    @include md { width: 100%; }
     .title{
         font-size: 14px;
     }
@@ -39,6 +40,7 @@
             }
             .CardImage{
                 width: 100%;
+                height: auto;
                 cursor: pointer;
             }
             .CardPriceContainer{

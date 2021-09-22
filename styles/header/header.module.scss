@@ -151,24 +151,25 @@
         align-items: center;
         justify-content: center;
         max-width: 1400px;
-        height: 12.5vh;
+        height: auto; 
         margin: 0 auto;
         @include xl {
             max-width: none;
             flex-direction: column;
         }
         .logo{
+            width: 15%;
             max-width: 100%;
             height: 100%;
             padding: 15px;
             margin-right: 5%;
             cursor: pointer;
             @include xl { 
-                height: 80%;
+                width: 20%;
                 margin: 0 3% 0 3%; }
-            @include lg { height: 75%; }
+            @include lg { width: 30%;}
             // @include md { height: 60%; }
-            // @include sm { height: 60%; }
+            @include sm {width: 50% }
         }
         .text {
             font-family: 'Work Sans', sans-serif;
