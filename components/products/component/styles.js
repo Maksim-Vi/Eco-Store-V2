@@ -48,9 +48,17 @@ export const useBuyMenu = makeStyles((theme) => ({
         height: theme.spacing(15),
         marginLeft: 10
     },
+    textItemContainer:{
+        display: 'flex',
+        flexDirection: 'column',
+    },
     cardItemName:{
         fontFamily: 'Montserrat, sans-serif',
         marginLeft: 10
+    },
+    itemId:{
+        fontFamily: 'Montserrat, sans-serif',
+        marginLeft: 10 
     },
     cardItemUpDown:{
         display:'flex',
@@ -105,6 +113,24 @@ export const useBuyMenu = makeStyles((theme) => ({
         },
     },
 
+    CardBtn:{
+        border: '1px solid green',
+        borderRadius: '5px',
+        padding: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        cursor: 'pointer',
+    },
+    BtnInBasket:{
+        display: 'block',
+        marginRight: '5px'
+    },
+    BtnImg:{
+        width: '13px'
+    },
+   
     divider:{
         margin: 10
     }

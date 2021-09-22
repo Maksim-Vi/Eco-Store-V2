@@ -1,8 +1,9 @@
-import { Avatar, Box, Card, CardActions, CardContent, Dialog, DialogContent, Divider, Grid, Typography } from '@material-ui/core'
+import { Card, CardActions, Dialog, DialogContent,Button } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react'
 import { useBuyMenu } from '../styles';
 import Item from './Item';
+import Link from "next/link";
 
 const BuyMenuItem = (props) => {
 
@@ -23,8 +24,13 @@ const BuyMenuItem = (props) => {
                                          
                 <Card className={classes.cardToBascketContainer} xs={12}>
                     <CardActions className={classes.cardToBascket}>
-                        <p>назад к товару</p>
-                        <span>к корзине</span>
+                        <Button color="primary" onClick={()=>{props.CloseBuyMenu()}}>назад к товару</Button>
+                        <Link href="/basket" as={'/basket'}>
+                            <button className={classes.CardBtn}>
+                                <p className={classes.BtnInBasket} style={{display: 'block'}}>в корзину</p>
+                                <img className={classes.BtnImg} src="/contentImg/products/buy2.png" alt="" />
+                            </button>
+                        </Link>
                     </CardActions>
                 </Card>
             </DialogContent>

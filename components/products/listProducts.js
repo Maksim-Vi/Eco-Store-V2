@@ -5,15 +5,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import s from '../../styles/content/products.module.scss'
 import Link from "next/link";
-import { addItemToBasket } from '../../redux/reducers/basket-reducer';
-import { useDispatch } from 'react-redux';
 import { addedCountItem } from '../common/utilits';
 import { Avatar } from '@material-ui/core';
 
 const ListProduct = (props) => {
-
-    //let dispatch = useDispatch()
-
     return (
         <li className={s.Card}>
             <Card variant="outlined" className={s.CardItem}>

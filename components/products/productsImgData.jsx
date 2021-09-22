@@ -4,6 +4,12 @@ import s from '../../styles/content/product.module.scss'
 const ProductsImgData = (props) => {
     let [ImgDesc, setImgDesc] = useState([])
 
+    let hendlerBuyItem = () =>{
+        if(props.item.inStock === false){
+            props.hendlerOpenBuyMenu(props.item)
+        }
+    }
+
     useEffect(() => {
         if(props.item.imagesDescription && props.item.imagesDescription.length > 0){
             let imagesDescription = []
@@ -28,7 +34,7 @@ const ProductsImgData = (props) => {
                    {ImgDesc.map((item, index)=>{
                        return (
                         <div key={index} className={s.colorContainerItem}>
-                            <img className={s.img} src={`${item.url.split('public')[1]}`} alt="item" onClick={()=>{props.hendlerOpenBuyMenu(props.item)}}/>
+                            <img className={s.img} src={`${item.url.split('public')[1]}`} alt="item" onClick={()=>{hendlerBuyItem()}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
                                 <span>{item.count} шт</span>

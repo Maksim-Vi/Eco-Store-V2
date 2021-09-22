@@ -68,7 +68,12 @@ const Item = (props) => {
         <Card className={classes.card} xs={12}>
             <Box component='div' className={classNames(`${classes.cardItem}`, { [`${classes.cardItemJustify}`]: ImgDesc.length === 0 })}>
                 <Avatar variant="square" className={classes.imageProductMain} src={`${props.item.images[0].url.split('public')[1]}`} alt="item" />
-                <Typography className={classes.cardItemName} variant="p" component="h4" >{props.item.name}</Typography>
+                <Box component='div' className={classes.textItemContainer}>
+                    <Typography className={classes.cardItemName} variant="p" component="h4" >{props.item.name}</Typography>
+                    <Typography className={classes.itemId} variant="p" component="span">Артикул: 100{props.item.id}</Typography>
+                    <Typography className={classes.itemId} variant="p" component="h4">Комплектация:</Typography>
+                    <Typography className={classes.itemId} variant="p" component="span">{props.item.equipment}</Typography>
+                </Box>
                 {ImgDesc.length === 0 &&
                     <Box className={classes.cardItemUpDown} component='div'>
                         <p className={classes.UpDown} onClick={() => { removeToBascketItem(props.item.id) }}>-</p>
