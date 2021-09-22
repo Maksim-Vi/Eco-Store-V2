@@ -5,7 +5,7 @@ const ProductsImgData = (props) => {
     let [ImgDesc, setImgDesc] = useState([])
 
     let hendlerBuyItem = () =>{
-        if(props.item.inStock === false){
+        if(props.item.inStock !== false){
             props.hendlerOpenBuyMenu(props.item)
         }
     }
