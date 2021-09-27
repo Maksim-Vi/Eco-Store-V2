@@ -47,7 +47,6 @@ const BasketForm = (props) => {
     })
 
     let setDataForm = (e) => {
-        console.log(`ANSWER`,e.target.value);
         setFormLocalData({ ...formLocalData, [e.target.name]: e.target.value })
     }
 
@@ -67,7 +66,6 @@ const BasketForm = (props) => {
     }
 
     let onSubmit = (values) => {
-        console.log(`ANSWER`, values);
         setFormLocalData({username: values.username, phone: values.phone, email: values.email})
         dispatch(setName(values.username))
         dispatch(setPhone(values.phone))

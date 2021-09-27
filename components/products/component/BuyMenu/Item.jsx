@@ -2,7 +2,7 @@ import { Avatar, Box, Card, Divider, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useBuyMenu } from '../styles';
 import classNames from 'classnames';
-import { checkIsHaveDopDesc, count, countImgData } from '../../../../utility/utils';
+import { count, countImgData } from '../../../../utility/utils';
 import { useDispatch } from 'react-redux';
 import { addItemToBasket, removeOneItemToBasket } from '../../../../redux/reducers/basket-reducer';
 import { connect } from 'react-redux';

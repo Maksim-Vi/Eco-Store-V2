@@ -12,6 +12,7 @@ import { addItemToProduct, postFormBasket } from '../../../redux/reducers/form-r
 import { uniqBy } from 'lodash';
 import { removeAllItemStore } from '../../../redux/reducers/basket-reducer';
 import { Divider } from '@material-ui/core';
+import { checkIsHaveDopDesc } from '../../../utility/utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     //   width: '93%',
     // },
     margin: 20,
-    '& .MuiPaper-root':{
+    '& .MuiPaper-root': {
       backgroundColor: '#ececec',
       padding: '20px 0 20px 0',
     },
@@ -52,13 +53,13 @@ const useStyles = makeStyles((theme) => ({
         borderColor: '#ececec'
       }
     },
-    '& .MuiStepContent-root':{
+    '& .MuiStepContent-root': {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       paddingLeft: 0,
       border: 'none',
-      '& .MuiCollapse-root':{
+      '& .MuiCollapse-root': {
         width: '100%',
       }
     }
@@ -116,7 +117,7 @@ function getSteps() {
 
 const CreateOrder = ({ setCreateOrder }) => {
   let isOldRender = false
-  
+
   const classes = useStyles();
 
   const dispatch = useDispatch()
@@ -125,19 +126,6 @@ const CreateOrder = ({ setCreateOrder }) => {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-
-  let basketItems = uniqBy(basketItem.items, i=>i.id)
-
-  let item = basketItems.map(item => {
-    return {
-      id: item.id,
-      name: item.name,
-      cost: (item.price - item.salePrice),
-      count: basketItem.items.reduce((count, i) => {
-        return count + (i.id === item.id ? 1 : 0)
-      }, 0)
-    }
-  })
 
   const { addToast, removeAllToasts } = useToasts()
 
@@ -159,20 +147,45 @@ const CreateOrder = ({ setCreateOrder }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  let sortBasketItem = (items) => {
+    return uniqBy(items, i => {
+      if (i.ImgDesc.id !== '') {
+        return i.id && i.ImgDesc.id
+      } else {
+        return i.id
+      }
+    })
+  }
+
+  let sortBasketItemToOrder = () => {
+    let items = sortBasketItem(basketItem.items)
+    console.log(`ANSWER`, items);
+    let item = items.map(item => {
+      return {
+        id: item.id,
+        name: item.name,
+        cost: (item.price - item.salePrice),
+        type: item.ImgDesc.id !== '' ? item.ImgDesc.imgName : '',
+        count: checkIsHaveDopDesc(item.ImgDesc.id, item, basketItem.items) > 0 && checkIsHaveDopDesc(item.ImgDesc.id, item, basketItem.items)
+      }
+    })
+    return item
+  }
+
   const handleCreate = () => {
-    
-    if (item.length === 0) {
+    let itemsToOrder = sortBasketItemToOrder()
+    if (itemsToOrder.length === 0) {
       error('Выберите товар!')
     } else {
-      dispatch(postFormBasket(form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, item))
-      dispatch(addItemToProduct(item))
+      dispatch(postFormBasket(form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
+      dispatch(addItemToProduct(itemsToOrder))
       dispatch(removeAllItemStore())
       message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
     }
     setCreateOrder(false)
   };
 
-  const oldRenderData = () =>{
+  const oldRenderData = () => {
     return (
       <div className={classes.root}>
         <span className={classes.ItemClose} onClick={() => { setCreateOrder(false) }}>{
@@ -197,21 +210,21 @@ const CreateOrder = ({ setCreateOrder }) => {
     );
   }
 
-  let newRender = () =>{
+  let newRender = () => {
     return (
       <div className={classes.root}>
         <h3>Заказ № 1836217</h3>
         <p>Спасибо что выбрали именно нас!</p>
         <Divider />
-         <Stepper activeStep={activeStep} orientation="vertical">
+        <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
               <StepContent>
-                  {index === 0
-                    ? <BasketForm handleNext={handleNext} />
-                    : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
-                  }
+                {index === 0
+                  ? <BasketForm handleNext={handleNext} />
+                  : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
+                }
               </StepContent>
             </Step>
           ))}

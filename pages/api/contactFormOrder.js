@@ -19,6 +19,7 @@ export default async function setContactFormOrder(req, res) {
                     <p>id: ${item.id};</p> 
                     <p>Название товара: ${item.name};</p> 
                     <p>цена товара: ${item.cost} = ${item.cost * item.count};</p> 
+                    <p>типо товара: ${item.type};</p>
                     <p>количество: ${item.count};</p>
                 </p>`
             })
