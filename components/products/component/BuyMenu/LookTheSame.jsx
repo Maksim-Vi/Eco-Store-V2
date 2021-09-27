@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const LookTheSame = () => {
     return (
         <div>
-            
+            123
         </div>
     )
 }

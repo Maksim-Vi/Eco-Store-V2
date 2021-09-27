@@ -4,6 +4,7 @@ import React from 'react'
 import { useBuyMenu } from '../styles';
 import Item from './Item';
 import Link from "next/link";
+import LookTheSame from './LookTheSame';
 
 const BuyMenuItem = (props) => {
 
@@ -33,6 +34,7 @@ const BuyMenuItem = (props) => {
                         </Link>
                     </CardActions>
                 </Card>
+                {/* <LookTheSame /> */}
             </DialogContent>
 
         </Dialog>

@@ -15,8 +15,8 @@ let initialState ={
     product:{},
     firstName: '',
     Email: '',
-    subject:'',
     phone: '',
+    subject:'',
     promocode:'',
     pay:'Оплата на карту', // способ оплаты 
     post:'Новой почтой', // способ доставки 
