@@ -76,28 +76,28 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
         handleClose(true)
     }
 
-    React.useEffect(() => {
-        let message = ''
+    // React.useEffect(() => {
+    //     let message = ''
 
-        if(Object.keys(errors).length !== 0){
-            let title = 'Ваша фарма не была отправлена! '
-            message += title
-            let text1 = errors.email?.type === 'maxLength' || 'minLength'
-                ? '1) Имя не должно быть больше 20 символов, но больше 1 ' 
-                : '1) Вы не ввели имя ' 
-            let text2 = errors.email?.type === 'pattern' ? '2) не верный email ' : errors.email?.message
-            let text3 = errors.subject?.message
+    //     if(Object.keys(errors).length !== 0){
+    //         let title = 'Ваша фарма не была отправлена! '
+    //         message += title
+    //         let text1 = errors.email?.type === 'maxLength' || 'minLength'
+    //             ? '1) Имя не должно быть больше 20 символов, но больше 1 ' 
+    //             : '1) Вы не ввели имя ' 
+    //         let text2 = errors.email?.type === 'pattern' ? '2) не верный email ' : errors.email?.message
+    //         let text3 = errors.subject?.message
     
-            if(text1)
-                message += text1
-            if(text2)
-                message += text2
-            if(text3)
-                message += text3
-            if(message !== '')
-                error(message)
-        }
-    }, [errors])
+    //         if(text1)
+    //             message += text1
+    //         if(text2)
+    //             message += text2
+    //         if(text3)
+    //             message += text3
+    //         if(message !== '')
+    //             error(message)
+    //     }
+    // }, [errors])
     
     return (
         <div>
@@ -123,7 +123,8 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
                                    name="name" 
                                    id="name" 
                                    placeholder="Введите ваше Имя" 
-                                   ref={register({ required: true, minLength:1, maxLength: 20 })}/>
+                                  // ref={register({ required: true, minLength:1, maxLength: 20 })}
+                                  />
                         </div>
 
                         <div className={s.containerInput} style={{ marginRight: 'auto' }}>
@@ -132,7 +133,8 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
                                    name="email" 
                                    id="contacts" 
                                    placeholder="Введите ваш email" 
-                                   ref={register({required: "2) Введите email ", pattern: /^\S+@\S+$/i})}/>
+                                   //ref={register({required: "2) Введите email ", pattern: /^\S+@\S+$/i})}
+                                   />
                         </div>
 
                         <div className={s.containerInput}>
@@ -140,7 +142,8 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
                                       name="subject" 
                                       className={s.txtArea}
                                       placeholder="Задайте нам вопрос" 
-                                      ref={register({required: "3) Поле не может быть пустым или содержать больше 200 символов. ", maxLength: 200})}/>
+                                      //ref={register({required: "3) Поле не может быть пустым или содержать больше 200 символов. ", maxLength: 200})}
+                                      />
                         </div>
 
                         <button className={s.btnContuctUS} type="submit" >Отправить</button>

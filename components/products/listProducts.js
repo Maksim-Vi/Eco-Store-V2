@@ -16,7 +16,7 @@ const ListProduct = (props) => {
                     <Typography className={s.CardCode} color="textSecondary" gutterBottom>
                         код товара 100{props.item.id}
                     </Typography>
-                    <Link href={{ pathname: `/product/${props.item.id}`, query: { name: 'test' } }} as={`/product/${props.item.id}`} >
+                    <Link href="/product/[id]" as={`/product/${props.item.id}`} >
                         <Avatar variant="square" className={s.CardImage} src={`${props.item.images[0].url.split('public')[1]}`} alt="item" />
                     </Link>
                     <Typography className={s.CardTitleText} variant="body2" component="h2" >

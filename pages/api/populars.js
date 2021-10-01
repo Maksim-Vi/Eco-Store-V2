@@ -1,4 +1,5 @@
 import { sql_query } from "../../database_connection";
+import { getAllPopulats } from "../../lib/db/DbRequestGet";
 import { authenticated } from "../../utility/middlware";
 
 export default authenticated(async function getPopular(req, res) {
@@ -8,12 +9,15 @@ export default authenticated(async function getPopular(req, res) {
                 res.status(500).json({ message: `popular.js GET req, SELECT desc: Something was wrong! ${err}` })
             })
 
+            //let tops = await getAllPopulats()
+
             let data = []
             tops.forEach(top => {
                 data.push({id: top.id, text: top.text, image: top.image , isNew: false})
             });
 
             return res.end(JSON.stringify(data));
+            //return  res.json(tops);
         }
         case 'POST': {
             await sql_query('TRUNCATE TABLE tops').catch((err) => {

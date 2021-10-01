@@ -30,18 +30,18 @@ app.prepare().then(() => {
   const server = express()
 
   server.get('/', (req, res) => ssrCache({ req, res }))
-
   server.get('/products', (req, res) => ssrCache({ req, res }))
-
   server.get('/product', (req, res) => ssrCache({ req, res }))
-
   server.get('/about-us', (req, res) => ssrCache({ req, res }))
-
   server.get('/payement-and-delivery', (req, res) => ssrCache({ req, res }))
-
   server.get('/contacts', (req, res) => ssrCache({ req, res }))
-
   server.get('/basket', (req, res) => ssrCache({ req, res }))
+
+  server.get('/AdminPanel/Account', (req, res) => ssrCache({ req, res }))
+  server.get('/AdminPanel/Dashboard', (req, res) => ssrCache({ req, res }))
+  server.get('/AdminPanel/Products', (req, res) => ssrCache({ req, res }))
+  server.get('/AdminPanel/Settings', (req, res) => ssrCache({ req, res }))
+  server.get('/AdminPanel/Top', (req, res) => ssrCache({ req, res }))
 
   server.all('*', (req, res) => {
     return handle(req, res)

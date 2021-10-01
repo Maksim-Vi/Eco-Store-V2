@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "next start",
+    "build": "next build",
+    "export": "next export",
     "dev": "next",
     "next": "nodemon server.js",
-    "build": "next build",
     "developStart": "cross-env NODE_ENV=development next start",
-    "productionStart": "cross-env NODE_ENV=production node server.js",
-    "serverProd": "npm run start --prefix server",
-    "production": "concurrently \"npm run start\" \"npm run serverProd\""
+    "productionStart": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",

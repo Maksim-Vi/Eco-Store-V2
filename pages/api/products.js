@@ -1,4 +1,5 @@
 import { db } from "../../database_connection";
+import { getAllProducts } from "../../lib/db/DbRequestGet";
 import { authenticated } from "../../utility/middlware";
 
 export default authenticated(async function getProducts(req, res) {
@@ -13,6 +14,8 @@ export default authenticated(async function getProducts(req, res) {
             const response = await db.query(SELECT)
             await db.end()
 
+            //let response = await getAllProducts()
+            
             let productsData = []
             response.forEach(product => {
                 let newData = product
@@ -48,7 +51,7 @@ export default authenticated(async function getProducts(req, res) {
                
                 productsData.push(newData)
             });
-
+            //productsData = response
             return res.json(productsData)
         }
         case 'POST': {

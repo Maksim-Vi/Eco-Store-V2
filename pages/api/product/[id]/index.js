@@ -65,8 +65,17 @@ export default authenticated(async function getProductById(req, res) {
                 equipment: response[0].equipment,
                 structure: response[0].structure
             }
-
-            return res.json(product);
+            // const id = typeof (req.query.id === 'string' || req.query.id === 'number') ? parseInt(req.query.id, 10) : undefined
+            // let product = id ? await getProductById(id) : undefined
+            
+            if(product){
+                res.statusCode = 200
+                return res.json(product);
+            } else {
+                res.statusCode = 404
+                return res.json(null);
+            }
+           
         }
         case 'DELETE': {
             let DELETE = `

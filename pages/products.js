@@ -1,7 +1,7 @@
 import { sortItemByType } from '../components/common/utilits';
 import HeaderMain from '../components/header/headerMain';
 import ProductsContainer from '../components/products/productsContainer';
-
+import { getAllProducts } from '../lib/db/DbRequestGet';
 
 const Products = ({ items }) => {
     return (
@@ -20,5 +20,15 @@ Products.getInitialProps = async () => {
 
     return { items: json }
 }
+
+// export const getServerSideProps = async () => {
+//     let products = await getAllProducts()
+     
+//     return {
+//         props: {
+//             items: products,
+//         }
+//     };
+// };
 
 export default Products

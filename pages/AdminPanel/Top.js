@@ -74,7 +74,7 @@ Top.getInitialProps = async (ctx) => {
     }  
     
     return {
-        products:products,
-        top:top
+        products:products || [],
+        top:top || []
     }
 }

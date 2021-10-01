@@ -14,7 +14,7 @@ const HeaderMain = ({children, title='', descTitle='', desc=''}) =>{
     let description = desc !== '' ? desc : 'Eco Choice – это небольшой семейный интернет-магазин. Мы предлагаем широкий ассортимент натуральных и экологически чистых товаров.Вести здоровый образ жизни – это не мода и не роскошь. Это философия, это стиль, это необходимость.'
 
     return(
-    <>
+    <React.Fragment>
         <Head>
             <title>{titleHome}</title>
             <meta charSet="utf-8" />
@@ -64,7 +64,7 @@ const HeaderMain = ({children, title='', descTitle='', desc=''}) =>{
                 
             }
         `}</style>
-    </>)
+    </React.Fragment>)
 }
 
 export default HeaderMain

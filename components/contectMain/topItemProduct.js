@@ -5,7 +5,7 @@ import Link from "next/link";
 const TopItemProduct = (props) =>{
     let URL = process.env.SERVER_URL
     return (  
-        <Link href={{pathname: `/product/${props.item.id}`}} as={`/product/${props.item.id}`} >
+        <Link href="/product/[id]" as={`/product/${props.item.id}`} >
             <div className={stl.contentContainer}>
                 <div className={stl.itemContent}>
                     <img src={`${props.item.image}`} alt="item popular" />

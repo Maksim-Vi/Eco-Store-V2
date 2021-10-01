@@ -98,7 +98,7 @@
             }
             .CardTitleText{
                 font-size: 1.1vw;
-                white-space: nowrap;
+                white-space: normal;
                 @include xl { font-size: 1.3vw; }
                 @include lg { font-size: 1.4vw; }
                 @include md { font-size: 3vw; }
