@@ -67,12 +67,17 @@ export const AddImages = () => {
             })
         } else {
             imageList.forEach((img,index) => {
-                let newDataImg = {
-                    isNew: true,
-                    data_url: img.data_url,
-                    file: img.file,
+                let newDataImg = {}
+                if(img.isNew === false){
+                    newDataImg = img
+                } else {
+                    newDataImg = {
+                        isNew: true,
+                        data_url: img.data_url,
+                        file: img.file
+                    }
                 }
-
+                
                 ImgDataDesc.push({
                     id: index,
                     imgName:  desc[index] ? desc[index].imgName : "",
@@ -161,8 +166,8 @@ export const AddImages = () => {
                             {imageList.map((image, index) => {
 
                                 let img = ''
-                                if(image.data_url.split('public')[0] === ''){
-                                    img = image.data_url.split('public')[1]
+                                if(image.data_url.split('uploadsDescImages')[0] === ''){
+                                    img = `${process.env.SERVER_UPLOAD_URL}/${image.data_url}`
                                 } else {
                                     img = image.data_url
                                 }

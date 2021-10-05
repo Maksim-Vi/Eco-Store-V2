@@ -40,11 +40,17 @@ const AddImagesDesc = ({ setImages, images }) => {
             })
         } else {
             imageList.forEach(img => {
-                let newDataImg = {
-                    isNew: true,
-                    data_url: img.data_url,
-                    file: img.file
+                let newDataImg = {}
+                if(img.isNew === false){
+                    newDataImg = img
+                } else {
+                    newDataImg = {
+                        isNew: true,
+                        data_url: img.data_url,
+                        file: img.file
+                    }
                 }
+             
                 imgData.push(newDataImg)
             })
         }
@@ -90,8 +96,8 @@ const AddImagesDesc = ({ setImages, images }) => {
                     {imageList.map((image, index) => {
                         
                         let img = ''
-                        if(image.data_url.split('public')[0] === ''){
-                            img = image.data_url.split('public')[1]
+                        if(image.data_url.split('uploadsImages')[0] === ''){
+                            img =  `${process.env.SERVER_UPLOAD_URL}/${image.data_url}`
                         } else {
                             img = image.data_url
                         }

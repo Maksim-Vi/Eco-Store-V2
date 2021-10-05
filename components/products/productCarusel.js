@@ -41,7 +41,7 @@ class CaruselProduct extends React.Component{
         let imgCarusel = []
         _.forEach(this.props.item.images,(img,index) => {
             if(img.url !== undefined && img.url !== ''){
-                imgCarusel.push({ "id": index+ 1, "img": `${img.url.split('public')[1]}` })
+                imgCarusel.push({ "id": index+ 1, "img": `${process.env.SERVER_UPLOAD_URL}/${img.url}` })
             }
         })
         this.setState({CaruselImage: imgCarusel})

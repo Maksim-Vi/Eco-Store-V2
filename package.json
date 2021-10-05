@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "next start",
+    "startDev": "next",
+    "startSSRDev": "node server.js",
+    "startServer": "nodemon SERVER/index.js",
+    "startProd": "next start",
     "build": "next build",
     "export": "next export",
-    "dev": "next",
-    "next": "nodemon server.js",
     "developStart": "cross-env NODE_ENV=development next start",
     "productionStart": "cross-env NODE_ENV=production node server.js"
   },

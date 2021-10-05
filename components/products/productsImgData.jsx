@@ -34,7 +34,7 @@ const ProductsImgData = (props) => {
                    {ImgDesc.map((item, index)=>{
                        return (
                         <div key={index} className={s.colorContainerItem}>
-                            <img className={s.img} src={`${item.url.split('public')[1]}`} alt="item" onClick={()=>{hendlerBuyItem()}}/>
+                            <img className={s.img} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem()}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
                                 <span>{item.count} шт</span>

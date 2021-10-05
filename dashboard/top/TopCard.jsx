@@ -87,7 +87,6 @@ const TopCard = ({ top, products }) => {
         let data = []
         popularItems.forEach(i => {
             let checkIsNewItem = (topArr.find(item => item.id === id)) ? false : true
-            console.log(`ANSWE`, checkIsNewItem, topArr,id);
             if (i.id === id) {
                 let newData = { id: i.id, text: text, image: i.image , isNew: checkIsNewItem}
                 data.push(newData)
@@ -108,7 +107,6 @@ const TopCard = ({ top, products }) => {
                 },
             })
 
-            console.log(res.data);
             if (res.status === 200) {
                 dispatch(setTop(res.data.tops))
                 setTopArr(res.data.tops)

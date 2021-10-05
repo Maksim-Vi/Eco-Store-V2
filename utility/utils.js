@@ -30,6 +30,7 @@ export const deleteAndUpload = (arr,imagesFile) =>{
     return images
 }
 
+
 export const deleteImageIfErr = (arr) =>{
     if(arr.length > 0){
         arr.forEach(img=>{

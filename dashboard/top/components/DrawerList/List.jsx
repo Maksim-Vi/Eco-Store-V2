@@ -26,7 +26,7 @@ export default function List({item,addPopularItem,popularItems}) {
 
         let data = {
             id: item.id,
-            image: item.images[0].url.split('public')[1],
+            image: item.images[0].url,
             text: '',
             isCheked: !selected,
             isNew: true
@@ -49,7 +49,7 @@ export default function List({item,addPopularItem,popularItems}) {
     return (
         <>
             <ListItem button key={item.id}>
-                <Avatar className={classes.avatar} alt="Remy Sharp" src={item.images[0].url.split('public')[1]} />
+                <Avatar className={classes.avatar} alt="Remy Sharp" src={`${process.env.SERVER_UPLOAD_URL}/${item.images[0].url}`} />
                 <ListItemText primary={item.name} />
                 <Button variant="contained"
                     color="primary"

@@ -32,7 +32,7 @@ const apiRoute = nextConnect({
     },
 });
 
-apiRoute.use(upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]))
+// apiRoute.use(upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]))
 
 apiRoute.put(async (req, res) => {
     let body = JSON.parse(req.body.product)
@@ -130,112 +130,104 @@ apiRoute.put(async (req, res) => {
 });
 
 apiRoute.post(async (req, res) => {
-    let body = JSON.parse(req.body.product)
+    let body = JSON.parse(req.product)
     let ImgData = JSON.stringify(body.ImgData)
 
-    let imagesUrl = []
-    let imagesDescUrl = []
+    console.log(`ANSWER`, body,ImgData);
+   
+    // let body = JSON.parse(req.body.product)
+    // let ImgData = JSON.stringify(body.ImgData)
 
-    if (req.files.images !== undefined) {
-        req.files.images.forEach(file => {
-            imagesUrl.push(file.path.replace('public/', ''))
-        })
-    }
+    // let INSERT_PRODUCTS = `INSERT INTO products(sale, salePrice, name, category, price, images, inStock, countInStock, DescProductId, DescProductTableId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    // let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
+    // let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
 
-    if (req.files.imagesDesc !== undefined) {
-        req.files.imagesDesc.forEach(file => {
-            imagesDescUrl.push(file.path.replace('public/', ''))
-        })
-    }
-
-    let INSERT_PRODUCTS = `INSERT INTO products(sale, salePrice, name, category, price, images, inStock, countInStock, DescProductId, DescProductTableId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    let INSERT_DESC = `INSERT INTO descriptionproducts(nameDescription, description, imagesDescription,ImgData)  VALUES(?, ?, ?, ?)`
-    let INSERT_DESC_TABLE = `INSERT INTO descriptionproductstables(typeName, countPeople, features, eco, equipment, structure)  VALUES(?, ?, ?, ?, ?, ?)`
-
-    const descProduct = await sql_query(INSERT_DESC, [
-        body.nameDescription,
-        body.descriptionD,
-        imagesDescUrl.length === 0 ? '' : imagesDescUrl.join(' , '),
-        ImgData,
-    ]).catch((err)=>{
-        res.status(500).json({ message: `createProduct.js POST req, INSERT desc: Something was wrong! ${err}` })
-    })
+    // const descProduct = await sql_query(INSERT_DESC, [
+    //     body.nameDescription,
+    //     body.descriptionD,
+    //     // imagesDescUrl.length === 0 ? '' : imagesDescUrl.join(' , '),
+    //     body.descriptionImages.length === 0 ? '' : imagesDescUrl.join(' , '),
+    //     ImgData,
+    // ]).catch((err)=>{
+    //     res.status(500).json({ message: `createProduct.js POST req, INSERT desc: Something was wrong! ${err}` })
+    // })
     
-    const descProductTable = await sql_query(INSERT_DESC_TABLE, [
-        body.typeName,
-        body.countPeople,
-        body.features,
-        body.eco,
-        body.equipment,
-        body.structure
-    ]).catch((err)=>{
-        res.status(500).json({ message: `createProduct.js POST req, INSERT descTabs: Something was wrong! ${err}` })
-    })
+    // const descProductTable = await sql_query(INSERT_DESC_TABLE, [
+    //     body.typeName,
+    //     body.countPeople,
+    //     body.features,
+    //     body.eco,
+    //     body.equipment,
+    //     body.structure
+    // ]).catch((err)=>{
+    //     res.status(500).json({ message: `createProduct.js POST req, INSERT descTabs: Something was wrong! ${err}` })
+    // })
 
-    if (descProduct.insertId > 0 && descProductTable.insertId > 0) {
-        await sql_query(INSERT_PRODUCTS, [
-            body.sale,
-            body.salePrice,
-            body.name,
-            body.category,
-            body.price,
-            imagesUrl.length === 0 ? '' : imagesUrl.join(' , '),
-            body.inStock,
-            body.countInStock,
-            descProduct.insertId,
-            descProductTable.insertId,
-        ]).catch((err)=>{
-            res.status(500).json({ message: `createProduct.js POST req, INSERT products: Something was wrong! ${err}` })
-        })
+    // if (descProduct.insertId > 0 && descProductTable.insertId > 0) {
+    //     await sql_query(INSERT_PRODUCTS, [
+    //         body.sale,
+    //         body.salePrice,
+    //         body.name,
+    //         body.category,
+    //         body.price,
+    //         // imagesUrl.length === 0 ? '' : imagesUrl.join(' , '),
+    //         body.Images.length === 0 ? '' : imagesUrl.join(' , '),
+    //         body.inStock,
+    //         body.countInStock,
+    //         descProduct.insertId,
+    //         descProductTable.insertId,
+    //     ]).catch((err)=>{
+    //         res.status(500).json({ message: `createProduct.js POST req, INSERT products: Something was wrong! ${err}` })
+    //     })
 
-        let SELECT = `
-            SELECT *, t1.id id 
-            FROM products t1 
-            LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
-            LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
+    //     let SELECT = `
+    //         SELECT *, t1.id id 
+    //         FROM products t1 
+    //         LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
+    //         LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
 
-        const response = await db.query(SELECT).catch((err)=>{
-            res.status(500).json({ message: `createProduct.js POST req, SELECT products: Something was wrong! ${err}` })
-        })
-        await db.end()
+    //     const response = await db.query(SELECT).catch((err)=>{
+    //         res.status(500).json({ message: `createProduct.js POST req, SELECT products: Something was wrong! ${err}` })
+    //     })
+    //     await db.end()
 
-        let productsData = []
-        response.forEach(product => {
-            let newData = product
-            if (newData.images !== '') {
-                let images = product['images'].split(' , ')
-                let data = []
-                images.forEach(img=>{
-                    data.push({
-                        url: img,
-                        data_url: img,
-                        isNew: false
-                    })
-                })
-                newData['images'] = data
-            } 
-            if (newData.imagesDescription !== '') {
-                let images = product['imagesDescription'].split(' , ')
-                let data = []
-                images.forEach(img=>{
-                    data.push({
-                        url: img,
-                        data_url: img,
-                        isNew: false
-                    })
-                })
-                newData['imagesDescription'] = data
-            }
+    //     let productsData = []
+    //     response.forEach(product => {
+    //         let newData = product
+    //         if (newData.images !== '') {
+    //             let images = product['images'].split(' , ')
+    //             let data = []
+    //             images.forEach(img=>{
+    //                 data.push({
+    //                     url: img,
+    //                     data_url: img,
+    //                     isNew: false
+    //                 })
+    //             })
+    //             newData['images'] = data
+    //         } 
+    //         if (newData.imagesDescription !== '') {
+    //             let images = product['imagesDescription'].split(' , ')
+    //             let data = []
+    //             images.forEach(img=>{
+    //                 data.push({
+    //                     url: img,
+    //                     data_url: img,
+    //                     isNew: false
+    //                 })
+    //             })
+    //             newData['imagesDescription'] = data
+    //         }
 
-            newData['ImgData'] = eval("(" + newData.ImgData + ")")
-            newData['sale'] = newData.sale === 0 ? false : true
-            newData['inStock'] = newData.inStock === 0 ? false : true
+    //         newData['ImgData'] = eval("(" + newData.ImgData + ")")
+    //         newData['sale'] = newData.sale === 0 ? false : true
+    //         newData['inStock'] = newData.inStock === 0 ? false : true
             
-            productsData.push(newData)
-        });
+    //         productsData.push(newData)
+    //     });
 
-        res.status(200).json({ messages: 'success', products: productsData });
-    } 
+    //     res.status(200).json({ messages: 'success', products: productsData });
+    // } 
 });
 
 export default authenticated(apiRoute);

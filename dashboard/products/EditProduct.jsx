@@ -126,19 +126,33 @@ export default function EditProduct(props) {
         
         formData.append('product', JSON.stringify(data));
 
-        let res = await axios.put(`${URL}/createProduct`, formData , {
-            headers: { 
+        await axios.put(`${process.env.SERVER_UPLOAD_URL}/uploadProductById`, formData, {
+            headers: {
                 'authorization': cookie,
-                'Accept': 'application/json', 
-                'content-type': 'multipart/form-data' 
-            },
-            onUploadProgress: (event) => {
-                console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-            },
+                'content-type': 'multipart/form-data'
+            }
+        }).then((response) => {
+            if (response.status === 200 && response.data.success === true) {
+                data['Images'] = response.data.images
+                data['descriptionImages'] = response.data.imagesDesc
+            }
+        }).catch((err) => {
+            console.log(`uploadProducts ERROR EditProduct`, err);
+            // props.closeDialog()
+            return
         })
 
+        let res = await axios.put(`${URL}/products`, data , {
+            headers: { 
+                'authorization': cookie,
+            }
+        }).catch((err) => {
+            console.log(`updateProduct ERROR EditProduct`, err);
+            // props.closeDialog()
+            return
+        })
         
-        if(res.status === 200){
+        if(res !== undefined && res.status === 200){
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         } 

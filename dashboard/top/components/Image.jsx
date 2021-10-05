@@ -13,7 +13,7 @@ export default function Image({url}) {
     const classes = useStyles();
     return (
         <ListItemAvatar>
-            <Avatar className={classes.Avatar} alt="Product" src={`${url}`} variant="square" />
+            <Avatar className={classes.Avatar} alt="Product" src={`${process.env.SERVER_UPLOAD_URL}/${url}`} variant="square" />
         </ListItemAvatar>
     )
 }

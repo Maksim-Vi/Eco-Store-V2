@@ -27,7 +27,7 @@ const BasketItem = (props) => {
                 <span className={s.ItemClose} onClick={() => { props.removeItemToBasket(props.item) }}>{
                     <a href="#delete" className={s.remove}>&times;</a>
                 }</span>
-                <Avatar className={classes.ImgMain} variant="square" src={`${props.item.url}`} alt='img'/>
+                <Avatar className={classes.ImgMain} variant="square" src={`${process.env.SERVER_UPLOAD_URL}/${props.item.url}`} alt='img'/>
                 <div className={s.ItemContentContainer}>
                     <h3>{props.item.name}</h3>
                     <span className={s.articl}>Артикул: 1000{props.item.id}</span>
@@ -58,7 +58,7 @@ const BasketItem = (props) => {
                     <div className={s.imgDescContainer}>
                         <h4>Подтип товара:</h4>
                         <div className={s.imageText}>
-                            <Avatar  variant="square" className={classes.imgDesc} src={`${props.item.ImgDesc.imgUrl}`} alt='img' />
+                            <Avatar  variant="square" className={classes.imgDesc} src={`${process.env.SERVER_UPLOAD_URL}/${props.item.ImgDesc.imgUrl}`} alt='img' />
                             <p>Цвет: {props.item.ImgDesc.imgName}</p>
                         </div>                
                     </div>    

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
     },
-    Toolbar:{
+    Toolbar: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -51,12 +51,12 @@ export default function AddProduct(props) {
     let descriptionTableTabs = useSelector(state => state.CRM_products.descriptionTableTabs)
     const dispatch = useDispatch()
 
-    let saveProduct  = async () => {
+    let saveProduct = async () => {
         let cookie = getCookie('auth')
 
         let images = []
-        if(Images.length > 0){
-            Images.forEach(img=>{
+        if (Images.length > 0) {
+            Images.forEach(img => {
                 let imgData = {
                     isNew: img.isNew,
                     file: img.file
@@ -66,8 +66,8 @@ export default function AddProduct(props) {
         }
 
         let imagesDesc = []
-        if(descriptionProductTabs.descriptionImages.length > 0){
-            Images.forEach(img=>{
+        if (descriptionProductTabs.descriptionImages.length > 0) {
+            descriptionProductTabs.descriptionImages.forEach(img => {
                 let imgData = {
                     isNew: img.isNew,
                     file: img.file
@@ -75,62 +75,74 @@ export default function AddProduct(props) {
                 imagesDesc.push(imgData)
             })
         }
-        
+
         let data = {
             id: props.productId,
             DescProductId: genetalTabs.DescProductId,
             DescProductTableId: genetalTabs.DescProductTableId,
             name: genetalTabs.name,
-            inStock: genetalTabs.inStock  === true ? 1 : 0,
-            countInStock:  genetalTabs.countInStock,
+            inStock: genetalTabs.inStock === true ? 1 : 0,
+            countInStock: genetalTabs.countInStock,
             category: genetalTabs.category,
             price: genetalTabs.price,
-            Images: images,
+            Images: [],
             sale: genetalTabs.sale === true ? 1 : 0,
             salePrice: genetalTabs.salePrice,
 
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
-            descriptionImages: imagesDesc,
+            descriptionImages: [],
             ImgData: descriptionProductTabs.ImgData,
-                        
-            typeName:descriptionTableTabs.typeName,
+
+            typeName: descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
-            features:descriptionTableTabs.features,
-            eco:descriptionTableTabs.eco,
-            equipment:descriptionTableTabs.equipment,
-            structure:descriptionTableTabs.structure,
+            features: descriptionTableTabs.features,
+            eco: descriptionTableTabs.eco,
+            equipment: descriptionTableTabs.equipment,
+            structure: descriptionTableTabs.structure,
         }
-        
+
         const formData = new FormData();
-        if(Images.length > 0){
-            Images.forEach((img)=>{
+        if (images.length > 0) {
+            images.forEach((img) => {
                 formData.append('images', img.file);
             })
         }
-      
-        if(descriptionProductTabs.descriptionImages.length > 0){
-            descriptionProductTabs.descriptionImages.forEach((img)=>{
+
+        if (imagesDesc.length > 0) {
+            imagesDesc.forEach((img) => {
                 formData.append('imagesDesc', img.file);
             })
         }
-        
-        formData.append('product', JSON.stringify(data));
-       
-        let res = await axios.post(`${URL}/createProduct`, formData ,  {
-            headers: { 
+
+        await axios.post(`${process.env.SERVER_UPLOAD_URL}/uploadProducts`, formData, {
+            headers: {
                 'authorization': cookie,
-                'Accept': 'application/json', 
-                'content-type': 'multipart/form-data' 
-            },
-            onUploadProgress: (event) => {
-                console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-            },
+                'Accept': 'application/json',
+                'content-type': 'multipart/form-data'
+            }
+        }).then((response) => {
+            if (response.status === 200 && response.data.success === true) {
+                data['Images'] = response.data.images
+                data['descriptionImages'] = response.data.imagesDesc
+            }
+        }).catch((err) => {
+            console.log(`uploadProducts ERROR AddProduct`, err);
+            // props.closeDialog()
+            return
         })
 
-        console.log('ANSWER data', res);
-        
-        if(res.status === 200){
+        let res = await axios.post(`${URL}/products`, data , {
+            headers: { 
+                'authorization': cookie,
+            }
+        }).catch((err) => {
+            console.log(`createProduct ERROR AddProduct`, err);
+            // props.closeDialog()
+            return
+        })
+
+        if (res !== undefined && res.status === 200) {
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         }
