@@ -15,17 +15,18 @@ import axios from 'axios';
 import { getCookie } from '../../components/common/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProductTabs, resetProductTabs, setProducts } from '../../redux/reducers/SRM/products/action';
+import { ImagesDeleteDataUrl } from '../utilits/products/ProductsUtils';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
     },
-    Toolbar:{
+    Toolbar: {
         display: 'flex',
         alignItems: 'center',
         // justifyContent: 'space-between',
     },
-    topBarLeft:{
+    topBarLeft: {
         [theme.breakpoints.down('md')]: {
             fontSize: '14px',
         },
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '10px',
         },
     },
-    delete:{
+    delete: {
         marginLeft: 'auto',
         marginRight: 20
     }
@@ -56,7 +57,7 @@ export default function EditProduct(props) {
     const classes = useStyles();
     let URL = process.env.SERVER_URL
     let products = useSelector(state => state.CRM_products.products)
-   
+
 
     let Images = useSelector(state => state.CRM_products.Images)
     let genetalTabs = useSelector(state => state.CRM_products.genetalTabs)
@@ -65,20 +66,20 @@ export default function EditProduct(props) {
     const dispatch = useDispatch()
 
 
-    let deleteProduct = async () =>{
+    let deleteProduct = async () => {
         let cookie = getCookie('auth')
 
         let res = await axios.delete(`${URL}/product/${props.productId}`, {
             headers: { 'authorization': cookie }
         })
-        
-        if(res.status === 200){
+
+        if (res.status === 200) {
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         }
     }
 
-    let updateProduct = async () =>{
+    let updateProduct = async () => {
         let cookie = getCookie('auth')
 
         let data = {
@@ -86,52 +87,52 @@ export default function EditProduct(props) {
             DescProductId: genetalTabs.DescProductId,
             DescProductTableId: genetalTabs.DescProductTableId,
             name: genetalTabs.name,
-            inStock: genetalTabs.inStock  === true ? 1 : 0,
-            countInStock:  genetalTabs.countInStock,
+            inStock: genetalTabs.inStock === true ? 1 : 0,
+            countInStock: genetalTabs.countInStock,
             category: genetalTabs.category,
             price: genetalTabs.price,
-            Images: Images,
+            Images: Images.length > 0 ? ImagesDeleteDataUrl(Images) : [],
             sale: genetalTabs.sale === true ? 1 : 0,
             salePrice: genetalTabs.salePrice,
 
             nameDescription: descriptionProductTabs.nameDescription,
             descriptionD: descriptionProductTabs.descriptionD,
-            descriptionImages: descriptionProductTabs.descriptionImages,
+            descriptionImages: descriptionProductTabs.descriptionImages.length > 0 ? ImagesDeleteDataUrl(descriptionProductTabs.descriptionImages) : [],
             ImgData: descriptionProductTabs.ImgData,
-                        
-            typeName:descriptionTableTabs.typeName,
+
+            typeName: descriptionTableTabs.typeName,
             countPeople: descriptionTableTabs.countPeople,
-            features:descriptionTableTabs.features,
-            eco:descriptionTableTabs.eco,
-            equipment:descriptionTableTabs.equipment,
-            structure:descriptionTableTabs.structure,
+            features: descriptionTableTabs.features,
+            eco: descriptionTableTabs.eco,
+            equipment: descriptionTableTabs.equipment,
+            structure: descriptionTableTabs.structure,
         }
 
         const formData = new FormData();
-        if(Images.length > 0){
-            Images.forEach((img)=>{
-                if(img.file){
+        formData.append('product', JSON.stringify(data));
+        if (Images.length > 0) {
+            Images.forEach((img) => {
+                if (img.file) {
                     formData.append('images', img.file);
                 }
             })
         }
-      
-        if(descriptionProductTabs.descriptionImages.length > 0){
-            descriptionProductTabs.descriptionImages.forEach((img)=>{
-                if(img.file){
+
+        if (descriptionProductTabs.descriptionImages.length > 0) {
+            descriptionProductTabs.descriptionImages.forEach((img) => {
+                if (img.file) {
                     formData.append('imagesDesc', img.file);
                 }
             })
         }
-        
-        formData.append('product', JSON.stringify(data));
 
-        await axios.put(`${process.env.SERVER_UPLOAD_URL}/uploadProductById`, formData, {
-            headers: {
-                'authorization': cookie,
-                'content-type': 'multipart/form-data'
-            }
+        await axios.put(`${process.env.SERVER_UPLOAD_URL}/uploadImageProduct`, formData , {
+            // headers: {
+            //     'Accept': 'application/json',
+            //     'content-type': 'multipart/form-data'
+            // }
         }).then((response) => {
+            console.log(`ANSWER response web`,response);
             if (response.status === 200 && response.data.success === true) {
                 data['Images'] = response.data.images
                 data['descriptionImages'] = response.data.imagesDesc
@@ -142,32 +143,32 @@ export default function EditProduct(props) {
             return
         })
 
-        let res = await axios.put(`${URL}/products`, data , {
-            headers: { 
-                'authorization': cookie,
-            }
-        }).catch((err) => {
-            console.log(`updateProduct ERROR EditProduct`, err);
-            // props.closeDialog()
-            return
-        })
-        
-        if(res !== undefined && res.status === 200){
-            dispatch(setProducts(res.data.products))
-            props.closeDialog()
-        } 
+        // let res = await axios.put(`${URL}/products`, data , {
+        //     headers: { 
+        //         'authorization': cookie,
+        //     }
+        // }).catch((err) => {
+        //     console.log(`updateProduct ERROR EditProduct`, err);
+        //     // props.closeDialog()
+        //     return
+        // })
+
+        // if(res !== undefined && res.status === 200){
+        //     dispatch(setProducts(res.data.products))
+        //     props.closeDialog()
+        // } 
     }
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         products.forEach(product => {
-            if(product.id === props.productId){
+            if (product.id === props.productId) {
                 dispatch(editProductTabs(product))
             }
         })
         return () => {
             dispatch(resetProductTabs())
         }
-    },[])
+    }, [])
 
     return (
         <Dialog fullScreen open={props.open} onClose={() => { props.closeDialog() }} TransitionComponent={Transition}>

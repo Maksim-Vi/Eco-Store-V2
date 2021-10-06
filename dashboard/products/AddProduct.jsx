@@ -115,7 +115,7 @@ export default function AddProduct(props) {
             })
         }
 
-        await axios.post(`${process.env.SERVER_UPLOAD_URL}/uploadProducts`, formData, {
+        await axios.post(`${process.env.SERVER_UPLOAD_URL}/uploadImagesProducts`, formData, {
             headers: {
                 'authorization': cookie,
                 'Accept': 'application/json',

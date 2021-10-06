@@ -62,11 +62,11 @@ function MyApp({ Component, pageProps }) {
         <AuchContextItem.Provider value={{ itemsProduct, itemsProductPatchId, id, itemPopular, itemsStore }}>
           <ToastProvider>
             <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
+              {/* <PersistGate loading={null} persistor={persistor}>
                 <Component {...pageProps} /> 
-              </PersistGate>
+              </PersistGate> */}
               <CssBaseline />
-              {/* <Component {...pageProps} />  */}
+              <Component {...pageProps} /> 
             </Provider>
           </ToastProvider>
         </AuchContextItem.Provider>

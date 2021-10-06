@@ -6,7 +6,7 @@ import DashboardContent from '../../dashboard/pages/Dashboard'
 import { getCookie } from '../../components/common/session';
 import { checkisVerifyToken } from '../../utility/middlware';
 
-export default function Dashboard() {
+const Dashboard = () => {
     return (
         <DashboardMain title="Dashboard Login">
             <DashboardContent />
@@ -34,3 +34,5 @@ Dashboard.getInitialProps = async (ctx) => {
      
     return {data:{}}
 }
+
+export default Dashboard

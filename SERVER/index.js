@@ -1,16 +1,21 @@
 
 const express = require('express')
-var cors = require('cors')
-const BodyParser = require('body-parser')
+const cors = require('cors')
 const route = require('./router/route')
 const path = require('path')
+const bodyParser = require('body-parser')
 
 let port = process.env.PORT_SERVER || 8888
 
 const app = express();
 
-app.use(BodyParser.urlencoded({extended:false}))
-app.use(BodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true,
+    limit: '50mb',
+}))
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
 
 app.use('/uploadsImages', express.static('uploadsImages'))
 app.use('/uploadsDescImages', express.static('uploadsDescImages'))

@@ -7,7 +7,7 @@ import { setTop } from '../../redux/reducers/SRM/top/action';
 import { setProducts } from '../../redux/reducers/SRM/products/action';
 import { checkisVerifyToken } from '../../utility/middlware';
 
-export default function Top({top,products}) {
+const TopDashboard = ({top,products}) => {
 
     const dispatch = useDispatch()
    
@@ -27,7 +27,7 @@ export default function Top({top,products}) {
     )
 }
 
-Top.getInitialProps = async (ctx) => {
+TopDashboard.getInitialProps = async (ctx) => {
     let products = []
     let top = []
 
@@ -78,3 +78,5 @@ Top.getInitialProps = async (ctx) => {
         top:top || []
     }
 }
+
+export default TopDashboard

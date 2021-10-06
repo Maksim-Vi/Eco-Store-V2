@@ -6,7 +6,7 @@ import DashboardMain from '../../dashboard/DashboardMain'
 import SettingsContent from '../../dashboard/pages/Account'
 import { checkisVerifyToken } from '../../utility/middlware'
 
-export default function Account() {
+const Account = () => {
     return (
         <DashboardMain title="Dashboard Login">
             <SettingsContent />
@@ -37,3 +37,5 @@ Account.getInitialProps = async (ctx) => {
     
     return {data:{}}
 }
+
+export default Account

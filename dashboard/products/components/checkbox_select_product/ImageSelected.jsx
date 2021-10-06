@@ -1,6 +1,7 @@
 import React from 'react'
 import ImageUploading from "react-images-uploading";
 import { makeStyles, Button } from '@material-ui/core'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     ContainerAddedItem: {
@@ -19,7 +20,7 @@ const AddImagesDesc = ({ setImages, images }) => {
 
     const classes = useStyles();
     const [createImages, setCreateImages] = React.useState([]);
-
+    const [onRemoveImagesUrl, setOnRemoveImagesUrl] = React.useState([]);
     const maxNumber = 8;
 
     const onChange = (imageList, addUpdateIndex) => {
@@ -58,6 +59,19 @@ const AddImagesDesc = ({ setImages, images }) => {
         setCreateImages(imgData);
         setImages(imgData)
     };
+
+    let onRemove = async (url) =>{
+        let checkUrl = url.match(/uploadsImages/i)
+        if(checkUrl && String(checkUrl[0]) === 'uploadsImages'){
+            setOnRemoveImagesUrl([...onRemoveImagesUrl, url])
+            // await axios({
+            //     method: 'DELETE',
+            //     url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
+            //     data: {url}
+            //   })
+           
+        }
+    }
 
     React.useEffect(()=>{
         if(images.length > 0){
@@ -108,7 +122,10 @@ const AddImagesDesc = ({ setImages, images }) => {
                             <div className={`image-item ${classes.ContainerBtn}`}>
                                 <Button variant="contained" color="primary" style={{ marginRight: '10px', marginLeft: '10px' }} onClick={() => onImageUpdate(index)}>Изменить</Button>
                                 &nbsp;
-                                <Button variant="contained" color="primary" onClick={() => onImageRemove(index)}>Удалить</Button>
+                                <Button variant="contained" color="primary" onClick={()=>{
+                                    onImageRemove(index)
+                                    onRemove(image.data_url)
+                                }}>Удалить</Button>
                             </div>
                         </div>
                     )})}
