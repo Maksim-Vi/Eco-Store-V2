@@ -61,8 +61,10 @@ let updateData = (req,res) =>{
 }
 
 let deleteData = (req,res) =>{
-    if(req.body.url !== ''){
-        fs.unlinkSync(String(req.body.url))
+    if(req.body.url.length > 0){
+        req.body.url.forEach(i=>{
+            fs.unlinkSync(String(i))
+        })
     }
 }
 

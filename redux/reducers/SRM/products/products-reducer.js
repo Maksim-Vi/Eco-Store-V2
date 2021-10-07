@@ -1,4 +1,14 @@
-import { EDIT_SRM_PRODUCTS_TABS, RESET_SRM_PRODUCTS_TABS, SET_SRM_DESCRIPTION_PRODUCT_TABS_DATA, SET_SRM_DESCRIPTION_TABLE_TABS_DATA, SET_SRM_GENERAL_TABS_DATA, SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA, SET_SRM_IMAGES_PRODUCT_DATA, SET_SRM_PRODUCTS } from "./action";
+import { 
+    EDIT_SRM_PRODUCTS_TABS, 
+    RESET_SRM_PRODUCTS_TABS, 
+    SET_SRM_DESCRIPTION_PRODUCT_TABS_DATA, 
+    SET_SRM_DESCRIPTION_TABLE_TABS_DATA, 
+    SET_SRM_GENERAL_TABS_DATA, 
+    SET_SRM_IMAGES_DESCRIPTION_PRODUCT_DATA, 
+    SET_SRM_IMAGES_PRODUCT_DATA, 
+    SET_SRM_NEED_TO_DELITE_IMAGES, 
+    SET_SRM_PRODUCTS 
+} from "./action";
 
 let initialState = {
     products:[],
@@ -25,7 +35,8 @@ let initialState = {
         equipment:'',
         structure:''
     },
-    Images: []
+    Images: [],
+    needToDeleteImages: []
 };
 
 const productsReducer = (state = initialState, action) =>{
@@ -62,7 +73,12 @@ const productsReducer = (state = initialState, action) =>{
         case SET_SRM_IMAGES_PRODUCT_DATA:{
             return {...state,Images: action.img}
         } 
-
+        case SET_SRM_NEED_TO_DELITE_IMAGES:{
+            return {
+                ...state, 
+                needToDeleteImages: state.needToDeleteImages.concat(action.images)
+            }
+        } 
 
         case EDIT_SRM_PRODUCTS_TABS:{
             return {

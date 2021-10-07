@@ -16,11 +16,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const AddImagesDesc = ({ setImages, images }) => {
+const AddImagesDesc = ({ setImages, onRemoveImagesUrl, setOnRemoveImagesUrl, images }) => {
 
     const classes = useStyles();
     const [createImages, setCreateImages] = React.useState([]);
-    const [onRemoveImagesUrl, setOnRemoveImagesUrl] = React.useState([]);
     const maxNumber = 8;
 
     const onChange = (imageList, addUpdateIndex) => {
@@ -63,13 +62,7 @@ const AddImagesDesc = ({ setImages, images }) => {
     let onRemove = async (url) =>{
         let checkUrl = url.match(/uploadsImages/i)
         if(checkUrl && String(checkUrl[0]) === 'uploadsImages'){
-            setOnRemoveImagesUrl([...onRemoveImagesUrl, url])
-            // await axios({
-            //     method: 'DELETE',
-            //     url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
-            //     data: {url}
-            //   })
-           
+            setOnRemoveImagesUrl([...onRemoveImagesUrl, url])           
         }
     }
 

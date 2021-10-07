@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, makeStyles, Tooltip, Typography, TextField, CardContent, Card, Divider, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { setDescriptionProductTabsData, setImagesProductData } from '../../../../redux/reducers/SRM/products/action';
+import { setDescriptionProductTabsData, setImagesProductData, setNeedToDeleteImages } from '../../../../redux/reducers/SRM/products/action';
 import AddImagesDesc from '../checkbox_select_product/ImageSelected';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +42,8 @@ export const DescriptionProduct = () => {
 
     const dispatch = useDispatch()
     const descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
+    const CRM_products = useSelector(state => state.CRM_products)
+
     const Images = useSelector(state => state.CRM_products.Images)
     let [sendData, setSendData] = React.useState(false);
 
@@ -50,6 +52,7 @@ export const DescriptionProduct = () => {
         descriptionD: descriptionProductTabs.descriptionD,
     });
     let [images, setImages] = React.useState( Images );
+    const [onRemoveImagesUrl, setOnRemoveImagesUrl] = React.useState([]);
 
     let handleChange = (event) => {
         setDescriptionProduct({ ...descriptionProduct, [event.target.name]: event.target.value })
@@ -59,13 +62,8 @@ export const DescriptionProduct = () => {
         setSendData(true)
         dispatch(setImagesProductData(images))
         dispatch(setDescriptionProductTabsData(descriptionProduct))
+        dispatch(setNeedToDeleteImages(onRemoveImagesUrl))
     }
-
-    React.useEffect(()=>{
-        // if(Images.length > 0){
-        //     setSendData(true)
-        // }
-    },[])
 
     return (
         <>
@@ -96,7 +94,7 @@ export const DescriptionProduct = () => {
                 </Card> 
                 : <Card className={classes.CardWrapper}>
                 <Typography color="textPrimary" gutterBottom variant="h6">Добавить картинки</Typography>
-                <AddImagesDesc setImages={setImages} images={images}/>
+                <AddImagesDesc setImages={setImages} setOnRemoveImagesUrl={setOnRemoveImagesUrl} onRemoveImagesUrl={onRemoveImagesUrl} images={images}/>
             </Card>
             }
             <Card className={classes.CardWrapper}>

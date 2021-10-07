@@ -3,7 +3,7 @@ import { makeStyles, CardContent, Card, TextField, Grid, Typography, FormControl
 import ImageUploading from 'react-images-uploading';
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { setImagesDescriptionProductData } from '../../../../redux/reducers/SRM/products/action';
+import { setImagesDescriptionProductData, setNeedToDeleteImages } from '../../../../redux/reducers/SRM/products/action';
 
 const useStyles = makeStyles((theme) => ({
     CardWrapper: {
@@ -36,7 +36,7 @@ export const AddImages = () => {
     let descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
     let [desc, setDesc] = React.useState([]);
     let [sendData, setSendData] = React.useState(false);
-
+    const [onRemoveImagesUrl, setOnRemoveImagesUrl] = React.useState([]);
     const [images, setImages] = React.useState([]);
     const maxNumber = 8;
 
@@ -91,12 +91,22 @@ export const AddImages = () => {
         setImages(imgData)
     };
 
-    let onRemove = (index) =>{
+    let onRemove = (index,url) =>{
         setDesc(desc.map(item => {
             if(item.id !== index ){
                 return item
             }
         }))
+        let checkUrl = url.match(/uploadsDescImages/i)
+        if(checkUrl && String(checkUrl[0]) === 'uploadsDescImages'){
+            setOnRemoveImagesUrl([...onRemoveImagesUrl, url])
+            // await axios({
+            //     method: 'DELETE',
+            //     url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
+            //     data: {url}
+            //   })
+           
+        }
     }
 
     let setImgDesc = (event,index) =>{
@@ -110,6 +120,7 @@ export const AddImages = () => {
     }
 
     let uploadImages = () =>{
+        dispatch(setNeedToDeleteImages(onRemoveImagesUrl))
         dispatch(setImagesDescriptionProductData({
             img: images,
             ImgData: desc,
@@ -144,9 +155,7 @@ export const AddImages = () => {
                         onImageUpload,
                         onImageRemoveAll,
                         onImageUpdate,
-                        onImageRemove = () => {
-                            onRemove()
-                        },
+                        onImageRemove,
                         isDragging,
                         dragProps,
                     }) => (
@@ -178,7 +187,10 @@ export const AddImages = () => {
                                         <div className={`image-item ${classes.ContainerBtn}`}>
                                             <Button variant="contained" color="primary" style={{ marginRight: '10px', marginLeft: '10px' }} onClick={() => onImageUpdate(index)}>Изменить</Button>
                                             &nbsp;
-                                            <Button variant="contained" color="primary" onClick={() => {onImageRemove(index)}}>Удалить</Button>
+                                            <Button variant="contained" color="primary" onClick={() => {
+                                                onImageRemove(index)
+                                                onRemove(index,image.data_url)
+                                            }}>Удалить</Button>
                                         </div>
 
                                         <Grid container spacing={3} wrap="wrap">
