@@ -31,3 +31,6 @@ export  const resetProductTabs = () => ({ type: RESET_SRM_PRODUCTS_TABS })
 
 export const SET_SRM_NEED_TO_DELITE_IMAGES = 'SRM/SET_SRM_NEED_TO_DELITE_IMAGES'
 export  const setNeedToDeleteImages = (images) => ({ type: SET_SRM_NEED_TO_DELITE_IMAGES, images })
+
+export const RESET_NEED_TO_DELITE_IMAGES = 'SRM/RESET_NEED_TO_DELITE_IMAGES'
+export  const resetNeedToDeleteImages = () => ({ type: RESET_NEED_TO_DELITE_IMAGES,  })

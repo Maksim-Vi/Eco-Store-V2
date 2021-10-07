@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import axios from 'axios';
 import { getCookie } from '../../components/common/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { editProductTabs, resetProductTabs, setNeedToDeleteImages, setProducts } from '../../redux/reducers/SRM/products/action';
+import { editProductTabs, resetNeedToDeleteImages, resetProductTabs, setNeedToDeleteImages, setProducts } from '../../redux/reducers/SRM/products/action';
 import { ImagesDeleteDataUrl } from '../utilits/products/ProductsUtils';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,6 +63,8 @@ export default function EditProduct(props) {
     let genetalTabs = useSelector(state => state.CRM_products.genetalTabs)
     let descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
     let descriptionTableTabs = useSelector(state => state.CRM_products.descriptionTableTabs)
+    const needToDeleteImages = useSelector(state => state.CRM_products.needToDeleteImages)
+
     const dispatch = useDispatch()
 
 
@@ -133,6 +135,8 @@ export default function EditProduct(props) {
             structure: descriptionTableTabs.structure,
         }
 
+        deleteImages()
+
         const formData = new FormData();
         formData.append('product', JSON.stringify(data));
         if (Images.length > 0) {
@@ -153,14 +157,23 @@ export default function EditProduct(props) {
 
         await axios.put(`${process.env.SERVER_UPLOAD_URL}/uploadImageProduct`, formData)
         .then((response) => {
-            console.log(`ANSWER response web`, response);
             if (response.status === 200 && response.data.success === true) {
                 data['Images'] = response.data.images
                 data['descriptionImages'] = response.data.imagesDesc
             }
         }).catch((err) => {
             console.log(`uploadProducts ERROR EditProduct`, err);
-            props.closeDialog()
+            //props.closeDialog()
+            return
+        })
+
+        let res = await axios.put(`${URL}/products`, data , {
+            headers: { 
+                'authorization': cookie,
+            }
+        }).catch((err) => {
+            console.log(`createProduct ERROR AddProduct`, err);
+            //props.closeDialog()
             return
         })
 
@@ -168,6 +181,21 @@ export default function EditProduct(props) {
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         } 
+    }
+
+    let deleteImages = async () =>{
+        let url = needToDeleteImages
+        if(needToDeleteImages.length > 0){
+            await axios({
+                method: 'DELETE',
+                url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
+                data: { url }
+            }).catch((err) => {
+                console.log(`delete images ERROR EditProduct`, err);
+                //props.closeDialog()
+                return 
+            })
+        }
     }
 
     React.useEffect(() => {
@@ -178,7 +206,7 @@ export default function EditProduct(props) {
         })
         return () => {
             dispatch(resetProductTabs())
-            dispatch(setNeedToDeleteImages([]))
+            dispatch(resetNeedToDeleteImages())
         }
     }, [])
 

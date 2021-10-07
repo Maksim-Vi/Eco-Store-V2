@@ -60,3 +60,40 @@ export const countImgData = (item, itemId) => {
         return count + (item.ImgDesc.id === itemId ? 1 : 0)
     }, 0)
 }
+
+export const formateProductsData = (response) =>{
+    let productsData = []
+    response.forEach(product => {
+        let newData = product
+        if (newData.images !== '') {
+            let images = product['images'].split(' , ')
+            let data = []
+            images.forEach(img=>{
+                data.push({
+                    url: img,
+                    data_url: img,
+                    isNew: false
+                })
+            })
+            newData['images'] = data
+        } 
+        if (newData.imagesDescription !== '') {
+            let images = product['imagesDescription'].split(' , ')
+            let data = []
+            images.forEach(img=>{
+                data.push({
+                    url: img,
+                    data_url: img,
+                    isNew: false
+                })
+            })
+            newData['imagesDescription'] = data
+        }
+        newData['ImgData'] = eval("(" + newData.ImgData + ")")
+        newData['sale'] = newData.sale === 0 ? false : true
+        newData['inStock'] = newData.inStock === 0 ? false : true
+        
+        productsData.push(newData)
+    });
+    return productsData
+}

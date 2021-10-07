@@ -61,16 +61,21 @@ let updateData = (req,res) =>{
 }
 
 let deleteData = (req,res) =>{
-    if(req.body.url.length > 0){
-        req.body.url.forEach(i=>{
-            fs.unlinkSync(String(i))
-        })
+    try{
+        if(req.body.url.length > 0){
+            req.body.url.forEach(i=>{
+                fs.unlinkSync(String(i))
+            })
+        }
+        res.status(200).json({success: true })
+    } catch(err){
+        res.status(401).json({success: false, err: err})
     }
+   
 }
 
 module.exports = (app) => {     
     app.post('/uploadImagesProducts', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), uploadData);
     app.put('/uploadImageProduct', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), updateData);
     app.delete('/removeImagesProduct', deleteData);
-    //app.put('/uploadProduct', updateData);
 };

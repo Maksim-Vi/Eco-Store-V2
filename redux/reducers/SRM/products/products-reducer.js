@@ -1,5 +1,6 @@
 import { 
     EDIT_SRM_PRODUCTS_TABS, 
+    RESET_NEED_TO_DELITE_IMAGES, 
     RESET_SRM_PRODUCTS_TABS, 
     SET_SRM_DESCRIPTION_PRODUCT_TABS_DATA, 
     SET_SRM_DESCRIPTION_TABLE_TABS_DATA, 
@@ -79,7 +80,12 @@ const productsReducer = (state = initialState, action) =>{
                 needToDeleteImages: state.needToDeleteImages.concat(action.images)
             }
         } 
-
+        case RESET_NEED_TO_DELITE_IMAGES:{
+            return {
+                ...state, 
+                needToDeleteImages: []
+            }
+        } 
         case EDIT_SRM_PRODUCTS_TABS:{
             return {
                 ...state,
