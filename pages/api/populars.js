@@ -7,17 +7,18 @@ export default authenticated(async function getPopular(req, res) {
         case 'GET': {
             const tops = await sql_query('select * from tops').catch((err) => {
                 res.status(500).json({ message: `popular.js GET req, SELECT desc: Something was wrong! ${err}` })
+            }).catch((err)=>{
+                return res.status(500).json({ message: `populars.js GET req, SELECT tops: Something was wrong! ${err}` })
             })
 
-            //let tops = await getAllPopulats()
-
             let data = []
-            tops.forEach(top => {
-                data.push({id: top.id, text: top.text, image: top.image , isNew: false})
-            });
-
-            return res.end(JSON.stringify(data));
-            //return  res.json(tops);
+            if(tops && tops.length > 0){
+                tops.forEach(top => {
+                    data.push({id: top.id, text: top.text, image: top.image , isNew: false})
+                });
+            }
+        
+            return res.status(200).json(data);
         }
         case 'POST': {
             await sql_query('TRUNCATE TABLE tops').catch((err) => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -11,7 +11,7 @@ import ProductsImgData from './productsImgData';
 import BuyMenuItem from './component/BuyMenu/BuyMenuItem'
 
 const ProductId = (props) => {
-    
+
     let dispatch = useDispatch()
     let [tableData, setTableData] = useState({
         typeName: '',
@@ -21,21 +21,21 @@ const ProductId = (props) => {
         equipment: '',
         structure: ''
     })
-    let [selectedImgData,setSelectedImgData] = useState()
+    let [selectedImgData, setSelectedImgData] = useState()
     const [openBuyMenu, setOpenBuyMenu] = React.useState({
         isOpen: false,
         item: {}
     })
 
-    let hendlerOpenBuyMenu = (item) =>{
-        setOpenBuyMenu({isOpen: true,item: item})
+    let hendlerOpenBuyMenu = (item) => {
+        setOpenBuyMenu({ isOpen: true, item: item })
     }
 
-    let hendlerCloseBuyMenu = () =>{
-        setOpenBuyMenu({isOpen: false,item: {}})
+    let hendlerCloseBuyMenu = () => {
+        setOpenBuyMenu({ isOpen: false, item: {} })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setTableData({
             typeName: props.item.typeName,
             countPeople: props.item.countPeople,
@@ -45,15 +45,15 @@ const ProductId = (props) => {
             structure: props.item.structure
         })
         setSelectedImgData(props.item)
-    },[])
-    
+    }, [])
+
 
     return (
         <section className={s.sectionProduct}>
             <div className={s.ProductContainer}>
                 <div className={s.ContainerHeader}>
                     <div className={s.CaruselProduct}>
-                        <CaruselProduct item={props.item}/>
+                        <CaruselProduct item={props.item} />
                     </div>
                     <div className={s.TitleProduct}>
                         <h2>{props.item.nameDescription}</h2>
@@ -61,18 +61,18 @@ const ProductId = (props) => {
                             <p className={s.CardCode}>код товара 100{props.item.id}</p>
                             <div className={s.CardPriceContainer}>
                                 {props.item.sale
-                                    ?<Typography className={s.CardSale} variant="body2" component="p">
-                                            <strike style={{ color: 'red' }}>
-                                                <span>{props.item.price}грн</span>
-                                            </strike>
-                                        </Typography>
+                                    ? <Typography className={s.CardSale} variant="body2" component="p">
+                                        <strike style={{ color: 'red' }}>
+                                            <span>{props.item.price}грн</span>
+                                        </strike>
+                                    </Typography>
                                     : <Typography className={s.CardSale} variant="body2" component="p"></Typography>
                                 }
 
                                 <Typography className={s.CardInStore} variant="body2" component="p">
                                     {props.item.inStock
                                         ? <span>в наличии</span>
-                                        : <span style={{color:'red'}}>нет в наличии</span>
+                                        : <span style={{ color: 'red' }}>нет в наличии</span>
                                     }
                                 </Typography>
                             </div>
@@ -80,20 +80,20 @@ const ProductId = (props) => {
                                 <Typography className={s.CardPrice} variant="body2" component="p">
                                     цена: <span style={{ color: 'green' }}>
                                         {props.item.sale
-                                            ?  (props.item.price - props.item.salePrice)
-                                            :  props.item.price
+                                            ? (props.item.price - props.item.salePrice)
+                                            : props.item.price
                                         }грн
                                     </span>
                                 </Typography>
 
-                                <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => {hendlerOpenBuyMenu(props.item)}}>
+                                <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => { hendlerOpenBuyMenu(props.item) }}>
                                     <p className={s.BtnInBasket}>в корзину</p>
                                     <img className={s.BtnImg} src="/contentImg/products/buy2.png" alt="buy" />
-                                    <span>{addedCountItem(props.itemBasket,props.item.id) > 0 && `(${addedCountItem(props.itemBasket,props.item.id)})`}</span>
+                                    <span>{addedCountItem(props.itemBasket, props.item.id) > 0 && `(${addedCountItem(props.itemBasket, props.item.id)})`}</span>
                                 </button>
                             </div>
                         </div>
-                        <ProductsImgData item={props.item} hendlerOpenBuyMenu={hendlerOpenBuyMenu}/>
+                        <ProductsImgData item={props.item} hendlerOpenBuyMenu={hendlerOpenBuyMenu} />
                     </div>
                 </div>
                 <div className={s.ContainerMiddle}>
@@ -105,7 +105,7 @@ const ProductId = (props) => {
                 <div className={s.ContainerFooter}>
                     <h2>Общие характеристики:</h2>
                     <hr />
-                    <ProductTable itemDescTable={tableData}/>
+                    <ProductTable itemDescTable={tableData} />
 
                     {/* <div className={s.SameProducts}>
                             похожие товары 
@@ -113,14 +113,14 @@ const ProductId = (props) => {
                 </div>
             </div>
 
-            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item}/>}
+            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item} />}
 
         </section>)
 }
 
 let mapStateToProps = (state) => {
     return {
-      itemBasket: state.basket.items,
+        itemBasket: state.basket.items,
     };
 };
 

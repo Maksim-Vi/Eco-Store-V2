@@ -25,7 +25,7 @@ Dashboard.getInitialProps = async (ctx) => {
     } else {
         let isVerivy = checkisVerifyToken(cookie)
 
-        if(!isVerivy){
+        if(!isVerivy && ctx){
             ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
             ctx.res.end();
             return; 

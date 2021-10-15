@@ -16,7 +16,11 @@ Products.getInitialProps = async () => {
     let json = []
     
     const res = await fetch(`${URL}/products`)
-    json = await res.json()
+
+    if(res){
+        json = await res.json()
+    }
+    
 
     return { items: json }
 }

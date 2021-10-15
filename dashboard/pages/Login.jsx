@@ -29,6 +29,8 @@ const Login = () => {
       setIsLogin(data.login)
       setCookie('auth',data.token)
       auch.login(data.token,data.userId)
+    } else {
+      router.push('/AdminPanel/SignIn')
     }
   }
 

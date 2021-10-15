@@ -13,14 +13,15 @@ export  const setUserData = (email,password) => ({ type: SET_SRM_SIGNIN, email,p
 
 export const SRM_Login = (email,password) => async (dispatch) => {
     let data = await postSignInApi(email,password)   
-    if(data){
+  
+    if(data && data.status === 200){
         dispatch(setToken(data.token))
         dispatch(setUserData(email,password))
         return {
             login: true,
-            token: data.token, 
-            userId: data.userId
+            token: data.data.token, 
+            userId: data.data.userId
         }
     }
-    return {login: false}
+    return {login: false,token: null, userId: null}
 } 

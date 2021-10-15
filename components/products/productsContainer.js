@@ -49,7 +49,7 @@ const ProductsContainer = ({items}) => {
         dispatch(setStore(items))
     }, [dispatch])
 
-    if (items === undefined){
+    if (!items || items === undefined || items === null){
         return  <section className={classes.sectionProducts}>data</section>
     }
 

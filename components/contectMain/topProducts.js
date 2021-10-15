@@ -3,10 +3,11 @@ import stl from '../../styles/content/topProducts.module.scss'
 import TopItemProduct from './topItemProduct';
 import Link from 'next/link'
 import ABS from '../common/abs';
+import { sendTelegramMsg } from '../../API/telegram';
 
 const TopProducts = (props) => {
 
-  if(props.popular.length === 0) return null
+  if(!props.popular && props.popular.length === 0) return null
 
   return (
     <div className={stl.sectionContainer}>
@@ -21,6 +22,7 @@ const TopProducts = (props) => {
           return <TopItemProduct key={item.id} item={item} />
         })}
       </div>
+      <button onClick={()=>{sendTelegramMsg()}}>click</button>
       <Link href="/products" as={'/products'}><button className={stl.btnBottom}>смотреть все товары</button></Link>
     </div>
 

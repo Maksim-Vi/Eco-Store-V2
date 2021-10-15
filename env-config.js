@@ -21,4 +21,5 @@ module.exports = {
 
   'process.env.EMAIL_NODEMAILER': prod ? 'maksdev01panel@gmail.com' : 'maksdev01panel@gmail.com',
   'process.env.EMAIL_PASSWORD':  prod ? 'Vfrcbv1996!' : 'Vfrcbv1996!',
+  'process.env.TELEGRAM_TOKEN': '2011610237:AAHhqAxePZ4RVZXIca0I0IjCjeoH-E3jm04'
 }

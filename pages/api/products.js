@@ -11,9 +11,14 @@ export default authenticated(async function getProducts(req, res) {
             LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
             LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
 
-            const response = await db.query(SELECT)
-            await db.end()
-            
+            const response = await sql_query(SELECT).catch((err)=>{
+                return res.status(500).json({ message: `products.js GET req, GET data: Something was wrong! ${err}` })
+            })
+
+            if(response === null){
+                return res.status(500).json({ message: `Data andswer null, please check open db` })
+            }    
+
             let productsData = formateProductsData(response)
             
             return res.json(productsData)
@@ -72,10 +77,9 @@ export default authenticated(async function getProducts(req, res) {
                 LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
                 LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
     
-                const response = await db.query(SELECT).catch((err)=>{
+                const response = await sql_query(SELECT).catch((err)=>{
                     return res.status(500).json({ message: `createProduct.js POST req, SELECT products: Something was wrong! ${err}` })
                 })
-                await db.end()
         
                 let productsData = formateProductsData(response)
                 res.status(200).json({ messages: 'success', products: productsData });
@@ -86,10 +90,9 @@ export default authenticated(async function getProducts(req, res) {
                 LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
                 LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
     
-                const response = await db.query(SELECT).catch((err)=>{
+                const response = await sql_query(SELECT).catch((err)=>{
                     return res.status(500).json({ message: `createProduct.js POST req, SELECT products: Something was wrong! ${err}` })
                 })
-                await db.end()
         
                 let productsData = formateProductsData(response)
                 
@@ -112,7 +115,7 @@ export default authenticated(async function getProducts(req, res) {
                     ImgData,
                     body.DescProductId
                 ]).catch((err)=>{
-                    res.status(500).json({ message: `createProduct.js PUT req, UPDATE desc: Something was wrong! ${err}` })
+                    return res.status(500).json({ message: `createProduct.js PUT req, UPDATE desc: Something was wrong! ${err}` })
                 })
                 
                 let UPDATE_DESC_TABLE = 'UPDATE descriptionproductstables SET typeName = ?, countPeople = ?, features = ?, eco = ?, equipment = ?, structure = ? WHERE id = ?'
@@ -125,7 +128,7 @@ export default authenticated(async function getProducts(req, res) {
                     body.structure,
                     body.DescProductTableId
                 ]).catch((err)=>{
-                    res.status(500).json({ message: `createProduct.js PUT req, UPDATE descTabs: Something was wrong! ${err}` })
+                    return res.status(500).json({ message: `createProduct.js PUT req, UPDATE descTabs: Something was wrong! ${err}` })
                 })
             
             
@@ -142,7 +145,7 @@ export default authenticated(async function getProducts(req, res) {
                     body.countInStock, 
                     body.id
                 ]).catch((err)=>{
-                    res.status(500).json({ message: `createProduct.js PUT req, UPDATE products: Something was wrong! ${err}` })
+                    return res.status(500).json({ message: `createProduct.js PUT req, UPDATE products: Something was wrong! ${err}` })
                 })
             
                 let SELECT = `
@@ -151,14 +154,13 @@ export default authenticated(async function getProducts(req, res) {
                     LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
                     LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
             
-                const response = await db.query(SELECT).catch((err)=>{
-                    res.status(500).json({ message: `createProduct.js PUT req, SELECT products: Something was wrong! ${err}` })
+                const response = await sql_query(SELECT).catch((err)=>{
+                    return res.status(500).json({ message: `createProduct.js PUT req, SELECT products: Something was wrong! ${err}` })
                 })
-                await db.end()
-            
+                            
                 let productsData = formateProductsData(response)
             
-                res.status(200).json({ messages: 'success', products: productsData });     
+                return res.status(200).json({ messages: 'success', products: productsData });     
             } catch(err) {
                 let SELECT = `
                     SELECT *, t1.id id 
@@ -166,14 +168,13 @@ export default authenticated(async function getProducts(req, res) {
                     LEFT JOIN descriptionproducts t2 ON t1.DescProductId = t2.id 
                     LEFT JOIN descriptionproductstables t3 ON t1.DescProductTableId = t3.id`
             
-                const response = await db.query(SELECT).catch((err)=>{
-                    res.status(500).json({ message: `createProduct.js PUT req, SELECT products: Something was wrong! ${err}` })
+                const response = await sql_query(SELECT).catch((err)=>{
+                    return res.status(500).json({ message: `createProduct.js PUT req, SELECT products: Something was wrong! ${err}` })
                 })
-                await db.end()
-            
+                            
                 let productsData = formateProductsData(response)
 
-                res.status(401).json({ messages: 'unsuccess', products: productsData, err: err });    
+                return res.status(401).json({ messages: 'unsuccess', products: productsData, err: err });    
             }
         }
         default: {

@@ -15,6 +15,7 @@ export async function sql_query(query_string,values = []) {
     await db.end()
     return results
   } catch (e) {
-    throw Error(e.message)
+    // throw Error(e.message)
+    return null
   }
 }

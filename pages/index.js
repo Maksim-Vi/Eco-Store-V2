@@ -19,7 +19,6 @@ const Home = (props) => {
 
     return (
         <HeaderMain title="Eco Choice">
-            <h2>temp: {Date.now()}</h2>
             <TopProducts popular={props.popular} />
             <ContactUs />
         </HeaderMain>)
@@ -34,9 +33,13 @@ Home.getInitialProps = async () => {
     let products = await fetch(`${URL}/products`)
     let popular = await fetch(`${URL}/populars`)
 
-    productsJson = await products.json()
-    popularJson = await popular.json()
-
+    if(products.status === 200){
+        productsJson = await products.json()
+    }
+    if(popular.status === 200){
+        popularJson = await popular.json()
+    }
+   
     return { 
         items: productsJson,
         popular: popularJson

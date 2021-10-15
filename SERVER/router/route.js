@@ -71,8 +71,8 @@ let deleteData = (req,res) =>{
     } catch(err){
         res.status(401).json({success: false, err: err})
     }
-   
 }
+
 
 module.exports = (app) => {     
     app.post('/uploadImagesProducts', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), uploadData);
