@@ -13,6 +13,7 @@ import { uniqBy } from 'lodash';
 import { removeAllItemStore } from '../../../redux/reducers/basket-reducer';
 import { Divider } from '@material-ui/core';
 import { checkIsHaveDopDesc } from '../../../utility/utils';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,6 +126,7 @@ const CreateOrder = ({ setCreateOrder }) => {
   const basketItem = useSelector(state => state.basket)
 
   const [activeStep, setActiveStep] = React.useState(0);
+  const [currentOrder, setCurrentOrder] = React.useState('0');
   const steps = getSteps();
 
   const { addToast, removeAllToasts } = useToasts()
@@ -159,7 +161,6 @@ const CreateOrder = ({ setCreateOrder }) => {
 
   let sortBasketItemToOrder = () => {
     let items = sortBasketItem(basketItem.items)
-    console.log(`ANSWER`, items);
     let item = items.map(item => {
       return {
         id: item.id,
@@ -177,13 +178,21 @@ const CreateOrder = ({ setCreateOrder }) => {
     if (itemsToOrder.length === 0) {
       error('Выберите товар!')
     } else {
-      dispatch(postFormBasket(form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
+      let namLid = currentOrder
+      dispatch(postFormBasket(namLid,form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
       dispatch(addItemToProduct(itemsToOrder))
       dispatch(removeAllItemStore())
       message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
     }
     setCreateOrder(false)
   };
+
+  React.useEffect(()=>{
+    setCurrentOrder(String(Math.floor(Math.random() * (10000 - 999)) + 1000))
+    return ()=>{
+      setCurrentOrder('0')
+    }
+  },[])
 
   const oldRenderData = () => {
     return (
@@ -213,7 +222,7 @@ const CreateOrder = ({ setCreateOrder }) => {
   let newRender = () => {
     return (
       <div className={classes.root}>
-        <h3>Заказ № 1836217</h3>
+        <h3>Заказ № {currentOrder}</h3>
         <p>Спасибо что выбрали именно нас!</p>
         <Divider />
         <Stepper activeStep={activeStep} orientation="vertical">

@@ -1,24 +1,17 @@
 
-const TOKEN = '2065373657:AAFYPKjhGaKppVj4HpEPvqRby40Mpmuh0iQ';
-const CHAT_ID = '768197028'; 
+const TOKEN = process.env.TELEGRAM_TOKEN || '2065373657:AAFYPKjhGaKppVj4HpEPvqRby40Mpmuh0iQ';
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '776918618';
 
-// var form = document.querySelector('.form'); // находим в DOM нашу лид-форму
-// form.addEventListener("submit", function (e) { // прослушиваем форму
-//     e.preventDefault(); // перехватываем стандартный ответ
-//     data = new FormData(this); // вместо serialize на jQuery
-//     sendMsg(data); // передаём данные из формы на отправку
-// })
-
-export const sendTelegramMsg = async () => {
+export const sendTelegramMsg = async (dataLid) => {
     let url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage';
     let data = JSON.stringify({
         chat_id: CHAT_ID,
         parse_mode: 'Markdown',
-        // text: '*Новый лид*\n' + data.get("title") + '\n\n*Имя:* ' + data.get("name") + '\n*Телефон:* ' + data.get("phone") + '\n*Откуда:* [' + window.location.href + '](' + window.location.href + ')'
-        text: '*Новый лид*'
+        //text: '*Новый лид*\n' + '#261524' + '\n\n*Имя:* ' + dataLid.firstName + '\n*Телефон:* ' + dataLid.phone + '\n*Емейл:* ' + dataLid.Email + '\n*Промокол:* ' + dataLid.promocode + '\n\n*Оплата:* ' + dataLid.pay + '\n*Доставка:* ' + dataLid.post + '\n*Iнформация по доставкe:* \n' + dataLid.postInfo +  '\n\n*Товары:* \n' + dataLid.items +''
+        text: formatText(dataLid)
     });
 
-    let response = await fetch(`${url}/contactFormOrder`, {
+    let response = await fetch(`${url}`, {
         method: "POST",
         body: data,
         headers: {
@@ -27,4 +20,15 @@ export const sendTelegramMsg = async () => {
     })
 
     return response
+}
+
+const formatText = (dataLid) => {
+    let firstString = `*Новый заказ:* ${dataLid.namLid}\n\n*Имя:* ${dataLid.firstName}\n*Телефон:* ${dataLid.phone}\n*Емейл:* ${dataLid.Email}\n*Промокол:* ${dataLid.promocode}`
+    let secondSting = `\n\n*Оплата:* ${dataLid.pay}\n*Доставка:* ${dataLid.post}\n\n*Iнформация по доставкe:*\n\n*Имя Отправляемого:* ${dataLid.postInfo.post_FirstName}, ${dataLid.postInfo.post_LastName};\n*Телефон Отправляемого:* ${dataLid.postInfo.post_Phone};\n*Отделение почты:* ${dataLid.postInfo.post_NumberPost};\n\n*Товары:*\n`
+    let items = dataLid.items.map(item => {
+        return `\n*id:* ${item.id};\n*Название товара:* ${item.name};\n*типо товара:* ${item.type};\n*количество:* ${item.count};\n*цена товара:* ${item.cost} = ${item.cost * item.count};\n`
+    })
+    let countCostItems = `\n--------------------------------\n*Общая цена:* ${dataLid.items.reduce((count, item) => {return count + item.cost * item.count}, 0)}`
+
+    return firstString + secondSting + items + countCostItems
 }

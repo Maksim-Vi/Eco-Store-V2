@@ -30,6 +30,7 @@ export default async function setContactFormOrder(req, res) {
                 subject: 'From Eco Store',
     
                 html:`
+                <h2>Номер заказа: ${req.body.namLid}</h2>
                 <h3>Вам пришел заказ от:</h3>
                     <p><b>Имя:</b> ${req.body.firstName},</p>
                     <p><b>телефон:</b> ${req.body.phone},</p>

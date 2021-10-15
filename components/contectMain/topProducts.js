@@ -22,7 +22,6 @@ const TopProducts = (props) => {
           return <TopItemProduct key={item.id} item={item} />
         })}
       </div>
-      <button onClick={()=>{sendTelegramMsg()}}>click</button>
       <Link href="/products" as={'/products'}><button className={stl.btnBottom}>смотреть все товары</button></Link>
     </div>
 

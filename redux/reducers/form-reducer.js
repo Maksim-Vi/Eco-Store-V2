@@ -130,7 +130,7 @@ export const setPostInfo = (postInfo) => ({type: SET_POST_INFO, postInfo})
 
 export const addItemToProduct = (item, count) => ({type: ADD_ITEM_PRODUCT, item, count })
 
-export const postFormStore = (token,firstName,Email,subject,phone=null,promocode=null,pay=null,post=null,postInfo=null) => async (dispatch) => {
+export const postFormStore = (token,firstName,Email,subject) => async (dispatch) => {
     try {
         postFormStoreApi(token,firstName,Email,subject,phone,promocode,pay,post,postInfo)
         //dispatch(setAnswerForm(firstName,Email,subject,phone,promocode,pay,post,postInfo)); 
@@ -142,10 +142,9 @@ export const postFormStore = (token,firstName,Email,subject,phone=null,promocode
 
 } 
 
-export const postFormBasket = (FirstName,LastName=null,Email,subject=null,phone,promocode,pay=null,post=null,postInfo=null,item) => async (dispatch) => {
+export const postFormBasket = (namLid,FirstName,Email,phone,promocode,pay,post,postInfo,itemsData) => async (dispatch) => {
     try {
-        let items = JSON.stringify(item)
-        let data = await postFormStoreBasketApi(FirstName,LastName,Email,subject,phone,promocode,pay,post,postInfo,items)
+        let data = await postFormStoreBasketApi(namLid,FirstName,Email,phone,promocode,pay,post,postInfo,itemsData)
         dispatch(clearFullForm())
     } catch (error){
         console.log(error);
