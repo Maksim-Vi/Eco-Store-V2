@@ -11,7 +11,6 @@ const CarouselProduct = ({ children, images }) => {
             responsive={responsiveOneItem()}
             additionalTransfrom={0}
             arrows
-            // autoPlaySpeed={3000}
             centerMode={false}
             className=""
             containerClass="container"
@@ -24,7 +23,7 @@ const CarouselProduct = ({ children, images }) => {
             minimumTouchDrag={80}
             renderButtonGroupOutside={false}
             renderDotsOutside
-            customDot={<CustomDot images={images}/>}
+            customDot={<CustomDot images={images} />}
             showDots
             sliderClass=""
             slidesToSlide={1}

@@ -68,6 +68,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "sass": "^1.29.0",
+    "screenfull": "^5.1.0",
     "serverless-mysql": "^1.5.4",
     "url": "^0.11.0",
     "yup": "^0.32.9"
