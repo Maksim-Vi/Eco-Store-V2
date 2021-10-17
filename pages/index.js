@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 // import getPopular from '../API/api';
 import ContactUs from '../components/contact/contactUs';
 import TopProducts from '../components/contectMain/topProducts';
+import TopProductsSlider from '../components/contectMain/topProductsSlider';
 import HeaderMain from '../components/header/headerMain';
 import { getAllPopulats, getAllProducts } from '../lib/db/DbRequestGet';
 import { setPopular } from '../redux/reducers/popular-reducer';
@@ -19,8 +20,15 @@ const Home = (props) => {
 
     return (
         <HeaderMain title="Eco Choice">
-            <TopProducts popular={props.popular} />
-            <ContactUs />
+            {true &&
+                <TopProductsSlider popular={props.popular}/>
+            }
+            {false &&
+                <TopProducts popular={props.popular} />
+            }
+            { false &&
+                <ContactUs />
+            }
         </HeaderMain>)
 }
 

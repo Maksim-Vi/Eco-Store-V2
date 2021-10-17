@@ -9,8 +9,8 @@ let useStyle = makeStyles((theme) => ({
         height: theme.spacing(15),
     },
     imgDesc:{
-        width: theme.spacing(7),
-        height: theme.spacing(7),
+        width: theme.spacing(10),
+        height: theme.spacing(10),
     },
     divider:{
         marginTop: 10

@@ -12,12 +12,12 @@ export const useBuyMenu = makeStyles((theme) => ({
         padding: theme.spacing(2),
         margin: 'auto',
         width:'800px',
-        height: '700px',
+        height: '650px',
         maxWidth: '100%',
         maxHeight: '100%',
         [theme.breakpoints.down('sm')]: {
             width:'800px',
-            height: '800px',
+            height: '700px',
         },
     },
     closeBtn:{
@@ -39,13 +39,18 @@ export const useBuyMenu = makeStyles((theme) => ({
         flexDirection: 'row',
         width: '100%',
         padding: '10px 0 10px 0',
+        [theme.breakpoints.down('sm')]: {
+            alignItems:'center',
+            justifyContent:'center',
+            flexDirection: 'column',
+        },
     },
     cardItemJustify:{
         justifyContent:'space-around',
     },
     imageProductMain:{
-        width: theme.spacing(15),
-        height: theme.spacing(15),
+        width: theme.spacing(20),
+        height: theme.spacing(20),
         marginLeft: 10
     },
     textItemContainer:{
@@ -54,7 +59,10 @@ export const useBuyMenu = makeStyles((theme) => ({
     },
     cardItemName:{
         fontFamily: 'Montserrat, sans-serif',
-        marginLeft: 10
+        marginLeft: 10,
+        [theme.breakpoints.down('sm')]: {
+            textAlign:'center'
+        },
     },
     itemId:{
         fontFamily: 'Montserrat, sans-serif',
@@ -64,6 +72,10 @@ export const useBuyMenu = makeStyles((theme) => ({
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
+        marginLeft:'auto',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 0
+        },
     },
     UpDown:{
         fontFamily: 'Montserrat, sans-serif',
@@ -86,22 +98,35 @@ export const useBuyMenu = makeStyles((theme) => ({
         fontFamily: 'Montserrat, sans-serif',  
     },
     cardToBascketContainer:{
-        marginTop: 10,
+        marginTop: 40,
         padding: 10,
         '& .MuiCardActions-root':{
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            [theme.breakpoints.down('sm')]: {
+                padding: 0,
+            },
         }
     },
     
     itemDescContainer:{
-        width: '70%',
-        maxWidth:'100%',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        alignItems: 'center',
+        width: '95%',
         '& .MuiBox-root':{
             fontFamily: 'Montserrat, sans-serif',   
         },
         [theme.breakpoints.down('sm')]: {
+            flexDirection:'row',
+            // flexWrap: 'wrap',
             width: '100%',
         },
+    },
+    image:{
+        width: '70px',
+        height:'auto',
+        margin: '0 10px 0 10px'
     },
     itemDesc:{
         display: 'flex',

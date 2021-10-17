@@ -1,0 +1,39 @@
+@import '../media.scss';
+
+.sectionContainer{
+    margin: 0 auto;
+    .image{
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        // pointer-events: none;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .topTextContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 80px;
+        background-color: #f0f0f0;
+        background-size: cover;
+        // @include sm { padding-top: 30px; }
+        .topText{
+            text-transform: uppercase;
+            font-size: 28px;
+            @include sm {font-size: 22px;}
+            & span:first-child{
+                color: green;
+            }
+            & p{
+                text-transform: none;
+                font-size: 16px;
+                margin-left: 220px;
+                @include sm {font-size: 14px;margin-left: 0;}
+            }
+        } 
+    }
+}

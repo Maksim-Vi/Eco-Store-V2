@@ -1,8 +1,9 @@
+
+import React from 'react';
+import { Avatar } from '@material-ui/core';
 import _ from 'lodash';
-import React,{useState} from 'react';
-import Slaider from '../header/carusel/Slaider';
-
-
+import CarouselProduct from '../../utility/Carousels/CarouselProduct';
+import s from '../../styles/sliderStyles/productSlider.module.scss'
 class CaruselProduct extends React.Component{
     constructor(props) {
         super(props);
@@ -10,23 +11,10 @@ class CaruselProduct extends React.Component{
         this.state={
             CaruselImage: []
         }
-        this.CaruselImage = []
-        this.settingsCmponent = {
-            value: 'cycle',
-            isCounter: false,
-            isCounter_Speed: 5000,
-            dots: true,
-            navigation:true,
-            stateImage: 'oneImage',
-        }
     }
 
     componentDidMount(){
         this.filterImageCarusel()
-    }
-
-    componentWillUnmount(){
-        this.CaruselImage = []
     }
 
     shouldComponentUpdate(prevProps, prevState){
@@ -50,7 +38,15 @@ class CaruselProduct extends React.Component{
     render() {
         if(this.state.CaruselImage.length === 0) return null
         
-        return <Slaider image={this.state.CaruselImage} settingsCmponent={this.settingsCmponent} />
+        return (
+            <div className={s.sectionContainer}>
+                <CarouselProduct images={this.state.CaruselImage}>
+                        {this.state.CaruselImage.map(image=>{
+                            return <Avatar variant="square" className={s.image} src={image.img} alt="item" />
+                        })}
+                </CarouselProduct>
+            </div>
+        ) 
     }
 }
 

@@ -89,7 +89,7 @@ const Item = (props) => {
                         {ImgDesc.map((item, index) => {
                             return (
                                 <Box className={classes.itemDesc} key={index} display='flex' alignItems='center' margin='10px'>
-                                    <Avatar variant="square" src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" />
+                                    <Avatar variant="square" className={classes.image} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" />
                                     <Box component='span'>{item.imgName}</Box>
                                     <Box className={classes.cardItemUpDown} component='div'>
                                         <p className={classes.UpDown} onClick={() => { removeToBascketItem(props.item.id,item.id) }}>-</p>

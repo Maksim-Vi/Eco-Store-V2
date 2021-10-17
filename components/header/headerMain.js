@@ -3,8 +3,8 @@ import Head from "next/head";
 import { useRouter } from 'next/router'
 import Header from './header';
 import Nav from './nav/nav';
-import CaruselHeader from './carusel/caruselHeader';
 import Footer from '../footer/footer';
+import HeaderSlider from './headerSlider';
 
 const HeaderMain = ({children, title='', descTitle='', desc=''}) =>{
     const router = useRouter()
@@ -27,7 +27,7 @@ const HeaderMain = ({children, title='', descTitle='', desc=''}) =>{
         </Head>
         <Header />
         <nav><Nav /></nav>
-        {router.pathname === '/' ? <CaruselHeader /> : null}
+        {router.pathname === '/' ? <HeaderSlider /> : null}
         
         <main>
             {children}
