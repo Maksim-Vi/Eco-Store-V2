@@ -26,7 +26,7 @@ const ProductsContainer = ({items}) => {
     })
     const [inLine, setInLine] = React.useState(false)
 
-    let handleChange = (newValue) => {
+    let handleChange = (event, newValue) => {
         setValue(newValue);
         if(newValue === 0){
             dispatch(setFilter('all'))
