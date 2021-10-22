@@ -6,6 +6,7 @@ import ProductsLinks from '../components/contectMain/productsLinks';
 import TopProducts from '../components/contectMain/topProducts';
 import TopProductsSlider from '../components/contectMain/topProductsSlider';
 import HeaderMain from '../components/header/headerMain';
+import ReviewsSlider from '../components/reviews/ReviewsSlider';
 import { setPopular } from '../redux/reducers/popular-reducer';
 import { setStore } from '../redux/reducers/store-reducer';
 
@@ -28,6 +29,9 @@ const Home = (props) => {
             }
             {false &&
                 <TopProducts popular={props.popular} />
+            }
+            {false &&
+                <ReviewsSlider />
             }
             { true &&
                 <ContactUs />

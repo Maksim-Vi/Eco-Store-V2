@@ -63,6 +63,7 @@ const Nav = () => {
             <a className={stl.link} onClick={()=>{handleClickOpen()}}>СВЯЗАТЬСЯ С НАМИ</a>
             <Link href="/promotions" as={'/promotions'}><a className={stl.link}>АКЦИИ</a></Link>
             <Link href="/about-us" as={'/about-us'}><a className={stl.link}>О НАС</a></Link>
+            {true && <Link href="/reviews" as={'/reviews'}><a className={stl.link}>ОТЗЫВЫ</a></Link>}
             <Link href="/payement-and-delivery" as={'/payement-and-delivery'}><a className={stl.link}>ОПЛАТА И ДОСТАВКА</a></Link>
             <Link href="/contacts" as={'/contacts'}><a className={stl.link}>КОНТАКТЫ</a></Link>
             <BasketButton />

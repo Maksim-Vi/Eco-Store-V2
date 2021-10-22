@@ -1,0 +1,17 @@
+.reviewsContainer{
+    padding: 50px;
+    .reviewsItem{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px 0 5px 0;
+        .CardItemContainer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 600px;
+            height: 200px;
+        }
+    }
+   
+}
