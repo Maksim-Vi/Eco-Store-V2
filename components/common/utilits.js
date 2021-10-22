@@ -149,5 +149,39 @@ export const getDescProductToSeo = (id) =>{
       return ''
     }
   }
+}
 
+export const Links = () =>{
+  return [
+    {
+      id: 1,
+      title: 'Все товары',
+      typeLink:'1'
+    },
+    {
+      id: 2,
+      title: 'Столовые приборы',
+      typeLink:'приборы'
+    },
+    {
+      id: 3,
+      title: 'Средства по уходу',
+      typeLink:'уход'
+    },
+    {
+      id: 4,
+      title: 'Трубочки для напитков',
+      typeLink:'трубочки'
+    },
+    {
+      id: 5,
+      title: 'Мешочки для хранения',
+      typeLink:'мешочки'
+    },
+    {
+      id: 6,
+      title: 'Подарочные боксы',
+      typeLink:'бокс'
+    },
+  ]
 }

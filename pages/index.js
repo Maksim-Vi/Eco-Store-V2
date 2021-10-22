@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import getPopular from '../API/api';
 import ContactUs from '../components/contact/contactUs';
+import ProductsLinks from '../components/contectMain/productsLinks';
 import TopProducts from '../components/contectMain/topProducts';
 import TopProductsSlider from '../components/contectMain/topProductsSlider';
 import HeaderMain from '../components/header/headerMain';
-import { getAllPopulats, getAllProducts } from '../lib/db/DbRequestGet';
 import { setPopular } from '../redux/reducers/popular-reducer';
 import { setStore } from '../redux/reducers/store-reducer';
 
@@ -21,12 +21,15 @@ const Home = (props) => {
     return (
         <HeaderMain title="Eco Choice">
             {true &&
+                <ProductsLinks />
+            }
+            {true &&
                 <TopProductsSlider popular={props.popular}/>
             }
             {false &&
                 <TopProducts popular={props.popular} />
             }
-            { false &&
+            { true &&
                 <ContactUs />
             }
         </HeaderMain>)

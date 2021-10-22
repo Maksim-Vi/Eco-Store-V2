@@ -1,0 +1,30 @@
+@import '../media.scss';
+
+.linksCarousel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include lg {justify-content: start;}
+    .linksContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin: 10px;
+        .linksImg{
+            width: 80px;
+            height: 80px;
+            // pointer-events: none;
+            outline: 0;
+            cursor: pointer;
+            &:active{
+                transform: scale(1.1);
+            }
+        }
+    }
+    .itemClass{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

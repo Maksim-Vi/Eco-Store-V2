@@ -24,6 +24,7 @@ const HeaderMain = ({children, title='', descTitle='', desc=''}) =>{
             <meta name="description" content={description}/>            
             <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Open+Sans:wght@300;600&family=Recursive:wght@300;500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
         </Head>
         <Header />
         <nav><Nav /></nav>

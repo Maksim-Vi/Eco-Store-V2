@@ -8,7 +8,8 @@ const CarouselWithButtonAndDots = ({ children }) => {
         <Carousel
             additionalTransfrom={0}
             arrows
-            autoPlaySpeed={3000}
+            autoPlay={true}
+            autoPlaySpeed={20000}
             centerMode={false}
             className=""
             containerClass="container"
