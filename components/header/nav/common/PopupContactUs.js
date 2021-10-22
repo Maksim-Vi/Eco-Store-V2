@@ -16,8 +16,8 @@ import * as gtag from '../../../../lib/gtag'
 const useStyles = makeStyles({
     root: {
         '& .MuiDialog-paperWidthSm': {
-            width:'100%',
-            maxWidth:'800px'
+            width: '100%',
+            maxWidth: '800px'
         }
     },
     ItemClose: {
@@ -34,12 +34,12 @@ const useStyles = makeStyles({
     }
 });
 
-  
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const PopupContactUs = ({ open, handleClose , ...props}) => {
+const PopupContactUs = ({ open, handleClose, ...props }) => {
 
     const classes = useStyles();
 
@@ -47,7 +47,7 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
     let token = auch.token
 
     const { addToast, removeAllToasts } = useToasts()
-    const { register, trigger, handleSubmit, errors } = useForm();
+    const { register, trigger, handleSubmit, formState: { errors } } = useForm();
 
     let message = (mes) => {
         removeAllToasts()
@@ -63,8 +63,8 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
         error('Что то пошло не так, попробуйте снова!')
     }
 
-    let onSubmit = (values,e) => {
-        props.postFormStore(token, values.name, values.email, values.subject)
+    let onSubmit = (values, e) => {
+        props.postFormStore(values.username, values.email, values.subject)
         message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
         window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
         gtag.event({
@@ -76,29 +76,27 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
         handleClose(true)
     }
 
-    // React.useEffect(() => {
-    //     let message = ''
+    React.useEffect(() => {
+        let message = ''
 
-    //     if(Object.keys(errors).length !== 0){
-    //         let title = 'Ваша фарма не была отправлена! '
-    //         message += title
-    //         let text1 = errors.email?.type === 'maxLength' || 'minLength'
-    //             ? '1) Имя не должно быть больше 20 символов, но больше 1 ' 
-    //             : '1) Вы не ввели имя ' 
-    //         let text2 = errors.email?.type === 'pattern' ? '2) не верный email ' : errors.email?.message
-    //         let text3 = errors.subject?.message
+        if(Object.keys(errors).length !== 0){
+            let title = 'Ваша фарма не была отправлена! '
+            message += title
+            let text1 = errors.username?.type === 'maxLength' && '1) Имя не должно быть больше 20 символов ' 
+            let text2 = errors.email?.type === 'pattern' && '2) не верный email '
+            let text3 = errors.subject?.message && "3) Поле не может быть пустым или содержать больше 200 символов. "
     
-    //         if(text1)
-    //             message += text1
-    //         if(text2)
-    //             message += text2
-    //         if(text3)
-    //             message += text3
-    //         if(message !== '')
-    //             error(message)
-    //     }
-    // }, [errors])
-    
+            if(text1)
+                message += text1
+            if(text2)
+                message += text2
+            if(text3)
+                message += text3
+            if(message !== '')
+                error(message)
+        }
+    }, [errors])
+
     return (
         <div>
             <Dialog
@@ -112,38 +110,44 @@ const PopupContactUs = ({ open, handleClose , ...props}) => {
             >
                 <DialogTitle id="alert-dialog-slide-title">
                     Связаться с нами
-                    <span className={classes.ItemClose} onClick={()=>{handleClose(false)}}>&times;</span>
+                    <span className={classes.ItemClose} onClick={() => { handleClose(false) }}>&times;</span>
                 </DialogTitle>
                 <DialogContent className={`${s.containerContactUsForm}`}>
                     <form className={`${s.formControl}`} onSubmit={handleSubmit(onSubmit)}>
 
                         <div className={s.containerInput} style={{ marginRight: 'auto' }}>
                             <input type="contactUS"
-                                   className={s.txtInput} 
-                                   name="name" 
-                                   id="name" 
-                                   placeholder="Введите ваше Имя" 
-                                  // ref={register({ required: true, minLength:1, maxLength: 20 })}
-                                  />
+                                className={s.txtInput}
+                                name="username"
+                                id="username"
+                                placeholder="Введите ваше Имя"
+                                required
+                                {...register("username", { required: true, minLength: 1, maxLength: 20 })}
+                            />
+                            {errors.username && <span className={s.error}>проверьте поле с именем!</span>}
                         </div>
 
                         <div className={s.containerInput} style={{ marginRight: 'auto' }}>
-                            <input type="contactUS" 
-                                   className={s.txtInput} 
-                                   name="email" 
-                                   id="contacts" 
-                                   placeholder="Введите ваш email" 
-                                   //ref={register({required: "2) Введите email ", pattern: /^\S+@\S+$/i})}
-                                   />
+                            <input type="contactUS"
+                                className={s.txtInput}
+                                name="email"
+                                id="contacts"
+                                placeholder="Введите ваш email"
+                                required
+                                {...register("email", { required: true, pattern: /^\S+@\S+\.\S+$/ })}
+                            />
+                            {errors.email && <span className={s.error}>проверьте поле с email!</span>}
                         </div>
 
                         <div className={s.containerInput}>
-                            <textarea type="contactUS" 
-                                      name="subject" 
-                                      className={s.txtArea}
-                                      placeholder="Задайте нам вопрос" 
-                                      //ref={register({required: "3) Поле не может быть пустым или содержать больше 200 символов. ", maxLength: 200})}
-                                      />
+                            <textarea type="contactUS"
+                                name="subject"
+                                className={s.txtArea}
+                                placeholder="Задайте нам вопрос"
+                                required
+                                {...register("subject", { required: true, maxLength: 200 })}
+                            />
+                            {errors.subject && <span className={s.error}>проверьте поле, оно должно быть не больше 200 символов.</span>}
                         </div>
 
                         <button className={s.btnContuctUS} type="submit" >Отправить</button>

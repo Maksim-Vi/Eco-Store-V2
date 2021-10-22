@@ -32,9 +32,9 @@ const ContactUs = (props) => {
     }
 
     let onSubmit = (values, e) => {
-        props.postFormStore(token, values.name, values.email, values.subject)
+        props.postFormStore( values.username, values.email, values.subject)
         message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
-        //window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
+        window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
 
         if (process.env.NODE_ENV === 'production') {
             gtag.event({
@@ -48,15 +48,12 @@ const ContactUs = (props) => {
 
     React.useEffect(() => {
         let message = ''
-
         if(Object.keys(errors).length !== 0){
             let title = 'Ваша фарма не была отправлена! '
             message += title
-            let text1 = errors.email?.type === 'maxLength' || 'minLength'
-                ? '1) Имя не должно быть больше 20 символов, но больше 1 ' 
-                : '1) Вы не ввели имя ' 
-            let text2 = errors.email?.type === 'pattern' ? '2) не верный email ' : errors.email?.message
-            let text3 = errors.subject?.message
+            let text1 = errors.username?.type === 'maxLength' && '1) Имя не должно быть больше 20 символов, но больше 1 '  
+            let text2 = errors.email?.type === 'pattern' && '2) не верный email '
+            let text3 = errors.subject?.message && "3) Поле не может быть пустым или содержать больше 200 символов. "
     
             if(text1)
                 message += text1
@@ -68,7 +65,6 @@ const ContactUs = (props) => {
                 error(message)
         }
     }, [errors])
-
 
     return (
         <section className={stl2.sectionContactUsContainer}>
@@ -85,21 +81,23 @@ const ContactUs = (props) => {
                     <div className={stl2.containerInput} style={{ marginRight: 'auto' }}>
                         <input type="contactUS" 
                                className={stl2.txtInput} 
-                               name="name" id="name" 
+                               name="username" id="username" 
                                placeholder="Введите ваше Имя" 
+                               required
                                {...register("username", { required: true, minLength:1, maxLength: 20 })}
-                            // {...register("username", { required: true})}
                         />
+                        {errors.username && <span className={stl2.error}>проверьте поле с именем!</span>}
                     </div>
 
                     <div className={stl2.containerInput} style={{ marginRight: 'auto' }}>
                         <input type="contactUS"
                             className={stl2.txtInput}
                             name="email" id="contacts"
-                            placeholder="Введите ваш email или телефон"
-                            //{...register("email",{required: "2) Введите email ", pattern: /^\S+@\S+$/i})}
-                            {...register("email")}
+                            placeholder="Введите ваш email"
+                            required
+                            {...register("email",{required: true, pattern: /^\S+@\S+\.\S+$/})}
                         />
+                        {errors.email && <span className={stl2.error}>проверьте поле с email!</span>}
                     </div>
 
                     <div className={stl2.containerInput}>
@@ -107,9 +105,10 @@ const ContactUs = (props) => {
                             className={stl2.txtArea}
                             name="subject"
                             placeholder="Задайте нам вопрос"
-                            {...register("subject", {required: "3) Поле не может быть пустым или содержать больше 200 символов. ", maxLength: 200})}
-                        //{...register("subject", { required: true})}
+                            required
+                            {...register("subject", {required: true, maxLength: 200})}
                         />
+                        {errors.subject && <span className={stl2.error}>проверьте поле, оно должно быть не больше 200 символов.</span>}
                     </div>
 
                     <button className={stl2.btnContuctUS} type="submit" >Отправить</button>

@@ -90,8 +90,10 @@
                     border: solid 1px red ;
                 }
 
-                &.error span {
+                .error {
                     color: red;
+                    font-size: 12px;
+                    margin-left: 10px;
                 }
             }
             .btnContuctUS{

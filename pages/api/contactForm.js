@@ -2,7 +2,6 @@
 export default async function setContactForm(req, res) {
    switch(req.method){
        case 'POST': {
-          
            let nodemailer = require('nodemailer')
 
            const transporter = nodemailer.createTransport({

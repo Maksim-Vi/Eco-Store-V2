@@ -21,11 +21,11 @@ export const postSignInApi = async (email, password) => {
 }
 
 
-export const postFormStoreApi = async (token, firstName, Email, subject, phone) => {
+export const postFormStoreApi = async ( firstName, Email, subject) => {
     try {
         let response = await fetch(`${URL}/contactForm`, {
             method: "POST",
-            body: JSON.stringify({ firstName, Email, subject, phone }),
+            body: JSON.stringify({ firstName, Email, subject }),
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'

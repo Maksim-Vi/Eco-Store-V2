@@ -58,6 +58,16 @@
                         color: rgba(83, 83, 83, 0.319);
                     }
                 }
+                &.error input,
+                &.error textarea {
+                    border: solid 1px red ;
+                }
+                
+                .error {
+                    color: red;
+                    font-size: 12px;
+                    margin-left: 10px;
+                }
             }
             .btnContuctUS{
                 display: flex;
