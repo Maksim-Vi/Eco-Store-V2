@@ -3,26 +3,26 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsiveOneItem } from './utils'
 
-const CarouselWithButtonAndDots = ({ children }) => {
+const CarouselWithButtonAndDots = ({ children, responsive, arrows, dotsOutside, dotListClass, itemClass }) => {
     return (
         <Carousel
             additionalTransfrom={0}
-            arrows
+            arrows = {arrows}
             autoPlay={true}
             autoPlaySpeed={20000}
             centerMode={false}
             className=""
             containerClass="container"
-            dotListClass=""
+            dotListClass={dotListClass}
             draggable
             focusOnSelect={false}
             infinite
-            itemClass=""
+            itemClass={itemClass}
             keyBoardControl
             minimumTouchDrag={80}
             renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={responsiveOneItem()}
+            renderDotsOutside={dotsOutside}
+            responsive={responsive}
             showDots
             sliderClass=""
             slidesToSlide={1}

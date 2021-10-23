@@ -30,10 +30,10 @@ const Home = (props) => {
             {false &&
                 <TopProducts popular={props.popular} />
             }
-            {false &&
+            {true &&
                 <ReviewsSlider />
             }
-            { true &&
+            {true &&
                 <ContactUs />
             }
         </HeaderMain>)

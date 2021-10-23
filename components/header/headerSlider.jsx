@@ -1,6 +1,7 @@
 import { Avatar, makeStyles } from '@material-ui/core'
 import React from 'react'
 import CarouselWithButtonAndDots from '../../utility/Carousels/CarouselWithButtonAndDots'
+import { responsiveOneItem } from '../../utility/Carousels/utils'
 
 const useStyles = makeStyles((theme) => ({
     image:{
@@ -23,7 +24,7 @@ const HeaderSlider = () => {
     ]
 
     return (
-        <CarouselWithButtonAndDots>
+        <CarouselWithButtonAndDots responsive={responsiveOneItem()} dotsOutside={false} arrows={true}>
             {image.map(image=>{
                 return <Avatar variant="square" className={classes.image} src={image.img} alt="item" />
             })}
