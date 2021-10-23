@@ -1,9 +1,8 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { CardActions } from '@material-ui/core';
+import { Button, CardActions } from '@material-ui/core';
 import s from '../../../styles/reviews/reviews.module.scss'
 
 const CardItem = () => {
@@ -11,11 +10,12 @@ const CardItem = () => {
         <Card className={s.CardItemContainer} variant="outlined">
             <CardContent>
                 <Typography color="textSecondary">
-                    Word of the Day
+                   text
                 </Typography>
             </CardContent>
             <CardActions>
-
+                <Typography variant="body1">Name</Typography>
+                <Button variant="contained" color="primary">Primary</Button>
             </CardActions>
         </Card>
     )

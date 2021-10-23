@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core'
 import React from 'react'
 import s from '../../styles/promotion.module.scss'
 import ABS from '../common/abs'
@@ -5,6 +6,9 @@ import ABS from '../common/abs'
 const Promotion = () => {
     return (
         <div className={s.promotionContainer}>
+            <p><br /></p>
+            <Typography variant="h3">Наши Акционные предложения</Typography>
+            <br />
             <div>
                 <h2 className={s.title}>1. Подарок при заказе от 350 грн</h2>
                 <p className={s.text}>Сделайте заказ на сумму от 350 грн, и получите  приятный бонус - бамбуковую зубную щетку бесплатно. 

@@ -1,11 +1,16 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import HeaderMain from '../components/header/headerMain';
+import s from '../styles/aboutUs.module.scss'
 
 const AboutUs = () =>{
     return (
         <HeaderMain title="Eco Choice About us">
-             <div className='containerAboutUs'>
-                    <div className='About'><h2>О нас</h2></div>
+             <div className={s.containerAboutUs}>
+                    <p><br /></p>
+                    <div className={s.About}>
+                        <Typography className={s.Title} variant="h3">О нас</Typography>
+                    </div>
                     <p>
                         <strong>Eco Choice</strong> – это небольшой семейный 
                         интернет-магазин. Мы предлагаем широкий ассортимент натуральных и экологически 
@@ -35,36 +40,6 @@ const AboutUs = () =>{
                     </p>
                     <p><strong><br/></strong></p>
                 </div>
-                <style jsx>{`
-                .containerAboutUs{
-                    width: 100%;
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    font-family: 'Work Sans', sans-serif;
-                    margin-top: 2%;
-                    margin-bottom: 5%;
-                    font-size: 20px;
-                }
-                
-                .containerAboutUs strong {
-                    font-size: 20px;
-                }
-                
-                .About h2 {
-                    font-family: 'Work Sans', sans-serif;
-                    margin-bottom: 3%;
-                    font-size: 35px;
-                    font-weight: 900;
-                    color: rgb(53, 53, 53);
-                }
-                @media (max-width:610px) {   
-                    .containerAboutUs {
-                       font-family: 'Work Sans', sans-serif;
-                       padding: 15px;
-                       font-size: 22px;
-                    }
-                }
-                `}</style>
         </HeaderMain>
     )
 }

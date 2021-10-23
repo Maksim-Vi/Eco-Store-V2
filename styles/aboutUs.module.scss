@@ -1,0 +1,26 @@
+@import './media.scss';
+
+.containerAboutUs{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Work Sans', sans-serif;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    font-size: 20px;
+    @include sm { 
+        font-family: 'Work Sans', sans-serif;
+        padding: 15px;
+        font-size: 22px
+    }
+    strong {
+        font-size: 20px;
+    }
+    .Title{
+        font-family: 'Work Sans', sans-serif !important;
+        margin-bottom: 3%;
+        font-size: 35px !important;
+        font-weight: 900 !important;
+        color: rgb(53, 53, 53) !important;
+    }
+}

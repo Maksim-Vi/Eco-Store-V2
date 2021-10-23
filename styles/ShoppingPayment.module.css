@@ -33,9 +33,10 @@
 }
 
 .strongTitle{
-    font-size: 2rem;
-    text-transform: uppercase;
-    color: rgb(53, 53, 53);
+    font-size: 35px !important;
+    font-weight: 900 !important;
+    font-family: 'Work Sans', sans-serif !important;
+    color: rgb(53, 53, 53) !important;
 }
 
 

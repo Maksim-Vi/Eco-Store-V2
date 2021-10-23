@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import HeaderMain from '../components/header/headerMain';
 import s from '../styles/ShoppingPayment.module.css';
@@ -8,7 +9,7 @@ const PayementAndDelivery = () => {
             <div className={s.containerShopPay}>
                 <div className={s.Shopping}>
                     <p><br /></p>
-                    <strong className={s.strongTitle}>Оплата Товара</strong>
+                    <Typography variant="h3" className={s.strongTitle}>Оплата Товара</Typography>
                     <p><br /></p>
                     <p>После оформления заказа, на указанный Вами e-mail автоматически приходит чек об оформленном заказе. Проверьте папку спам. </p>
                     <h3><img src="/contentImg/shopPay/cards.png" alt="cards" /> Оплата на карту<br /></h3>
