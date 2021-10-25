@@ -12,18 +12,18 @@ import {
     }
   }));
 
-const ProductListToolbar = (props) => {
+const DashboardAddButton = (props) => {
   const classes = useStyles();
     return (
     <Box {...props}>
       <Box className={classes.btnContainer}>
         <Button color="primary" variant="contained" onClick={()=>{props.openDialog()}}>
-          Добавить Товар
+          {props.textButton}
         </Button>
       </Box>
     </Box>
     )
 };
   
-  export default ProductListToolbar;
+  export default DashboardAddButton;
   

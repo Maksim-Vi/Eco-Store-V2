@@ -17,7 +17,6 @@ const Account = () => (
                 md={6}
                 xs={12}
             >
-                <span>first view</span>
                 {/* <AccountProfile /> */}
             </Grid>
             <Grid
@@ -26,7 +25,6 @@ const Account = () => (
                 md={6}
                 xs={12}
             >
-                <span>seccond view</span>
                 {/* <AccountProfileDetails /> */}
             </Grid>
         </Grid>

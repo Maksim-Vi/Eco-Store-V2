@@ -1,9 +1,6 @@
 import {
-  Box,
-  Button,
   Card,
   CardContent,
-  CardHeader,
   Checkbox,
   Divider,
   FormControlLabel,
@@ -16,11 +13,6 @@ const useStyles = makeStyles(() => ({
   gridColum:{
     display: 'flex',
     flexDirection: 'column'
-  },
-  btnContainer:{
-    display: 'flex',
-    justifyContent: 'flex-end',
-    p: 2
   }
 }));
 
@@ -30,62 +22,35 @@ const SettingsNotifications = (props) => {
   return (
     <form {...props}>
       <Card>
-        <CardHeader
-          subheader="На этой вкладке можно применять разные настройки для CRM"
-          title="Настройки"
-        />
-        <Divider />
         <CardContent>
           <Grid container spacing={6} wrap="wrap">
             <Grid className={classes.gridColum} item md={4} sm={6} xs={12}>
-              <Typography
-                color="textPrimary"
-                gutterBottom
-                variant="h6"
-              >
-                Notifications
+              <Typography color="textPrimary" gutterBottom variant="h6">
+                Данные на главной странице
               </Typography>
               <FormControlLabel
                 control={(<Checkbox color="primary" defaultChecked />)}
-                label="Email"
+                label="Показывать слайдер навигации по сайту"
               />
               <FormControlLabel
                 control={(<Checkbox color="primary" defaultChecked/>)}
-                label="Push Notifications"
+                label="Показывать слайдер Топ товаров"
               />
               <FormControlLabel
-                control={<Checkbox />}
-                label="Text Messages"
-              />
-              <FormControlLabel
-                control={(<Checkbox color="primary" defaultChecked />)}
-                label="Phone calls"
-              />
-            </Grid>
-            <Grid className={classes.gridColum} item md={4} sm={6} xs={12}>
-              <Typography color="textPrimary" gutterBottom variant="h6" >
-                Messages
-              </Typography>
-              <FormControlLabel
-                control={(<Checkbox color="primary" defaultChecked />)}
-                label="Email"
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Push Notifications"
+                control={<Checkbox color="primary" defaultChecked/>}
+                label="Показывать Grid (сетку) Топ товаров"
               />
               <FormControlLabel
                 control={(<Checkbox color="primary" defaultChecked />)}
-                label="Phone calls"
+                label="Показывать отзывы"
+              />
+               <FormControlLabel
+                control={(<Checkbox color="primary" defaultChecked />)}
+                label="Показывать форму связи с нами"
               />
             </Grid>
           </Grid>
         </CardContent>
-        <Box className={classes.btnContainer}>
-          <Button color="primary" variant="contained">
-            Save
-          </Button>
-        </Box>
       </Card>
     </form>
   )

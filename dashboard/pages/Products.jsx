@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import AddProduct from '../products/AddProduct';
 import EditProduct from '../products/EditProduct';
 import ProductCard from '../products/ProductCard';
-import ProductListToolbar from '../products/ProductsToolBar';
+import DashboardAddButton from '../utilits/DashboardAddButton';
 
 const Product = () => {
  
@@ -48,7 +48,7 @@ const Product = () => {
     <>
     <Container maxWidth={false}>
     <CardHeader subheader="На этой вкладке можно отредактировать или добавить товар" title="Товары"/>
-      <ProductListToolbar openDialog={()=>{handleClickOpen()}}/>
+      <DashboardAddButton openDialog={()=>{handleClickOpen()}} textButton={'Добавить Товар'}/>
       <Box sx={{ pt: 3 }}>
         <Grid container spacing={3}>
           {products.map((product) => (

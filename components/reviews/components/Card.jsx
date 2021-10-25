@@ -21,7 +21,7 @@ const CardItem = () => {
                     <Divider />
                     <Typography className={s.placeReview} variant="body2">{true ? 'отзыв с facebook' : 'отзыв с google'}</Typography>
                 </Box>
-                <Button variant="contained" color="primary">Перейти к отзыву</Button>
+                <Button variant="contained" color="primary" target='_blank' href='https://goo.gl/maps/CxquiSRpnPFGiMMh7'>Перейти к отзыву</Button>
             </CardActions>
         </Card>
     )

@@ -2,6 +2,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import { v4 as uuid } from 'uuid';
 
 export const user = {
@@ -27,6 +28,12 @@ export const items = [
         href: '/AdminPanel/Top',
         icon: FormatListBulletedIcon,
         title: 'Топ товары',
+        id: uuid()
+    },
+    {
+        href: '/AdminPanel/Reviews',
+        icon: RateReviewIcon,
+        title: 'Отзывы',
         id: uuid()
     },
     {
