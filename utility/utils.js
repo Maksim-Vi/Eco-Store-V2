@@ -97,3 +97,19 @@ export const formateProductsData = (response) =>{
     });
     return productsData
 }
+
+export const formateDataReviews = (reviews) =>{
+    let reviewsData = []
+    reviews.forEach(review => {
+        reviewsData.push({
+            id: review.id,
+            userName: review.userName, 
+            reviewsText: review.reviewsText, 
+            reviewsCurrentUrl: review.reviewsCurrentUrl, 
+            isShowInMainPage: review.isShowInMainPage === 1 ? true : false, 
+            isGoogle: review.isGoogle === 1 ? true : false
+        })
+    });
+
+    return reviewsData
+}

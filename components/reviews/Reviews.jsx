@@ -18,16 +18,16 @@ const Reviews = () => {
          </Box>
          <Grid container className={s.reviewsContainer} spacing={2}>
             <Grid className={s.reviewsItem} item lg={6} sm={12} >
-               <CardItem />
+               <CardItem key={1} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
             </Grid>
             <Grid className={s.reviewsItem} item  lg={6} sm={12} >
-               <CardItem />
+               <CardItem key={2} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
             </Grid>
             <Grid className={s.reviewsItem} item  lg={6} sm={12} >
-               <CardItem />
+               <CardItem key={3} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
             </Grid>
             <Grid className={s.reviewsItem} item lg={6} sm={12} >
-               <CardItem />
+               <CardItem key={4} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
             </Grid>
          </Grid>
       </Box>

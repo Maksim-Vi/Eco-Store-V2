@@ -1,0 +1,66 @@
+@import '../media.scss';
+
+.reviewsWrapper{
+    flex-grow: 1;
+        .reviewsItem{
+            margin: 5px;
+            .CardItemContainer{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+                .review{
+                    font-family: "Work Sans", sans-serif;
+                    // width: 450px;
+                    width: 100%;
+                    height: 120px;
+                    overflow: scroll;
+                    overflow-x:hidden;
+                    &::-webkit-scrollbar-track{
+                        border-radius: 5px;
+                    }
+                    &::-webkit-scrollbar{
+                        width: 5px;
+                    }
+                    &::-webkit-scrollbar-thumb{
+                        border-radius: 5px;
+                        background-color: #00650c5e;
+                    }
+                }
+            }
+            .CardButton{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-family: "Work Sans", sans-serif !important;
+                width: 90%;
+                @include md {text-align: center; justify-content: center; flex-direction: column; }
+                .CardButtonText{
+                    display: flex;
+                    flex-direction: column;
+                    .userName {
+                        font-family: "Work Sans", sans-serif !important;
+                        font-size: 21px !important;
+                    }
+                    .placeReview{
+                        font-family: "Work Sans", sans-serif !important;
+                        font-size: 14px !important;
+                        @include md { margin-bottom: 10px; }
+                    }
+                }
+            }
+            .btnContainer{
+                display: flex;
+                flex-direction: column;
+                .delete{
+                    background-color: rgb(245, 63, 63);
+                    margin-bottom: 5px;
+                }
+                .edit{
+                    margin-bottom: 5px; 
+                }
+            }
+        } 
+} 

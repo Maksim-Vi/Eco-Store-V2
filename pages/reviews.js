@@ -10,4 +10,17 @@ const Reviews = () =>{
     )
 }
 
+Reviews.getInitialProps = async () => {
+  let URL = process.env.SERVER_URL
+  let json = []
+  
+  const res = await fetch(`${URL}/reviews`)
+
+  if(res){
+      json = await res.json()
+  }
+  
+  return { items: json }
+}
+
 export default Reviews

@@ -5,23 +5,21 @@ import Typography from '@material-ui/core/Typography';
 import { Box, Button, CardActions, Divider } from '@material-ui/core';
 import s from '../../../styles/reviews/reviews.module.scss'
 
-const CardItem = () => {
+const CardItem = (props) => {
     return (
-        <Card className={s.CardItemContainer} variant="outlined">
+        <Card key={props.key} className={s.CardItemContainer} variant="outlined">
             <CardContent>
                 <Typography className={s.review} color="textSecondary">
-                    Заказала на пробу себе наборчик деревянных столовых приборов, трубочки и зубные щетки. 
-                    Невероятно крутой весь товар! Качество на высоте,  отправка и доставка быстрая. 
-                    Обязательно в скором времени закажу и другим членам семьи такие столовые приборы.
+                    {props.reviewsText}
                 </Typography>
             </CardContent>
             <CardActions className={s.CardButton}>
                 <Box className={s.CardButtonText} component='div'>
-                    <Typography className={s.userName} variant="body1">Traveller</Typography>
+                    <Typography className={s.userName} variant="body1">{props.userName}</Typography>
                     <Divider />
-                    <Typography className={s.placeReview} variant="body2">{true ? 'отзыв с facebook' : 'отзыв с google'}</Typography>
+                    <Typography className={s.placeReview} variant="body2">{!props.isGoogle ? 'отзыв с facebook' : 'отзыв с google'}</Typography>
                 </Box>
-                <Button variant="contained" color="primary" target='_blank' href='https://goo.gl/maps/CxquiSRpnPFGiMMh7'>Перейти к отзыву</Button>
+                <Button variant="contained" color="primary" target='_blank' href={props.reviewsCurrentUrl}>Перейти к отзыву</Button>
             </CardActions>
         </Card>
     )

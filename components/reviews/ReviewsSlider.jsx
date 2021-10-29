@@ -14,10 +14,10 @@ const ReviewsSlider = () => {
                 </span>
             </div>
             <CarouselWithButtonAndDots responsive={responsiveTwoItems()} dotsOutside={true} dotListClass={s.sliderDots} arrows={false} itemClass={s.itemClass}>
-                <CardItem />
-                <CardItem />
-                <CardItem />
-                <CardItem />
+                <CardItem key={1} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
+                <CardItem key={2} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
+                <CardItem key={3} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
+                <CardItem key={4} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
             </CarouselWithButtonAndDots>
         </Box>
     )

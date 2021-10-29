@@ -26,8 +26,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ReviewsDialog({ stateReviews, open, closeReviewsDialog, saveReviews, changeStateReviews }) {
+export default function ReviewsDialog({ stateReviews, open, closeReviewsDialog,editReview, saveReviews, changeStateReviews, stateIsEditOrCreateRef }) {
     const classes = useStyles();
+
+    let saveOrEdit = () =>{
+        if(stateIsEditOrCreateRef === 'Create'){
+            saveReviews()
+        } else {
+            editReview()
+        }
+    }
+
     return (
         <Dialog
             className={classes.DialogContainer}
@@ -90,8 +99,11 @@ export default function ReviewsDialog({ stateReviews, open, closeReviewsDialog, 
 
             </DialogContent>
             <DialogActions>
-                <Button onClick={saveReviews} color="primary">
-                    Сохранить отзыв
+                <Button onClick={()=>{saveOrEdit()}} color="primary">
+                    {stateIsEditOrCreateRef === 'Create'
+                        ? 'Создать отзыв'
+                        : 'Редактировать отзыв'
+                    }
                 </Button>
             </DialogActions>
         </Dialog>
