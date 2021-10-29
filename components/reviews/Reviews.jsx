@@ -3,7 +3,10 @@ import React from 'react'
 import CardItem from './components/Card'
 import s from '../../styles/reviews/reviews.module.scss'
 
-const Reviews = () => {
+const Reviews = (props) => {
+
+   if (!props.reviews && props.reviews.length === 0) return
+
    return (
       <Box className={s.reviewsWrapper}>
          <Box className={s.reviewsDescContainer}>
@@ -17,18 +20,13 @@ const Reviews = () => {
             </Box>
          </Box>
          <Grid container className={s.reviewsContainer} spacing={2}>
-            <Grid className={s.reviewsItem} item lg={6} sm={12} >
-               <CardItem key={1} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-            </Grid>
-            <Grid className={s.reviewsItem} item  lg={6} sm={12} >
-               <CardItem key={2} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-            </Grid>
-            <Grid className={s.reviewsItem} item  lg={6} sm={12} >
-               <CardItem key={3} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-            </Grid>
-            <Grid className={s.reviewsItem} item lg={6} sm={12} >
-               <CardItem key={4} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-            </Grid>
+            {props.reviews &&
+               props.reviews.map(review => {
+                  return <Grid className={s.reviewsItem} item lg={6} sm={12} >
+                     <CardItem key={review.id} userName={review.userName} reviewsText={review.reviewsText} reviewsCurrentUrl={review.reviewsCurrentUrl} isGoogle={review.isGoogle} />
+                  </Grid>
+               })
+            }
          </Grid>
       </Box>
    )

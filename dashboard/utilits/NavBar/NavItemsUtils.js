@@ -37,12 +37,6 @@ export const items = [
         id: uuid()
     },
     {
-        href: '/AdminPanel/Account',
-        icon: AccountBoxIcon,
-        title: 'Аккаунт',
-        id: uuid()
-    },
-    {
         href: '/AdminPanel/Settings',
         icon: SettingsIcon,
         title: 'Настройки',

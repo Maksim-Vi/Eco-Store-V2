@@ -18,6 +18,7 @@ import { setToken } from "./reducers/SRM/user/action";
 import productsReducer from "./reducers/SRM/products/products-reducer";
 import topReducer from "./reducers/SRM/top/top-reducer";
 import reviewsReducer from "./reducers/SRM/reviews/reviews-redicer";
+import reviewsStoreReducer from "./reducers/reviewsStore-reducer";
 
 const persistConfig = {
   key: 'state',
@@ -33,6 +34,7 @@ let reducers = combineReducers({
   basket: BasketReducer,
   filter: FilterReducer,
   answerForm: AnswerFormReducer,
+  reviews: reviewsStoreReducer,
 
   CRM_user: userReducer,
   CRM_products: productsReducer,

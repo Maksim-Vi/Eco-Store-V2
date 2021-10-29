@@ -19,7 +19,7 @@ export default function ReviewsItem(props) {
     return (
         <Card className={s.CardItemContainer} variant="outlined">
             <CardContent className={s.reviewTextContainer}>
-                <Typography className={[``],{[`${s.show}`]: !props.isShowInMainPage, [`${s.unshow}`]: props.isShowInMainPage  }} color="textSecondary">
+                <Typography className={[``],{[`${s.show}`]: props.isShowInMainPage, [`${s.unshow}`]: !props.isShowInMainPage  }} color="textSecondary">
                     {props.isShowInMainPage
                         ? 'этот отзыв отображается в слайдере на главной странице'
                         : 'этот отзыв не отображается в слайдере на главной странице'

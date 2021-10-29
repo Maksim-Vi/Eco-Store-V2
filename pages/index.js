@@ -8,6 +8,7 @@ import TopProductsSlider from '../components/contectMain/topProductsSlider';
 import HeaderMain from '../components/header/headerMain';
 import ReviewsSlider from '../components/reviews/ReviewsSlider';
 import { setPopular } from '../redux/reducers/popular-reducer';
+import { setReviewsStore } from '../redux/reducers/reviewsStore-reducer';
 import { setStore } from '../redux/reducers/store-reducer';
 
 const Home = (props) => {
@@ -17,6 +18,9 @@ const Home = (props) => {
     useEffect(() => {
         dispatch(setStore(props.items))
         dispatch(setPopular(props.popular))
+        if(props.reviews && props.reviews.length > 0){
+            dispatch(setReviewsStore(props.reviews))
+        }
     }, [dispatch])
 
     return (
@@ -31,7 +35,7 @@ const Home = (props) => {
                 <TopProducts popular={props.popular} />
             }
             {true &&
-                <ReviewsSlider />
+                <ReviewsSlider reviews={props.reviews}/>
             }
             {true &&
                 <ContactUs />
@@ -44,20 +48,26 @@ Home.getInitialProps = async () => {
 
     let productsJson = []
     let popularJson = []
+    let reviewsStoreJson = []
 
     let products = await fetch(`${URL}/products`)
     let popular = await fetch(`${URL}/populars`)
-
-    if(products.status === 200){
+    let reviewsStore = await fetch(`${URL}/reviews`)
+    
+    if(products && products.status === 200){
         productsJson = await products.json()
     }
-    if(popular.status === 200){
+    if(popular && popular.status === 200){
         popularJson = await popular.json()
     }
-   
+    if(reviewsStore && reviewsStore.status === 200){
+        reviewsStoreJson = await reviewsStore.json()
+    }
+
     return { 
         items: productsJson,
-        popular: popularJson
+        popular: popularJson,
+        reviews: reviewsStoreJson
     }
 }
 

@@ -5,7 +5,8 @@ import CarouselWithButtonAndDots from '../../utility/Carousels/CarouselWithButto
 import { responsiveTwoItems } from '../../utility/Carousels/utils'
 import CardItem from './components/Card'
 
-const ReviewsSlider = () => {
+const ReviewsSlider = (props) => {
+    if(!props.reviews && props.reviews.length === 0) return 
     return (
         <Box className={s.sliderReviewsContainer} component="div">
             <div className={s.topTextContainer}>
@@ -14,10 +15,12 @@ const ReviewsSlider = () => {
                 </span>
             </div>
             <CarouselWithButtonAndDots responsive={responsiveTwoItems()} dotsOutside={true} dotListClass={s.sliderDots} arrows={false} itemClass={s.itemClass}>
-                <CardItem key={1} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-                <CardItem key={2} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-                <CardItem key={3} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
-                <CardItem key={4} userName={'item.userName'} reviewsText={'item.reviewsText'} reviewsCurrentUrl={'item.reviewsCurrentUrl'} isShowInMainPage={'item.isShowInMainPage'} isGoogle={'item.isGoogle'}/>
+                {props.reviews &&
+                    props.reviews.map(review=>{
+                        if(!review.isShowInMainPage) return 
+                        return <CardItem key={review.id} userName={review.userName} reviewsText={review.reviewsText} reviewsCurrentUrl={review.reviewsCurrentUrl} isGoogle={review.isGoogle}/>
+                    })
+                }
             </CarouselWithButtonAndDots>
         </Box>
     )
