@@ -16,25 +16,32 @@ export default function ReviewsItem(props) {
         props.openEditReviewsDialog(data)
     }
 
-        return (
-            <Card className={s.CardItemContainer} variant="outlined">
-                <CardContent>
-                    <Typography className={s.review} color="textSecondary">
-                        {props.reviewsText}
-                    </Typography>
-                </CardContent>
-                <CardActions className={s.CardButton}>
-                    <Box className={s.CardButtonText} component='div'>
-                        <Typography className={s.userName} variant="body1">{props.userName}</Typography>
-                        <Divider />
-                        <Typography className={s.placeReview} variant="body2">{!props.isGoogle ? 'отзыв с facebook' : 'отзыв с google'}</Typography>
-                    </Box>
-                    <Box className={s.btnContainer} component='div'>
-                        <Button className={s.delete} variant="contained" color="primary" onClick={() => { props.deleteReview(props.id) }} >Удалить отзыв</Button>
-                        <Button className={s.edit} variant="contained" color="primary" onClick={() => { editReviers() }} >Редактировать</Button>
-                        <Button variant="contained" color="primary" target='_blank' href={props.reviewsCurrentUrl}>Перейти к отзыву</Button>
-                    </Box>
-                </CardActions>
-            </Card>
-        )
-    }
+    return (
+        <Card className={s.CardItemContainer} variant="outlined">
+            <CardContent className={s.reviewTextContainer}>
+                <Typography className={[``],{[`${s.show}`]: !props.isShowInMainPage, [`${s.unshow}`]: props.isShowInMainPage  }} color="textSecondary">
+                    {props.isShowInMainPage
+                        ? 'этот отзыв отображается в слайдере на главной странице'
+                        : 'этот отзыв не отображается в слайдере на главной странице'
+                    }
+                </Typography>
+                <Divider className={s.divider}/>
+                <Typography className={s.review} color="textSecondary">
+                    {props.reviewsText}
+                </Typography>
+            </CardContent>
+            <CardActions className={s.CardButton}>
+                <Box className={s.CardButtonText} component='div'>
+                    <Typography className={s.userName} variant="body1">{props.userName}</Typography>
+                    <Divider />
+                    <Typography className={s.placeReview} variant="body2">{!props.isGoogle ? 'отзыв с facebook' : 'отзыв с google'}</Typography>
+                </Box>
+                <Box className={s.btnContainer} component='div'>
+                    <Button className={s.delete} variant="contained" color="primary" onClick={() => { props.deleteReview(props.id) }} >Удалить отзыв</Button>
+                    <Button className={s.edit} variant="contained" color="primary" onClick={() => { editReviers() }} >Редактировать</Button>
+                    <Button variant="contained" color="primary" target='_blank' href={props.reviewsCurrentUrl}>Перейти к отзыву</Button>
+                </Box>
+            </CardActions>
+        </Card>
+    )
+}

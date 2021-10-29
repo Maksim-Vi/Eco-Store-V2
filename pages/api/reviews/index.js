@@ -57,14 +57,12 @@ export default authenticated(async function getReviews(req, res) {
             }
         } 
         case 'PUT':{
-            console.log(`ANSWER server data`, req.body);
+            let UPDATE = 'UPDATE reviews SET userName = ?, reviewsText = ?, reviewsCurrentUrl = ?, isShowInMainPage = ?, isGoogle = ? WHERE id = ?'
 
-            // let UPDATE = 'UPDATE reviews SET userName = ?, reviewsText = ?, reviewsCurrentUrl = ?, isShowInMainPage = ?, isGoogle = ? WHERE id = ?'
-
-            // let responseData = await sql_query(UPDATE,[req.body.userName, req.body.reviewsText, req.body.reviewsCurrentUrl, req.body.isShowInMainPage, req.body.isGoogle, req.body.id])
-            // .catch((err)=>{
-            //     return res.status(500).json({ message: `reviews/index.js PUT req, UPDATE desc: Something was wrong! ${err}` })
-            // })
+            let responseData = await sql_query(UPDATE,[req.body.userName, req.body.reviewsText, req.body.reviewsCurrentUrl, req.body.isShowInMainPage, req.body.isGoogle, req.body.id])
+            .catch((err)=>{
+                return res.status(500).json({ message: `reviews/index.js PUT req, UPDATE desc: Something was wrong! ${err}` })
+            })
 
             let reviews = await sql_query('select * from reviews')
             .catch((err) => {

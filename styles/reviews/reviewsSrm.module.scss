@@ -11,22 +11,33 @@
                 flex-direction: column;
                 width: 100%;
                 height: auto;
-                .review{
-                    font-family: "Work Sans", sans-serif;
-                    // width: 450px;
+                .reviewTextContainer{
                     width: 100%;
-                    height: 120px;
-                    overflow: scroll;
-                    overflow-x:hidden;
-                    &::-webkit-scrollbar-track{
-                        border-radius: 5px;
+                    .show{
+                        color: rgb(67, 228, 100);
                     }
-                    &::-webkit-scrollbar{
-                        width: 5px;
+                    .unshow{
+                        color: red;
                     }
-                    &::-webkit-scrollbar-thumb{
-                        border-radius: 5px;
-                        background-color: #00650c5e;
+                    .review{
+                        font-family: "Work Sans", sans-serif;
+                        width: 100%;
+                        height: 120px;
+                        overflow: scroll;
+                        overflow-x:hidden;
+                        &::-webkit-scrollbar-track{
+                            border-radius: 5px;
+                        }
+                        &::-webkit-scrollbar{
+                            width: 5px;
+                        }
+                        &::-webkit-scrollbar-thumb{
+                            border-radius: 5px;
+                            background-color: #00650c5e;
+                        }
+                    }
+                    .divider{
+                        margin: 10px 0 10px 0;
                     }
                 }
             }
