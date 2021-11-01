@@ -44,6 +44,7 @@ Reviews.getInitialProps = async (ctx) => {
         }
 
         const res = await fetch(`${process.env.SERVER_URL}/reviews`,{
+            mode: 'no-cors',
             headers: {
                 'authorization': cookie,
                 'Accept': 'application/json',
