@@ -64,9 +64,12 @@ app.prepare().then(() => {
     return app.render(req, res, '/AdminPanel/Settings')
   })
   server.get('/AdminPanel/Top', (req, res) => {
-    return app.render(req, res, '//AdminPanel/Top')
+    return app.render(req, res, '/AdminPanel/Top')
   })
-
+  server.get('/AdminPanel/Reviews', (req, res) => {
+    return app.render(req, res, '/AdminPanel/Reviews')
+  })
+  
   server.all('*', (req, res) => {
     return handle(req, res)
   })

@@ -17,7 +17,7 @@ let uploadData = (req,res) =>{
         })
     }
 
-    res.status(200).json({success: true, images: imagesUrl, imagesDesc: imagesDescUrl})
+    return res.status(200).json({success: true, images: imagesUrl, imagesDesc: imagesDescUrl})
 }
 
 let updateData = (req,res) =>{
@@ -57,7 +57,7 @@ let updateData = (req,res) =>{
     }
 
     // console.log(`RES`, images, imagesDescUrl);
-    res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
+    return res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
 }
 
 let deleteData = (req,res) =>{
@@ -67,9 +67,9 @@ let deleteData = (req,res) =>{
                 fs.unlinkSync(String(i))
             })
         }
-        res.status(200).json({success: true })
+        return res.status(200).json({success: true })
     } catch(err){
-        res.status(401).json({success: false, err: err})
+        return res.status(401).json({success: false, err: err})
     }
 }
 

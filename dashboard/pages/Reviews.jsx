@@ -132,6 +132,8 @@ const Reviews = () => {
             console.log(`delete review ERROR Reviews`, err);
         })
 
+        console.log(`ANSWER delete reviews`, res);
+        
         if (res && res.status === 200) {
             message('Удаление отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))

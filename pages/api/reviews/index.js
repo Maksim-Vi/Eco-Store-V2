@@ -20,7 +20,9 @@ export default authenticated(async function getReviews(req, res) {
             let reviewsData = formateDataReviews(reviews)
             if(reviewsData && reviewsData.length > 0){
                 return res.status(200).json(reviewsData);
-            } else {
+            } else if(reviewsData && reviewsData.length === 0){
+                return res.status(200).json({ message: `data equal []`, reviews: [] })
+            }else {
                 return res.status(500).json({ message: `sorry but data not parse`, reviews: [] })
             }
           
@@ -40,14 +42,14 @@ export default authenticated(async function getReviews(req, res) {
             let reviewsData = formateDataReviews(reviews)
             if(reviewsData && reviewsData.length > 0){
                 return res.status(200).json({ message: `success`, reviews: reviewsData });
-            } else {
+            } else if (reviewsData && reviewsData.length === 0){
+                return res.status(200).json({ message: `data equal []`, reviews: [] })
+            }else {
                 return res.status(500).json({ message: `sorry but data not parse`, reviews: [] })
             }
         }
         case 'DELETE': {
             let DELETE = `DELETE FROM reviews WHERE id = ?`
-
-            console.log(`ANSWER`, req.body);
 
             await sql_query(DELETE,[req.body.deleteId]).catch((err)=>{
                 return res.status(500).json({ message: `reviews/[id]/index.js DELETE req, DELETE desc: Something was wrong! ${err}` })
@@ -60,6 +62,8 @@ export default authenticated(async function getReviews(req, res) {
             let reviewsData = formateDataReviews(reviews)
             if(reviewsData && reviewsData.length > 0){
                 return res.status(200).json( {message: `delete saccess`, reviews: reviewsData});
+            } else if (reviewsData && reviewsData.length === 0) {
+                return res.status(200).json( {message: `delete saccess`, reviews: []});
             } else {
                 return res.status(500).json({ message: `delete unsacces`, reviews: reviewsData })
             }
@@ -80,8 +84,10 @@ export default authenticated(async function getReviews(req, res) {
             let reviewsData = formateDataReviews(reviews)
             if(reviewsData && reviewsData.length > 0){
                 return res.status(200).json( {message: `edit saccess`, reviews: reviewsData});
+            } else if (reviewsData && reviewsData.length === 0) {
+                return res.status(200).json( {message: `delete saccess`, reviews: []});
             } else {
-                return res.status(500).json({ message: `edit unsacces`, reviews: reviewsData })
+                return res.status(500).json({ message: `delete unsacces`, reviews: reviewsData })
             }
         }
         default: {
