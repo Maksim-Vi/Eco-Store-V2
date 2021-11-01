@@ -10,16 +10,16 @@ export default async function SignUp (req, res) {
     });
     if(req.method === 'POST'){
         hash(req.body.password, 10, async function(err, hash) {
-            const response = await db.query(
+            const response = await sql_query(
                 `INSERT INTO users(FirstName, LastName, email, password) VALUES(?, ?, ?, ?)`,
                 [req.body.FirstName,req.body.LastName,req.body.email,hash],
-                (error, response) => {
-                    console.log(error || response);
-                    res.json({message: 'Sorry something was wrong!'});          
-                }
             )
-            await db.end()
-            res.json(JSON.stringify(response));          
+
+            if(!response){
+                return res.status(401).json({message: 'Sorry something was wrong!'});       
+            } 
+
+            return res.status(200).json({message: 'create success'});    
         });     
     } else {
         res.status(500).json({message:`Sorry but you use ${req.method} request!`})

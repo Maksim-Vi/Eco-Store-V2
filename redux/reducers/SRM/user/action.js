@@ -1,4 +1,4 @@
-import { postSignInApi } from "../../../../API/apiNew"
+import { postRegisterApi, postSignInApi } from "../../../../API/apiNew"
 
 export const SET_SRM_TOKEN = 'SRM/SET_STM_TOKEN'
 export  const setToken = (token) => ({ type: SET_SRM_TOKEN, token })
@@ -24,4 +24,16 @@ export const SRM_Login = (email,password) => async (dispatch) => {
         }
     }
     return {login: false,token: null, userId: null}
+} 
+
+export const SRM_Register = (FirstName, LastName,email,password) => async (dispatch) => {
+    let data = await postRegisterApi(FirstName, LastName,email,password)   
+  
+    if(data && data.status === 200){
+        return {
+            create: true,
+            data: data,
+        }
+    }
+    return { create: false, data: []}
 } 

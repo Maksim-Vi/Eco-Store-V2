@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AuchContext } from "../../components/common/Context/context.hook"
 import { setCookie } from '../../components/common/session';
+import { useToasts } from 'react-toast-notifications';
 
 const Login = () => {
 
@@ -21,15 +22,28 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(false)
   const dispatch = useDispatch()
   let router = useRouter()
+  const { addToast, removeAllToasts } = useToasts()
+
+  let message = (mes) => {
+    removeAllToasts()
+    addToast(mes, {appearance: 'success',autoDismiss: true })
+  }
+
+  let error = (mes) => {
+    removeAllToasts()
+    addToast(mes, { appearance: 'error', autoDismiss: true })
+  }
 
   let onSubmit = async (values) => {
     let data = await dispatch(SRM_Login(values.email,values.password))
 
     if(data.login === true){
+      message('Вы вошли в систему EcoChoice SRM')
       setIsLogin(data.login)
       setCookie('auth',data.token)
       auch.login(data.token,data.userId)
     } else {
+      error('К сожалению данные не ерные попробуйте еще раз')
       router.push('/AdminPanel/SignIn')
     }
   }

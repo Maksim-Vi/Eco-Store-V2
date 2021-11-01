@@ -20,6 +20,22 @@ export const postSignInApi = async (email, password) => {
     return await res
 }
 
+export const postRegisterApi = async (FirstName, LastName,email,password) => {
+    let data = {FirstName:FirstName, LastName:LastName, email: email, password: password }
+    let res = await axios({
+        method: 'POST',
+        url: `${URL}/signup`,
+        data: data
+    }).catch((err) => {
+        console.log(`login ERROR`, err);
+    })
+
+    if(!res && res.status === 500 || res.status === 401){
+        return await res.status(500).json({message: 'Login failed, check please connection db or your login and password', data: []})
+    }
+
+    return await res
+}
 
 export const postFormStoreApi = async ( firstName, Email, subject) => {
     try {
