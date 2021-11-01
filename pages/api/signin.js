@@ -1,8 +1,15 @@
 import {compare} from 'bcrypt'
 import { sign } from 'jsonwebtoken';
 import { sql_query } from '../../database_connection';
+import NextCors from 'nextjs-cors';
 
 export default async function SignIn (req, res) {
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+    
     if(req.method === 'POST'){
         const userData = await sql_query('select * from users where email = ?', req.body.email).catch((err)=>{
             return res.status(500).json({ message: `signin.js POST req, Login is failed: Something was wrong! ${err}` })

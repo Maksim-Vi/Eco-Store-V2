@@ -1,10 +1,18 @@
+import NextCors from 'nextjs-cors';
 
 export default async function setContactForm(req, res) {
-   switch(req.method){
-       case 'POST': {
-           let nodemailer = require('nodemailer')
 
-           const transporter = nodemailer.createTransport({
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+
+    switch (req.method) {
+        case 'POST': {
+            let nodemailer = require('nodemailer')
+
+            const transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
                 secure: false, // true for 465, false for other ports
@@ -13,11 +21,11 @@ export default async function setContactForm(req, res) {
                     pass: process.env.EMAIL_PASSWORD
                 }
             });
-        
-                
+
+
             let message = {
                 from: req.body.Email,
-                to: `Mailer <${process.env.EMAIL_NODEMAILER}>` ,
+                to: `Mailer <${process.env.EMAIL_NODEMAILER}>`,
                 subject: 'From Eco Store',
                 text: `Вам пришело письмо от:
                     Имя: ${req.body.firstName},
@@ -29,15 +37,15 @@ export default async function setContactForm(req, res) {
                     Данное письмо требует ответ =>  ${req.body.Email}`,
             }
 
-            transporter.sendMail(message , (err,info) => {
-                if (err){
-                    return res.status(500).json({massage:'Что то пошло не так, попробуйте снова',err})
-                } 
+            transporter.sendMail(message, (err, info) => {
+                if (err) {
+                    return res.status(500).json({ massage: 'Что то пошло не так, попробуйте снова', err })
+                }
                 console.log('Email send info:', info)
             });
 
-            res.status(200).json({message: 'Данные успешно переданы!'})  
-       } 
-   }
-    
+            res.status(200).json({ message: 'Данные успешно переданы!' })
+        }
+    }
+
 }

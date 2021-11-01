@@ -1,8 +1,16 @@
-import { db, sql_query } from "../../database_connection";
+import { sql_query } from "../../database_connection";
 import { authenticated } from "../../utility/middlware";
 import { formateProductsData } from "../../utility/utils";
+import NextCors from 'nextjs-cors';
 
 export default authenticated(async function getProducts(req, res) {
+    
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+    
     switch (req.method) {
         case 'GET': {
             let SELECT = `

@@ -65,7 +65,7 @@ const Nav = () => {
             <Link href="/about-us"><a className={stl.link}>О НАС</a></Link>
             {true && <Link href="/reviews"><a className={stl.link}>ОТЗЫВЫ</a></Link>}
             <Link href="/payement-and-delivery"><a className={stl.link}>ОПЛАТА И ДОСТАВКА</a></Link>
-            <Link href="/contacts"><a className={stl.link}>КОНТАКТЫ</a></Link>
+            <Link href="/contacts" ><a className={stl.link}>КОНТАКТЫ</a></Link>
             <BasketButton />
 
             {openPopupContactUs

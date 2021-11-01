@@ -1,7 +1,13 @@
 import { db, sql_query } from "../../database_connection";
 import {hash} from 'bcrypt'
+import NextCors from 'nextjs-cors';
 
 export default async function SignUp (req, res) {
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
     if(req.method === 'POST'){
         hash(req.body.password, 10, async function(err, hash) {
             const response = await db.query(

@@ -3,6 +3,7 @@ import multer from 'multer';
 import { db, sql_query } from '../../database_connection';
 import { authenticated } from '../../utility/middlware';
 import { deleteAndUpload } from '../../utility/utils';
+import NextCors from 'nextjs-cors';
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -35,6 +36,13 @@ const apiRoute = nextConnect({
 // apiRoute.use(upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]))
 
 apiRoute.put(async (req, res) => {
+
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+
     let body = JSON.parse(req.body.product)
     let ImgData = JSON.stringify(body.ImgData)
 
@@ -130,6 +138,13 @@ apiRoute.put(async (req, res) => {
 });
 
 apiRoute.post(async (req, res) => {
+    
+    await NextCors(req, res, {
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+
     let body = JSON.parse(req.product)
     let ImgData = JSON.stringify(body.ImgData)
 
