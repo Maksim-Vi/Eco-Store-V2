@@ -9,7 +9,7 @@ const BasketButton = () =>{
     const items = useSelector(state => state.basket.items)
 
     return (
-        <Link href="/basket" as={'/basket'}>
+        <Link href="/basket">
             <div style={{ marginTop: '-10px'}}>
                 <button className={stl.basketBtn}>{totalPriceCount(items)} грн | 
                     <span className={stl.basketImg}></span>

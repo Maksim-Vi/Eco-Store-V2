@@ -23,7 +23,7 @@ const Header = () => {
                     }
                    
                     <div className={stl.mobileBasletContainer}>
-                        <Link href="/basket" as={'/basket'}>
+                        <Link href="/basket">
                             <a className={stl.LinkBasket}><span className={stl.basketCount}>{items.length}</span></a>
                         </Link>
                     </div>
@@ -38,7 +38,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className={stl.middleHead}>
-                    <Link href="/" as={'/'}><img className={stl.logo} src="/contentImg/logo.png" alt="logo" /></Link>
+                    <Link href="/"><img className={stl.logo} src="/contentImg/logo.png" alt="logo" /></Link>
                     <div className={stl.text}>
                         <span><span className={stl.textEco}>Эко </span>товары в каждый дом</span>
                     </div>

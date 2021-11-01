@@ -1,9 +1,0 @@
-{
-  "apps" : [
-  {
-    "name": "prod_client",
-    "script": "npm",
-    "args":"start",
-	  "watch": true
-  }]
-}

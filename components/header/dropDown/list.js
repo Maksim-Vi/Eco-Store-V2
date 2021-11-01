@@ -20,7 +20,7 @@ const ListItems = (props) => {
               <ul className={s.ListContainer}>
                 {props.itemsTab.map(item => (
                     <li className={s.divListItem} key={item.id} onClick={()=>{hendlerClickProducts(item)}}>
-                        <Link href="/products" as={'/products'}><a>{item.name}</a></Link>
+                        <Link href="/products"><a>{item.name}</a></Link>
                     </li>
                 ))}
               </ul>  

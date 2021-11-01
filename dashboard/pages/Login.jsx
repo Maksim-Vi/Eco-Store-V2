@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import * as Yup from 'yup';
-import { Formik } from 'Formik';
+import { Formik } from 'formik';
 import {
   Box,
   Button,

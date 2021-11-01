@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "startDev": "next",
+    "startDev": "next -p 4000",
     "startServer": "nodemon SERVER/index.js",
-    "startProd": "next start",
+    "startProd": "next start -p 4000",
     "build": "next build",
     "export": "next export",
-    "developStart": "cross-env NODE_ENV=development next",
-    "productionStart": "cross-env NODE_ENV=production next start",
-    "development": "concurrently \"npm run developStart\" \"npm run startServer\"",
-    "production": "concurrently \"npm run productionStart\" \"npm run startServer\""
+    "developStart": "cross-env NODE_ENV=development next -p 4000",
+    "developStartAsServer": "cross-env NODE_ENV=development node server.js",
+    "productionStart": "cross-env NODE_ENV=production next start -p 4000",
+    "productionStartAsServer": "cross-env NODE_ENV=production node server.js",
+    "development": "concurrently \"npm run developStartAsServer\" \"npm run startServer\"",
+    "production": "concurrently \"npm run productionStart\" \"npm run startServer\"",
+    "productionAsServer": "concurrently \"npm run productionStartAsServer\" \"npm run startServer\""
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",
@@ -71,6 +74,7 @@
     "sass": "^1.29.0",
     "screenfull": "^5.1.0",
     "serverless-mysql": "^1.5.4",
+    "swr": "^1.0.1",
     "url": "^0.11.0",
     "yup": "^0.32.9"
   },

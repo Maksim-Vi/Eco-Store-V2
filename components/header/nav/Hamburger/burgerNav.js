@@ -30,13 +30,14 @@ const BurgerMenu = () =>{
         [`${stl.Menu}`]:true,
         [`${stl.MenuActive}`]: open ,
     })} open={open}>
-        <Link href="/products" as={'/products'}><a className={stl.Link}>ПРОДУКЦИЯ</a></Link>
+        <Link href="/products"><a className={stl.Link}>ПРОДУКЦИЯ</a></Link>
         <a className={stl.Link} onClick={()=>{handleClickOpen()}}>СВЯЗАТЬСЯ С НАМИ</a>
-        <Link href="/promotions" as={'/promotions'}><a className={stl.Link}>АКЦИИ</a></Link>
-        <Link href="/about-us" as={'/about-us'}><a className={stl.Link}>О НАС</a></Link>
-        <Link href="/payement-and-delivery" as={'/payement-and-delivery'}><a className={stl.Link}>ОПЛАТА И ДОСТАВКА</a></Link>
-        <Link href="/contacts" as={'/contacts'}><a className={stl.Link}>КОНТАКТЫ</a></Link>
-        <Link href="/basket" as={'/basket'}>
+        <Link href="/promotions"><a className={stl.Link}>АКЦИИ</a></Link>
+        <Link href="/about-us"><a className={stl.Link}>О НАС</a></Link>
+        {true && <Link href="/reviews"><a className={stl.link}>ОТЗЫВЫ</a></Link>}
+        <Link href="/payement-and-delivery"><a className={stl.Link}>ОПЛАТА И ДОСТАВКА</a></Link>
+        <Link href="/contacts"><a className={stl.Link}>КОНТАКТЫ</a></Link>
+        <Link href="/basket">
             <a className={stl.Link}>
                 КОРЗИНА 
                 <span className={stl.LinkBasketCount}>{totalPriceCount(items)}грн | {items.length}шт</span>

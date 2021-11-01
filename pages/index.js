@@ -49,7 +49,7 @@ Home.getInitialProps = async () => {
     let productsJson = []
     let popularJson = []
     let reviewsStoreJson = []
-
+    
     let products = await fetch(`${URL}/products`)
     let popular = await fetch(`${URL}/populars`)
     let reviewsStore = await fetch(`${URL}/reviews`)

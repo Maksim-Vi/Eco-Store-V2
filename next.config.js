@@ -13,18 +13,17 @@ module.exports = {
     // exportPathMap: function () {
     //     return {
     //         "/": { page: "/" },
-    //         // "/products": { page: "/products" },
+    //         "/products": { page: "/products" },
     //         "/about-us": { page: "/about-us" },
     //         "/payement-and-delivery": { page: "/payement-and-delivery" },
     //         "/contacts": { page: "/contacts" },
     //         "/basket": { page: "/basket" },
     //         "/promotions": { page: "/promotions" },
 
-    //         // "/AdminPanel/Account": { page: "/AdminPanel/Account" },
-    //         // "/AdminPanel/Dashboard": { page: "/AdminPanel/Dashboard" },
-    //         // "/AdminPanel/Products": { page: "/AdminPanel/Products" },
-    //         // "/AdminPanel/Settings": { page: "/AdminPanel/Settings" },
-    //         // "/AdminPanel/Top": { page: "/AdminPanel/Top" },
+    //         "/AdminPanel/Dashboard": { page: "/AdminPanel/Dashboard" },
+    //         "/AdminPanel/Products": { page: "/AdminPanel/Products" },
+    //         "/AdminPanel/Settings": { page: "/AdminPanel/Settings" },
+    //         "/AdminPanel/Top": { page: "/AdminPanel/Top" },
 
     //         // "/product/1": { page: "/product/[id]", query: { id: '1' }},
     //         // "/product/2": { page: "/product/[id]", query: { id: '2' }},
