@@ -1,7 +1,6 @@
 import React from 'react'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { responsiveOneItem } from './utils'
 
 const CarouselWithButtonAndDots = ({ children, responsive, arrows, dotsOutside, dotListClass, itemClass }) => {
     return (

@@ -60,11 +60,8 @@ function MyApp({ Component, pageProps }) {
     <AppAnimate>
       <AuchContext.Provider value={{ token, userID, login, logout, isAuthorization }}>
         <AuchContextItem.Provider value={{ itemsProduct, itemsProductPatchId, id, itemPopular, itemsStore }}>
-          <ToastProvider>
+          <ToastProvider autoDismiss autoDismissTimeout={6000} placement="bottom-right">
             <Provider store={store}>
-              {/* <PersistGate loading={null} persistor={persistor}>
-                <Component {...pageProps} /> 
-              </PersistGate> */}
               <CssBaseline />
               <Component {...pageProps} /> 
             </Provider>

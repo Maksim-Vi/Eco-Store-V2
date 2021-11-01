@@ -12,6 +12,7 @@ import axios from 'axios';
 import { getCookie } from '../../components/common/session';
 import { useDispatch } from 'react-redux';
 import { setTop } from '../../redux/reducers/SRM/top/action';
+import { useToasts } from 'react-toast-notifications';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,6 +75,17 @@ const TopCard = ({ top, products }) => {
     let [topArr, setTopArr] = React.useState(top)
     let [popularItems, setPopularItems] = React.useState([])
     let [openDrower, setOpenDrower] = React.useState(false);
+    const { addToast, removeAllToasts } = useToasts()
+
+    let message = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'success', autoDismiss: true })
+    }
+  
+    let error = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'error', autoDismiss: true })
+    }
 
     const toggleDrawer = (type, event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -108,9 +120,12 @@ const TopCard = ({ top, products }) => {
             })
 
             if (res.status === 200) {
+                message('Добавление в топ товары прошло успешно! =)')
                 dispatch(setTop(res.data.tops))
                 setTopArr(res.data.tops)
                 setPopularItems(res.data.tops)
+            } else {
+                error('Что то пошло не так при добавлении в топ товары! =(')
             }
         }
     }
@@ -127,6 +142,9 @@ const TopCard = ({ top, products }) => {
             setPopularItems([])
             setTopArr([])
             dispatch(setTop([]))
+            message('Удаление всех топ товаров прошло успешно! =)')
+        } else {
+            error('Удаление невозможно, по скольку топ или 0 или больше 4')
         }
     }
 

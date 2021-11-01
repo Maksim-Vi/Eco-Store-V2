@@ -16,6 +16,7 @@ import { getCookie } from '../../components/common/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProductTabs, resetNeedToDeleteImages, resetProductTabs, setNeedToDeleteImages, setProducts } from '../../redux/reducers/SRM/products/action';
 import { ImagesDeleteDataUrl } from '../utilits/products/ProductsUtils';
+import { useToasts } from 'react-toast-notifications';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -66,7 +67,17 @@ export default function EditProduct(props) {
     const needToDeleteImages = useSelector(state => state.CRM_products.needToDeleteImages)
 
     const dispatch = useDispatch()
+    const { addToast, removeAllToasts } = useToasts()
 
+    let message = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'success', autoDismiss: true })
+    }
+  
+    let error = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'error', autoDismiss: true })
+    }
 
     let deleteProduct = async () => {
         let cookie = getCookie('auth')
@@ -101,8 +112,11 @@ export default function EditProduct(props) {
         })
 
         if (res.status === 200) {
+            message('Удаление продукта выполнено успешно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
+        } else {
+            error('При удалении товара что то пошло не так! =(')
         }
     }
 
@@ -178,9 +192,12 @@ export default function EditProduct(props) {
         })
 
         if(res !== undefined && res.status === 200){
+            message('Редактирование товара прошло успешно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
-        } 
+        } else {
+            error('Ошибка pедактирования товара! =(')
+        }
     }
 
     let deleteImages = async () =>{

@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import axios from 'axios';
 import { setTop } from '../../../redux/reducers/SRM/top/action';
 import { useDispatch } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
 
 const useStyles = makeStyles((theme) => ({
     BtnSave: {
@@ -21,21 +22,16 @@ const ButtonsList = (props) => {
 
     const classes = useStyles();
     const dispatch = useDispatch()
+    const { addToast, removeAllToasts } = useToasts()
 
-    let savePopular = async () => {
-        let URL = process.env.SERVER_URL
-        let cookie = getCookie('auth')
-
-        let res = await axios.put(`${URL}/popular/${props.item.id}`, props.item ,  {
-            headers: { 
-                'authorization': cookie,
-                'Accept': 'application/json', 
-            },
-        })
-
-        if (res.status === 200) {
-            console.log(`Popular added`);
-        }
+    let message = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'success', autoDismiss: true })
+    }
+  
+    let error = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'error', autoDismiss: true })
     }
 
     let updatePopular = async () => {
@@ -49,10 +45,11 @@ const ButtonsList = (props) => {
             },
         })
 
-        console.log(`ANSWER`, res);
-
         if (res.status === 200) {
+            message('Обновление топ товара прошло успешно! =)')
             console.log(`Popular update`);
+        } else {
+            error('Что то пошло не так при обновлении! =(')
         }
     }
 
@@ -68,10 +65,12 @@ const ButtonsList = (props) => {
         })
 
         if (res.status === 200) {
-            console.log(`Popular delete item`);
+            message('Удаление топ товара прошло успешно! =)')
             dispatch(setTop(res.data.tops))
             props.setTopArr(res.data.tops)
             props.setPopularItems(res.data.tops)
+        } else {
+            error('Что то пошло не так при удалении! =(')
         }
     }
 

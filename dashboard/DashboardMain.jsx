@@ -1,13 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { AuchContext } from '../components/common/Context/context.hook';
+import React from 'react';
 import Head from "next/head";
 import DashboardSidebar from './layoutsDashbord/DashboardSidebar';
 import DashboardNavbar from './layoutsDashbord/DashboardNavbar';
 import { Container, makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useRouter } from 'next/router'
-import { checkisVerifyToken } from '../utility/middlware';
-import { getCookie } from '../components/common/session';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,14 +48,14 @@ const DashboardMain = ({ children, titleHome = 'Main Dashboard' }) => {
 
       <DashboardNavbar handleDrawer={() => { handleDrawer() }} open={open} />
       <DashboardSidebar handleDrawer={() => { handleDrawer() }} open={open} />
-
+      
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Container maxWidth="lg">
           {children}
         </Container>
       </main>
-
+    
       <style jsx global>{`
               *{
                   margin:0;

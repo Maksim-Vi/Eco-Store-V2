@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setProducts } from '../../redux/reducers/SRM/products/action';
 import { getCookie } from '../../components/common/session';
+import { useToasts } from 'react-toast-notifications';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -44,12 +45,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function AddProduct(props) {
     let URL = process.env.SERVER_URL
     const classes = useStyles();
-
+    
     let Images = useSelector(state => state.CRM_products.Images)
     let genetalTabs = useSelector(state => state.CRM_products.genetalTabs)
     let descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
     let descriptionTableTabs = useSelector(state => state.CRM_products.descriptionTableTabs)
     const dispatch = useDispatch()
+    
+    const { addToast, removeAllToasts } = useToasts()
+
+    let message = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'success', autoDismiss: true })
+    }
+  
+    let error = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'error', autoDismiss: true })
+    }
 
     let saveProduct = async () => {
         let cookie = getCookie('auth')
@@ -143,9 +156,13 @@ export default function AddProduct(props) {
         })
 
         if (res !== undefined && res.status === 200) {
+            message('Товар был создан удачно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
+        } else {
+            error('Ошибка создания товара! =(')
         }
+
     }
 
     return (

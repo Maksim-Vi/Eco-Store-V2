@@ -7,6 +7,7 @@ import { getCookie } from '../../components/common/session';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews } from '../../redux/reducers/SRM/reviews/action';
+import { useToasts } from 'react-toast-notifications';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -35,6 +36,17 @@ const Reviews = () => {
         isGoogle: true,
         isShowInMainPage: false
     })
+    const { addToast, removeAllToasts } = useToasts()
+
+    let message = (mes) => {
+      removeAllToasts()
+      addToast(mes, {appearance: 'success',autoDismiss: true })
+    }
+  
+    let error = (mes) => {
+      removeAllToasts()
+      addToast(mes, { appearance: 'error', autoDismiss: true })
+    }
 
     let openReviewsDialog = () => {
         stateIsEditOrCreateRef.current = 'Create'
@@ -89,6 +101,7 @@ const Reviews = () => {
         })
 
         if (res && res.status === 200) {
+            message('Добавление отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
             setStateReviews({
@@ -100,6 +113,8 @@ const Reviews = () => {
                 isShowInMainPage: false
             })
             setOpen(false);
+        } else {
+            error('Ошибка при добавлении отзыва! =(')
         }
     };
 
@@ -118,9 +133,12 @@ const Reviews = () => {
         })
 
         if (res && res.status === 200) {
+            message('Удаление отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
             setOpen(false);
+        } else {
+            error('Ошибка при удалении отзыва! =(')
         }
 
     }
@@ -148,6 +166,7 @@ const Reviews = () => {
         })
 
         if (res && res.status === 200) {
+            message('Редактирование отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
             setStateReviews({
@@ -159,6 +178,8 @@ const Reviews = () => {
                 isShowInMainPage: false
             })
             setOpen(false);
+        } else {
+            error('Ошибка при редактировании отзыва! =(')
         }
     }
 
