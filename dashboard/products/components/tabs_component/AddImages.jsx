@@ -134,7 +134,6 @@ export const AddImages = () => {
         if(descriptionProductTabs.ImgData.length > 0){
             setDesc(descriptionProductTabs.ImgData)
         }
-        console.log(images, desc);
     },[])
 
 

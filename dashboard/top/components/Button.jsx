@@ -47,7 +47,6 @@ const ButtonsList = (props) => {
 
         if (res.status === 200) {
             message('Обновление топ товара прошло успешно! =)')
-            console.log(`Popular update`);
         } else {
             error('Что то пошло не так при обновлении! =(')
         }

@@ -15,7 +15,6 @@ export const authenticated = (fn) => async (req, res) => {
   } else {
     verify(req.headers.authorization, process.env.jwtSecret, async function(err, decoded) {
       if(!err && decoded){
-        console.log(`VERIFY is good`);
         return await fn(req, res)
       } else {
         console.log(`VERIFY is invalid`);

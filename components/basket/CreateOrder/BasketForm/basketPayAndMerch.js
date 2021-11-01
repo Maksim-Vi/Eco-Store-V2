@@ -119,7 +119,6 @@ const PayAndMarch = (props) => {
     }
 
     let onSubmit = (values, e) => {
-        console.log('answer form',values);
         window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
     }
 

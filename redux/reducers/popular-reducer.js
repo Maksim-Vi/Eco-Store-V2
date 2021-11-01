@@ -20,7 +20,6 @@ const PopularReducer = (state=initialState,action) => {
 export  const setPopular = (popular) => ({ type: SET_POPULAR, popular })
 
 export const PopularApi = () => async (dispatch) => {
-    console.log('in popularApi');
     let data = await getPopularApi()    
     dispatch(setPopular(data)); 
 } 

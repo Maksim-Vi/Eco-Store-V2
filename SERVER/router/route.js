@@ -10,7 +10,7 @@ let uploadData = (req,res) =>{
             imagesUrl.push(file.path)
         })
     }
-    console.log('req files data',req.files);
+    
     if (req.files.imagesDesc !== undefined) {
         req.files.imagesDesc.forEach(file => {
             imagesDescUrl.push(file.path)
