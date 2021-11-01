@@ -20,7 +20,7 @@ const Reviews = (props) => {
             </Box>
          </Box>
          <Grid container className={s.reviewsContainer} spacing={2}>
-            {props.reviews &&
+            {props.reviews && props.reviews.length > 0 &&
                props.reviews.map(review => {
                   return <Grid className={s.reviewsItem} item lg={6} sm={12} >
                      <CardItem key={review.id} userName={review.userName} reviewsText={review.reviewsText} reviewsCurrentUrl={review.reviewsCurrentUrl} isGoogle={review.isGoogle} />

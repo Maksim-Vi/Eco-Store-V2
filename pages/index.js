@@ -37,7 +37,7 @@ const Home = (props) => {
             {true &&
                 <ReviewsSlider reviews={props.reviews}/>
             }
-            {true &&
+            {false &&
                 <ContactUs />
             }
         </HeaderMain>)
