@@ -132,6 +132,7 @@ const Register = () => {
               label="Password"
               margin="normal"
               name="password"
+              autoComplete="on"
               onBlur={handleBlur}
               onChange={handleChange}
               type="password"

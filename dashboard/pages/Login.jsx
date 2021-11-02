@@ -91,6 +91,7 @@ const Login = () => {
               label="Email Address"
               margin="normal"
               name="email"
+              autocomplete="on"
               onBlur={handleBlur}
               onChange={handleChange}
               type="email"
@@ -104,6 +105,7 @@ const Login = () => {
               label="Password"
               margin="normal"
               name="password"
+              autoComplete="on"
               onBlur={handleBlur}
               onChange={handleChange}
               type="password"
