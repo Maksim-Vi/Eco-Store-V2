@@ -48,10 +48,8 @@ TopDashboard.getInitialProps = async (ctx) => {
 
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/products`,{
-            mode: 'no-cors',
             headers: {
                 'authorization': cookie,
-                'Accept': 'application/json',
                 'isCrm': true
             },
         })
@@ -59,7 +57,6 @@ TopDashboard.getInitialProps = async (ctx) => {
         const res2 = await fetch(`${URL}/populars`,{
             headers: {
                 'authorization': cookie,
-                'Accept': 'application/json',
                 'isCrm': true
             },
         })

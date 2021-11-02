@@ -48,7 +48,6 @@ ProductsDashboard.getInitialProps = async (ctx) => {
 
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/products`,{
-            mode: 'no-cors',
             headers: {
                 'authorization': cookie,
                 'isCrm': true
@@ -56,7 +55,6 @@ ProductsDashboard.getInitialProps = async (ctx) => {
         })
        
         const res2 = await fetch(`${URL}/populars`,{
-            mode: 'no-cors',
             headers: {
                 'authorization': cookie,
                 'isCrm': true
