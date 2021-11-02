@@ -16,10 +16,14 @@ const TopProductsSlider = (props) => {
                 <CarouselWithButtons>
                     {props.popular.map(item => {
                         return  <Link href="/product/[id]" as={`/product/${item.id}`} >
-                            <Avatar variant="square" className={stl.image} src={`${process.env.SERVER_UPLOAD_URL}/${item.image}`} alt="item" />
+                            <div className={stl.topItemContainer}>
+                                <Avatar variant="square" className={stl.image} src={`${process.env.SERVER_UPLOAD_URL}/${item.image}`} alt="item" />
+                                <span><p>{item.text}</p></span>
+                            </div>
                     </Link>
                     })}
-                </CarouselWithButtons>;
+                </CarouselWithButtons>
+                <Link href="/products" ><button className={stl.btnBottom}>смотреть все товары</button></Link>
             </div>
             )
 }

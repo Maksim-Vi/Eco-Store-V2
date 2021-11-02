@@ -22,7 +22,7 @@ const TopProducts = (props) => {
           return <TopItemProduct key={item.id} item={item} />
         })}
       </div>
-      <Link href="/products" as={'/products'}><button className={stl.btnBottom}>смотреть все товары</button></Link>
+      <Link href="/products" ><button className={stl.btnBottom}>смотреть все товары</button></Link>
     </div>
 
   );
