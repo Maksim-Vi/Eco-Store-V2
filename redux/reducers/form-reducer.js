@@ -131,23 +131,41 @@ export const setPostInfo = (postInfo) => ({type: SET_POST_INFO, postInfo})
 export const addItemToProduct = (item, count) => ({type: ADD_ITEM_PRODUCT, item, count })
 
 export const postFormStore = (firstName,Email,subject) => async (dispatch) => {
-    try {
-        postFormStoreApi(firstName,Email,subject)
-        dispatch(clearFullForm())
-    } catch (error) {
-        console.log(error);
-        return Promise.reject()
+    let data = await postFormStoreApi(firstName,Email,subject)
+    dispatch(clearFullForm())
+   
+    if(data.status === 200 || data.status === 201){
+        return {
+            status: data.status,
+            err: false,
+            data: data.data
+        }
+    } else {
+        return {
+            status: data.status,
+            err: true,
+            text: data.data ? data.data.massage : 'Что то пошло не так, попробуйте снова!',
+            data: data.data
+        }
     }
-
 } 
 
 export const postFormBasket = (namLid,FirstName,Email,phone,promocode,pay,post,postInfo,itemsData) => async (dispatch) => {
-    try {
-        let data = await postFormStoreBasketApi(namLid,FirstName,Email,phone,promocode,pay,post,postInfo,itemsData)
-        dispatch(clearFullForm())
-    } catch (error){
-        console.log(error);
-        return Promise.reject()
+    let data = await postFormStoreBasketApi(namLid,FirstName,Email,phone,promocode,pay,post,postInfo,itemsData)
+    dispatch(clearFullForm())
+    if(data.status === 200 || data.status === 201){
+        return {
+            status: data.status,
+            err: false,
+            data: data.data
+        }
+    } else {
+        return {
+            status: data.status,
+            err: true,
+            text: data.data ? data.data.massage : 'Что то пошло не так, попробуйте снова!',
+            data: data.data
+        }
     }
 } 
 

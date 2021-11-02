@@ -13,15 +13,15 @@ export const postSignInApi = async (email, password) => {
         console.log(`login ERROR`, err);
     })
 
-    if(!res && res.status === 500 || res.status === 401){
-        return await res.status(500).json({message: 'Login failed, check please connection db or your login and password', data: []})
+    if (!res && (res.status === 500 || res.status === 401)) {
+        return await res.status(500).json({ message: 'Login failed, check please connection db or your login and password', data: [] })
     }
 
     return await res
 }
 
-export const postRegisterApi = async (FirstName, LastName,email,password) => {
-    let data = {FirstName:FirstName, LastName:LastName, email: email, password: password }
+export const postRegisterApi = async (FirstName, LastName, email, password) => {
+    let data = { FirstName: FirstName, LastName: LastName, email: email, password: password }
     let res = await axios({
         method: 'POST',
         url: `${URL}/signup`,
@@ -30,49 +30,65 @@ export const postRegisterApi = async (FirstName, LastName,email,password) => {
         console.log(`login ERROR`, err);
     })
 
-    if(!res && res.status === 500 || res.status === 401){
-        return await res.status(500).json({message: 'Login failed, check please connection db or your login and password', data: []})
+    if (!res && res.status === 500 || res.status === 401) {
+        return await res.status(500).json({ message: 'Login failed, check please connection db or your login and password', data: [] })
     }
 
     return await res
 }
 
-export const postFormStoreApi = async ( firstName, Email, subject) => {
-    try {
-        let response = await fetch(`${URL}/contactForm`, {
-            method: "POST",
-            body: JSON.stringify({ firstName, Email, subject }),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        })
-        return await response.json()
+export const postFormStoreApi = async (firstName, Email, subject) => {
 
-    } catch (error) {
-        console.log(`data not found`);
-        return data = []
+    let response = await fetch(`${URL}/contactForm`, {
+        method: "POST",
+        body: JSON.stringify({ firstName, Email, subject }),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    if (response && (response.status === 200 || response.status === 201)) {
+        return {
+            status: response.status,
+            data: await response.json()
+        }
+    } else {
+        return {
+            status: response.status,
+            data: await response.json()
+        }
     }
 
 }
 
-export const postFormStoreBasketApi = async (namLid,firstName, Email, phone, promocode, pay, post, postInfo, items) => {
-    try {
-        let response = await fetch(`${URL}/contactFormOrder`, {
-            method: "POST",
-            body: JSON.stringify({namLid,firstName, phone, Email, promocode, pay, post, postInfo, items}),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
+export const postFormStoreBasketApi = async (namLid, firstName, Email, phone, promocode, pay, post, postInfo, items) => {
+    let response = await fetch(`${URL}/contactFormOrder`, {
+        method: "POST",
+        body: JSON.stringify({ namLid, firstName, phone, Email, promocode, pay, post, postInfo, items }),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    let dataTelegram = await sendTelegramMsg({ namLid, firstName, phone, Email, promocode, pay, post, postInfo, items })
+
+    if (response && (response.status === 200 || response.status === 201)) {
+        return {
+            status: response.status,
+            data: await response.json()
+        }
+    } else {
+        if (dataTelegram && (dataTelegram.status === 200 || dataTelegram.status === 201)) {
+            return {
+                status: dataTelegram.status,
+                data: await dataTelegram
             }
-        })
-
-        sendTelegramMsg({namLid,firstName, phone, Email, promocode, pay, post, postInfo, items})
-
-        return await response
-
-    } catch (error) {
-        console.log(`data not found`);
-        return data = []
+        }
+        return {
+            status: response.status,
+            data: await response.json()
+        }
     }
 }

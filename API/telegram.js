@@ -11,15 +11,23 @@ export const sendTelegramMsg = async (dataLid) => {
         text: formatText(dataLid)
     });
 
-    let response = await fetch(`${url}`, {
-        method: "POST",
-        body: data,
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8'
+    try {
+        let response = await fetch(`${url}`, {
+            method: "POST",
+            body: data,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        })
+    
+        return response
+    } catch (error) {
+        return {
+            status: 401,
+            message: 'Telegran Token or URL invalid'
         }
-    })
-
-    return response
+    }
+  
 }
 
 const formatText = (dataLid) => {

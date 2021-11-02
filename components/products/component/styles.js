@@ -37,7 +37,7 @@ export const useBuyMenu = makeStyles((theme) => ({
     cardItem:{
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
+        width: '95%',
         padding: '10px 0 10px 0',
         [theme.breakpoints.down('sm')]: {
             alignItems:'center',

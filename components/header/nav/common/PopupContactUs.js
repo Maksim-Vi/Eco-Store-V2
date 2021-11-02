@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { useToasts } from 'react-toast-notifications'
@@ -9,9 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import s from '../../../../styles/content/contactPopup.module.scss'
 import { makeStyles } from '@material-ui/core/styles'
 import { postFormStore } from '../../../../redux/reducers/form-reducer';
-import { AuchContext } from '../../../common/Context/context.hook';
 import { useForm } from 'react-hook-form';
-import * as gtag from '../../../../lib/gtag'
 
 const useStyles = makeStyles({
     root: {
@@ -43,9 +41,6 @@ const PopupContactUs = ({ open, handleClose, ...props }) => {
 
     const classes = useStyles();
 
-    let auch = useContext(AuchContext)
-    let token = auch.token
-
     const { addToast, removeAllToasts } = useToasts()
     const { register, trigger, handleSubmit, formState: { errors } } = useForm();
 
@@ -59,19 +54,18 @@ const PopupContactUs = ({ open, handleClose, ...props }) => {
         addToast(mes, { appearance: 'error', autoDismiss: true })
     }
 
-    let chatchAllUnhandleErrors = (reason, promise) => {
-        error('Что то пошло не так, попробуйте снова!')
-    }
-
-    let onSubmit = (values, e) => {
-        props.postFormStore(values.username, values.email, values.subject)
-        message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
-        window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
-        gtag.event({
-            action: 'submit_form',
-            category: 'Popup ContactUs',
-            label: values.name,
-        })
+    let onSubmit = async (values, e) => {
+        let data = await props.postFormStore(values.username, values.email, values.subject)
+        
+        if(data && (data.status === 200 || data.status === 201) && data.err === false){
+            message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
+        } else if(data.status !== 200 && data.err === true){
+            console.log(data);
+            error(data ? data.text : 'Что то пошло не так, попробуйте снова!')
+        } else {
+            error('Прооблема с подключением к базе данных, обратитесь к менеджеру')
+        }
+       
         e.target.reset();
         handleClose(true)
     }

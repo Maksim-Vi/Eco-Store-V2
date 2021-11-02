@@ -173,26 +173,33 @@ const CreateOrder = ({ setCreateOrder }) => {
     return item
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     let itemsToOrder = sortBasketItemToOrder()
     if (itemsToOrder.length === 0) {
       error('Выберите товар!')
     } else {
       let namLid = currentOrder
-      dispatch(postFormBasket(namLid,form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
-      dispatch(addItemToProduct(itemsToOrder))
+      let data = await dispatch(postFormBasket(namLid, form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
+      
+      if (data && (data.status === 200 || data.status === 201) && data.err === false) {
+        message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
+        dispatch(addItemToProduct(itemsToOrder))
+      } else if ((data.status !== 200 || data.status !== 201) && data.err === true) {
+        error(data.text || 'Что то пошло не так, попробуйте снова!')
+      } else {
+        error('Прооблема с подключением к базе данных, обратитесь к менеджеру')
+      }
       dispatch(removeAllItemStore())
-      message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
     }
     setCreateOrder(false)
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setCurrentOrder(String(Math.floor(Math.random() * (10000 - 999)) + 1000))
-    return ()=>{
+    return () => {
       setCurrentOrder('0')
     }
-  },[])
+  }, [])
 
   const oldRenderData = () => {
     return (

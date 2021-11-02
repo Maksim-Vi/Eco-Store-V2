@@ -12,7 +12,7 @@
     "developStartAsServer": "cross-env NODE_ENV=development node server.js",
     "productionStart": "cross-env NODE_ENV=production next start -p 4000",
     "productionStartAsServer": "cross-env NODE_ENV=production node server.js",
-    "development": "concurrently \"npm run developStartAsServer\" \"npm run startServer\"",
+    "development": "concurrently \"npm run developStart\" \"npm run startServer\"",
     "production": "concurrently \"npm run productionStart\" \"npm run startServer\"",
     "productionAsServer": "concurrently \"npm run productionStartAsServer\" \"npm run startServer\""
   },
