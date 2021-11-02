@@ -54,6 +54,46 @@
             transform: scale(1.05);
         }
     }
+    .TopCardContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 100px;
+        padding-right: 100px;
+        padding-bottom: 50px;
+        position: relative;
+        @include lg { padding-left: 30px; padding-right: 30px;}
+        @include md { flex-flow: row wrap; padding-left: 10px; padding-right: 10px;}
+        .topItemContainer{
+            transition: all ease-in 0.3s;
+            & span p{
+                position: absolute;
+                text-transform: none;
+                font-size: 22px;
+                bottom: 30px;
+                right: 30px;
+                @include md {font-size: 18px;}
+            }
+            &:hover{
+                transform: scale(1.05);
+            }
+        }
+        .btnBottom{ 
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+      
+    }
+    .TopCardItemOne{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%; 
+        margin: 0 auto;
+        @include lg { width: 80%; }
+        @include md { width: 100%; }
+    }
     .btnBottom{    
         display: flex;    
         border: none;
