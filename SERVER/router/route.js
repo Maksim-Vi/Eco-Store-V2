@@ -1,5 +1,6 @@
 const { upload } = require("./multer");
 const fs = require("fs");
+const { form, formStore } = require("./nodemailer");
 
 let uploadData = (req,res) =>{
     let imagesUrl = []
@@ -78,4 +79,7 @@ module.exports = (app) => {
     app.post('/uploadImagesProducts', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), uploadData);
     app.put('/uploadImageProduct', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), updateData);
     app.delete('/removeImagesProduct', deleteData);
+
+    app.post('/contactForm',form);
+    app.post('/contactFormOrder',formStore);
 };

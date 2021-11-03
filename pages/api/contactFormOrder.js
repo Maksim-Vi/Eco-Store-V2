@@ -65,10 +65,11 @@ export default async function setContactFormOrder(req, res) {
             }
 
             await transporter.sendMail(message, (err, info) => {
+                console.log(`Data send gmail err`, err);
+                console.log(`Data Gmail`, info);
                 if (err) {
                     return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
                 } else {
-                    console.log(`Data Gmail`, info);
                     return res.status(200).json({ message: 'Данные успешно переданы!' })
                 }
             });

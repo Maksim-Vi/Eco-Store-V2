@@ -38,12 +38,12 @@ export const postRegisterApi = async (FirstName, LastName, email, password) => {
 }
 
 export const postFormStoreApi = async (firstName, Email, subject) => {
-
     let response = await fetch(`${URL}/contactForm`, {
+    //let response = await fetch(`${process.env.SERVER_UPLOAD_URL}/contactForm`, {
         method: "POST",
         body: JSON.stringify({ firstName, Email, subject }),
         headers: {
-            'Accept': 'application/json, text/plain, */*',
+            // 'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     })
@@ -64,10 +64,11 @@ export const postFormStoreApi = async (firstName, Email, subject) => {
 
 export const postFormStoreBasketApi = async (namLid, firstName, Email, phone, promocode, pay, post, postInfo, items) => {
     let response = await fetch(`${URL}/contactFormOrder`, {
+    //let response = await fetch(`${process.env.SERVER_UPLOAD_URL}/contactFormOrder`, {
         method: "POST",
         body: JSON.stringify({ namLid, firstName, phone, Email, promocode, pay, post, postInfo, items }),
         headers: {
-            'Accept': 'application/json, text/plain, */*',
+            // 'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     })

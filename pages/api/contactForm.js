@@ -1,5 +1,6 @@
 import NextCors from 'nextjs-cors';
 let nodemailer = require('nodemailer')
+const smtpTransport = require('nodemailer-smtp-transport')
 
 export default async function setContactForm(req, res) {
 
@@ -11,38 +12,51 @@ export default async function setContactForm(req, res) {
 
     switch (req.method) {
         case 'POST': {
-            const transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                auth: {
-                    user: process.env.EMAIL_NODEMAILER,
-                    pass: process.env.EMAIL_PASSWORD
+            setTimeout(()=>{
+                // const transporter = nodemailer.createTransport({
+                //     host: 'smtp.gmail.com',
+                //     port: 587,
+                //     secure: false, // true for 465, false for other ports
+                //     auth: {
+                //         user: process.env.EMAIL_NODEMAILER,
+                //         pass: process.env.EMAIL_PASSWORD
+                //     }
+                // });
+
+                const transporter = nodemailer.createTransport(smtpTransport({
+                    service: 'gmail',
+                    host: 'smtp.gmail.com',
+                    port: 587,
+                    auth: {
+                        user: process.env.EMAIL_NODEMAILER,
+                        pass: process.env.EMAIL_PASSWORD
+                    }
+                  }))
+
+                let message = {
+                    from: req.body.Email,
+                    to: `Mailer <${process.env.EMAIL_NODEMAILER}>`,
+                    subject: 'From Eco Store',
+                    text: `Вам пришело письмо от:
+                            Имя: ${req.body.firstName},
+                            Email: ${req.body.Email},
+            
+                            Коментаций:
+                            ${req.body.subject}
+                            
+                            Данное письмо требует ответ =>  ${req.body.Email}`,
                 }
-            });
-
-            let message = {
-                from: req.body.Email,
-                to: `Mailer <${process.env.EMAIL_NODEMAILER}>`,
-                subject: 'From Eco Store',
-                text: `Вам пришело письмо от:
-                        Имя: ${req.body.firstName},
-                        Email: ${req.body.Email},
-        
-                        Коментаций:
-                        ${req.body.subject}
-                        
-                        Данное письмо требует ответ =>  ${req.body.Email}`,
-            }
-
-            await transporter.sendMail(message, (err, info) => {
-                if (err) {
-                    return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
-                } else {
+    
+                await transporter.sendMail(message, (err, info) => {
+                    console.log(`Data send gmail err`, err);
                     console.log(`Data Gmail`, info);
-                    return res.status(200).json({ message: 'Данные успешно переданы!' })
-                }
-            });
+                    if (err) {
+                        return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
+                    } else {
+                        return res.status(200).json({ message: 'Данные успешно переданы!' })
+                    }
+                });
+            },3000)
         }
     }
 
