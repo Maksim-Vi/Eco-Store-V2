@@ -21,8 +21,11 @@ export const useBuyMenu = makeStyles((theme) => ({
         },
     },
     closeBtn:{
-        display: 'flex',
-        marginLeft:'auto',
+        position: 'absolute',
+        top: '5px',
+        right: '10px',
+        // display: 'flex',
+        // marginLeft:'auto',
         '&:hover':{
             cursor: 'pointer',
             color: 'red',
@@ -59,10 +62,16 @@ export const useBuyMenu = makeStyles((theme) => ({
     },
     cardItemName:{
         fontFamily: 'Montserrat, sans-serif',
+        fontWeight: 600,
         marginLeft: 10,
         [theme.breakpoints.down('sm')]: {
             textAlign:'center'
         },
+    },
+    descItem:{
+        fontFamily: 'Montserrat, sans-serif',
+        fontWeight: 600,
+        marginLeft: 10,
     },
     itemId:{
         fontFamily: 'Montserrat, sans-serif',

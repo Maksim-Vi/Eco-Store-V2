@@ -93,7 +93,7 @@ const TopCard = ({ top, products }) => {
         }
         
         setOpenDrower(type);
-    };
+    }
 
     let addTextPopular = (id, text) => {
         let data = []

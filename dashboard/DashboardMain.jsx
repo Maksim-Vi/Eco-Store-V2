@@ -7,7 +7,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: 'flex',  
+  },
+  Container:{
+    [theme.breakpoints.down('md')]: {
+      '&.MuiContainer-root':{
+        paddingLeft: 0,
+        paddingRight: 0
+      }
+    },
   },
   toolbar: {
     display: 'flex',
@@ -51,7 +59,7 @@ const DashboardMain = ({ children, titleHome = 'Main Dashboard' }) => {
       
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Container maxWidth="lg">
+        <Container className={classes.Container} maxWidth="lg">
           {children}
         </Container>
       </main>

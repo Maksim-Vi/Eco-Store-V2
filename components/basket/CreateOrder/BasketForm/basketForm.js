@@ -111,7 +111,7 @@ const BasketForm = (props) => {
     },[])
 
     return (
-        <form className={s.FormContainer} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <form className={s.FormContainer} onSubmit={handleSubmit(onSubmit)} >
             <TextField className={s.containerInput}
                 error
                 id="standard-basic"

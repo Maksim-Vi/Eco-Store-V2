@@ -28,7 +28,7 @@ const TopSlider = (popular) => {
         <>
             <CarouselWithButtons>
                 {popular.map(item => {
-                    return <Link href="/product/[id]" as={`/product/${item.id}`} >
+                    return <Link key={item.id} href="/product/[id]" as={`/product/${item.id}`} >
                         <div className={stl.topItemContainer}>
                             <Avatar variant="square" className={stl.image} src={`${process.env.SERVER_UPLOAD_URL}/${item.image}`} alt="item" />
                             <span><p>{item.text}</p></span>

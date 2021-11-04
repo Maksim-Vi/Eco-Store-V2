@@ -25,8 +25,8 @@ const HeaderSlider = () => {
 
     return (
         <CarouselWithButtonAndDots responsive={responsiveOneItem()} dotsOutside={false} arrows={true}>
-            {image.map(image=>{
-                return <Avatar variant="square" className={classes.image} src={image.img} alt="item" />
+            {image.map((image, index)=>{
+                return <Avatar key={index} variant="square" className={classes.image} src={image.img} alt="item" />
             })}
         </CarouselWithButtonAndDots>
     )

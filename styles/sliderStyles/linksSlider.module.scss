@@ -2,7 +2,7 @@
 
 .linksCarousel{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     @include lg {justify-content: start;}
     .linksContainer{
@@ -26,5 +26,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .descLink{
+        text-align: center;
     }
 }

@@ -69,10 +69,10 @@ const Item = (props) => {
             <Box component='div' className={classNames(`${classes.cardItem}`, { [`${classes.cardItemJustify}`]: ImgDesc.length === 0 })}>
                 <Avatar variant="square" className={classes.imageProductMain} src={`${process.env.SERVER_UPLOAD_URL}/${props.item.images[0].url}`} alt="item" />
                 <Box component='div' className={classes.textItemContainer}>
-                    <Typography className={classes.cardItemName} variant="p" component="h4" >{props.item.name}</Typography>
-                    <Typography className={classes.itemId} variant="p" component="span">Артикул: 100{props.item.id}</Typography>
-                    <Typography className={classes.itemId} variant="p" component="h4">Комплектация:</Typography>
-                    <Typography className={classes.itemId} variant="p" component="span">{props.item.equipment}</Typography>
+                    <Typography className={classes.cardItemName} variant="body1" component="h4" >{props.item.name}</Typography>
+                    <Typography className={classes.itemId} variant="body1" component="span">Артикул: 100{props.item.id}</Typography>
+                    <Typography className={classes.descItem} variant="body1" component="h4">Комплектация:</Typography>
+                    <Typography className={classes.itemId} variant="body1" component="span">{props.item.equipment}</Typography>
                 </Box>
                 {ImgDesc.length === 0 &&
                     <Box className={classes.cardItemUpDown} component='div'>

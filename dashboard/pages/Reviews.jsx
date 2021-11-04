@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
             paddingRight: 0
         },
     },
+    reviewsHeader:{
+        [theme.breakpoints.down('md')]: {
+            padding: 0,
+        },  
+    }
 }))
 
 const Reviews = () => {
@@ -205,7 +210,7 @@ const Reviews = () => {
 
     return (
         <Container className={classes.Container} maxWidth="lg">
-            <CardHeader subheader="На этой вкладке можно добавить или отредактировать отзывы в CRM" title="Отзывы" />
+            <CardHeader className={classes.reviewsHeader} subheader="На этой вкладке можно добавить или отредактировать отзывы в CRM" title="Отзывы" />
             <DashboardAddButton openDialog={() => { openReviewsDialog() }} textButton={'Добавить новый отзыв'} />
             <ReviewsContainer reviews={ReviewsData}
                 openDialog={() => { openReviewsDialog() }}

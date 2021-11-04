@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Avatar,
     Box,
@@ -96,4 +97,4 @@ const ProductCard = ({ openEditCard, product, ...rest }) => {
     )
 }
 
-export default ProductCard;
+export default React.memo(ProductCard);

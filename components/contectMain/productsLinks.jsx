@@ -27,7 +27,7 @@ const ProductsLinks = () => {
                         alt={`nav${item.id}img`}
                         draggable="false"
                         onClick={() => { linkTo(item.typeLink) }} />
-                    <Typography variant="inherit">{item.title}</Typography>
+                    <Typography className={s.descLink} variant="inherit">{item.title}</Typography>
                 </Box>
             })}
         </CarouselLinks>

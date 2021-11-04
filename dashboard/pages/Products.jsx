@@ -2,7 +2,8 @@ import {
   Box,
   CardHeader,
   Container,
-  Grid
+  Grid,
+  makeStyles
 } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -11,8 +12,21 @@ import EditProduct from '../products/EditProduct';
 import ProductCard from '../products/ProductCard';
 import DashboardAddButton from '../utilits/DashboardAddButton';
 
+const useStyles = makeStyles((theme) => ({
+  productContainer: {
+    [theme.breakpoints.down('md')]: {
+      '&.MuiContainer-root':{
+        paddingLeft: 0,
+        paddingRight: 0
+      }
+    },
+  },
+}));
+
+
 const Product = () => {
- 
+  
+  const classes = useStyles();
   const products = useSelector(state => state.CRM_products.products)
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState({
@@ -46,7 +60,7 @@ const Product = () => {
 
   return (
     <>
-    <Container maxWidth={false}>
+    <Container className={classes.productContainer} maxWidth={false}>
     <CardHeader subheader="На этой вкладке можно отредактировать или добавить товар" title="Товары"/>
       <DashboardAddButton openDialog={()=>{handleClickOpen()}} textButton={'Добавить Товар'}/>
       <Box sx={{ pt: 3 }}>
