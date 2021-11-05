@@ -64,7 +64,7 @@ export default async function setContactFormOrder(req, res) {
                    `,
             }
 
-            await transporter.sendMail(message, (err, info) => {
+            transporter.sendMail(message, (err, info) => {
                 console.log(`Data send gmail err`, err);
                 console.log(`Data Gmail`, info);
                 if (err) {

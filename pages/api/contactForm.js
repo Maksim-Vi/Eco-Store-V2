@@ -12,32 +12,21 @@ export default async function setContactForm(req, res) {
 
     switch (req.method) {
         case 'POST': {
-            setTimeout(()=>{
-                // const transporter = nodemailer.createTransport({
-                //     host: 'smtp.gmail.com',
-                //     port: 587,
-                //     secure: false, // true for 465, false for other ports
-                //     auth: {
-                //         user: process.env.EMAIL_NODEMAILER,
-                //         pass: process.env.EMAIL_PASSWORD
-                //     }
-                // });
+            const transporter = nodemailer.createTransport(smtpTransport({
+                service: 'gmail',
+                host: 'smtp.gmail.com',
+                port: 587,
+                auth: {
+                    user: process.env.EMAIL_NODEMAILER,
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            }))
 
-                const transporter = nodemailer.createTransport(smtpTransport({
-                    service: 'gmail',
-                    host: 'smtp.gmail.com',
-                    port: 587,
-                    auth: {
-                        user: process.env.EMAIL_NODEMAILER,
-                        pass: process.env.EMAIL_PASSWORD
-                    }
-                  }))
-
-                let message = {
-                    from: req.body.Email,
-                    to: `Mailer <${process.env.EMAIL_NODEMAILER}>`,
-                    subject: 'From Eco Store',
-                    text: `Вам пришело письмо от:
+            let message = {
+                from: req.body.Email,
+                to: `Mailer <${process.env.EMAIL_NODEMAILER}>`,
+                subject: 'From Eco Store',
+                text: `Вам пришело письмо от:
                             Имя: ${req.body.firstName},
                             Email: ${req.body.Email},
             
@@ -45,18 +34,17 @@ export default async function setContactForm(req, res) {
                             ${req.body.subject}
                             
                             Данное письмо требует ответ =>  ${req.body.Email}`,
+            }
+
+            transporter.sendMail(message, (err, info) => {
+                console.log(`Data send gmail err`, err);
+                console.log(`Data Gmail`, info);
+                if (err) {
+                    return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
+                } else {
+                    return res.status(200).json({ message: 'Данные успешно переданы!' })
                 }
-    
-                await transporter.sendMail(message, (err, info) => {
-                    console.log(`Data send gmail err`, err);
-                    console.log(`Data Gmail`, info);
-                    if (err) {
-                        return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
-                    } else {
-                        return res.status(200).json({ message: 'Данные успешно переданы!' })
-                    }
-                });
-            },3000)
+            });
         }
     }
 

@@ -93,11 +93,21 @@
                 justify-content: space-between;
                 width: 100%;
                 @include sm {flex-direction: column;}
-                .textFieldName, .textFieldLastName{
-                    width: 45%;
-                    @include sm { width: 100%;}
+                .NameLastNameErr{
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    width: 100%;
+                    .textFieldName, .textFieldLastName{
+                        width: 95%;
+                        @include sm { width: 100%;}
+                    }
+                    .textFieldLastName{
+                        width: 100%;
+                    }
                 }
             }
+           
         }
     }
 

@@ -1,88 +1,33 @@
 import React from 'react';
-import { Button, makeStyles, MenuItem, TextField } from '@material-ui/core';
-import NPorUP from './NPorUP';
+import { Button, MenuItem, TextField, Typography } from '@material-ui/core';
 import s from '../../../../styles/orderForm.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { setPay, setPost } from '../../../../redux/reducers/form-reducer';
-import { useToasts } from 'react-toast-notifications';
+import { setPay, setPost, setPostInfo } from '../../../../redux/reducers/form-reducer';
 import { useForm } from 'react-hook-form';
-
-const useStyles = makeStyles((theme) => ({
-    button: {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: 20,
-        [theme.breakpoints.down('sm')]: {
-            width: '100%',
-            padding: '6px 10px',
-            fontSize: '12px'
-        },
-    },
-    actionsContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            alignItems: 'center',
-        },
-        [theme.breakpoints.down('xs')]: {
-            justifyContent: 'center'
-        }
-    },
-    buttonContainer: {
-        display: 'flex',
-        [theme.breakpoints.down('sm')]: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-        },
-        '&.makeStyles-button-7': {
-            fontSize: '9px'
-        }
-    },
-}));
-
-const currencies = [
-    {
-        value: 'Оплата на карту',
-        label: 'Оплата на карту',
-    },
-    {
-        value: 'Наложенный платёж',
-        label: 'Наложенный платёж',
-    },
-    {
-        value: 'Оплата наличными',
-        label: 'Оплата наличными',
-    },
-];
-
-const deliverys = [
-    {
-        value: 'Новой почтой',
-        label: 'Новой почтой',
-    },
-    {
-        value: 'Укр почтой',
-        label: 'Укр почтой',
-    },
-    {
-        value: 'Самовывоз',
-        label: 'Самовывоз',
-    }
-];
+import { yupResolver } from '@hookform/resolvers/yup';
+import { currencies, deliverys, validationSchema } from '../../../../utility/forms/utilsForms';
+import { useStylesForm } from './styles';
 
 const PayAndMarch = (props) => {
 
-    const classes = useStyles();
+    const classes = useStylesForm();
     const dispatch = useDispatch()
     const form = useSelector(state => state.answerForm)
 
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(validationSchema) });
+
     const [currency, setCurrency] = React.useState(form.pay);
     const [delivery, setDelivery] = React.useState(form.post);
+    const [postInfoPeople, setPostInfoPeople] = React.useState({
+        post_FirstName: form.postInfo.post_FirstName,
+        post_LastName: form.postInfo.post_LastName,
+        post_Phone: form.postInfo.post_Phone,
+        post_NumberPost: form.postInfo.post_NumberPost
+    })
+
+    const chengeHendler = (event) => {
+        setPostInfoPeople({ ...postInfoPeople, [event.target.name]: event.target.value });
+    };
 
     const handleChangePay = (event) => {
         setCurrency(event.target.value);
@@ -91,6 +36,11 @@ const PayAndMarch = (props) => {
     const handleChangeDelivery = (event) => {
         setDelivery(event.target.value)
     };
+
+    let onSubmit = (value) => {
+        console.log('ANSWER');
+        props.handleCreate()
+    }
 
     React.useEffect(() => {
         let payment = currencies.find(item => item.value === currency ? item : null)
@@ -102,53 +52,36 @@ const PayAndMarch = (props) => {
         dispatch(setPost(post.label))
     }, [delivery])
 
-
-    const { addToast, removeAllToasts } = useToasts()
-    const { control, register, handleSubmit, errors } = useForm();
-
-    let message = (mes) => {
-        removeAllToasts()
-        addToast(mes, { appearance: 'success', autoDismiss: true })
-    }
-    let error = (mes) => {
-        removeAllToasts()
-        addToast(mes, { appearance: 'error', autoDismiss: true })
-    }
-    let chatchAllUnhandleErrors = (reason, promise) => {
-        error('Что то пошло не так, попробуйте снова!')
-    }
-
-    let onSubmit = (values, e) => {
-        window.addEventListener("unhandledrejection", chatchAllUnhandleErrors)
-    }
+    React.useEffect(() => {
+        dispatch(setPostInfo(postInfoPeople))
+    }, [postInfoPeople])
 
     return (
-        <div className={s.wrapper}>
-            <form className={s.containerPayAmdMarch} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.wrapper} onSubmit={handleSubmit(onSubmit)}>
+            <div className={s.containerPayAmdMarch} >
+                <TextField className={s.howPay}
+                    id="standard-select-currency"
+                    select
+                    label="Способ оплаты"
+                    helperText="Пожалуйста, выбирите способ оплаты"
+                    value={currency}
+                    onChange={handleChangePay} >
 
-                <TextField  className={s.howPay}
-                            id="standard-select-currency"
-                            select
-                            label="Способ оплаты"
-                            helperText="Пожалуйста, выбирите способ оплаты"
-                            value={currency}
-                            onChange={handleChangePay} >
-                    
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
+                    {currencies.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
 
                 </TextField>
 
-                <TextField  className={s.howDelivery}
-                            id="standard-select-delivery"
-                            select
-                            label="Способ доставки"
-                            helperText="Пожалуйста, выбирите способ доставки"
-                            value={delivery}
-                            onChange={handleChangeDelivery} >
+                <TextField className={s.howDelivery}
+                    id="standard-select-delivery"
+                    select
+                    label="Способ доставки"
+                    helperText="Пожалуйста, выбирите способ доставки"
+                    value={delivery}
+                    onChange={handleChangeDelivery} >
 
                     {deliverys.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -156,13 +89,91 @@ const PayAndMarch = (props) => {
                         </MenuItem>
                     ))}
 
-                </TextField>    
-            </form>
+                </TextField>
+            </div>
 
             <div className={s.NPorUPWrapper}>
-                {delivery === 'Новой почтой' || delivery === 'Укр почтой' || currency === 'Наложенный платёж'
-                    ? <NPorUP register={register} control={control}/>
-                    : null
+                {(delivery === 'Новой почтой' || delivery === 'Укр почтой') &&
+                    <div className={s.NPorUPContainer}>
+                        <div className={s.NameLastName}>
+                            <div className={s.NameLastNameErr}>
+                                <TextField
+                                    label="Имя"
+                                    name="post_FirstName"
+                                    placeholder="Имя"
+                                    id="post_FirstName"
+                                    {...register('post_FirstName')}
+                                    error={errors.post_FirstName ? true : false}
+                                    className={s.textFieldName}
+                                    inputProps={{ autocomplete: 'new-password', form: { autocomplete: 'off' } }}
+                                    required
+                                    margin="dense"
+                                    onChange={chengeHendler}
+                                    value={postInfoPeople.post_FirstName}
+                                />
+                                <Typography variant="inherit" color="textSecondary">
+                                    {errors.post_FirstName?.message}
+                                </Typography>
+                            </div>
+                            <div className={s.NameLastNameErr}>
+                                <TextField
+                                    label="Фамилия"
+                                    name="post_LastName"
+                                    placeholder="Фамилия"
+                                    id="post_LastName"
+                                    className={s.textFieldLastName}
+                                    {...register('post_LastName')}
+                                    error={errors.post_LastName ? true : false}
+                                    inputProps={{ autocomplete: 'new-password', form: { autocomplete: 'off' } }}
+                                    required
+                                    margin="dense"
+                                    onChange={chengeHendler}
+                                    value={postInfoPeople.post_LastName}
+                                />
+                                <Typography variant="inherit" color="textSecondary">
+                                    {errors.post_LastName?.message}
+                                </Typography>
+                            </div>
+                        </div>
+                        <div className={s.dataContainer}>
+                            <TextField
+                                id="post_Phone"
+                                label="Телефон"
+                                name="post_Phone"
+                                placeholder="+380()ххх-ххх-ххх"
+                                {...register('post_Phone')}
+                                error={errors.post_Phone ? true : false}
+                                inputProps={{ autocomplete: 'new-password', form: { autocomplete: 'off' } }}
+                                required
+                                fullWidth
+                                margin="dense"
+                                className={s.textField}
+                                onChange={chengeHendler}
+                                value={postInfoPeople.post_Phone}
+                            />
+                            <Typography variant="inherit" color="textSecondary">
+                                {errors.post_Phone?.message}
+                            </Typography>
+                            <TextField
+                                id="standard-full-width"
+                                label="Город, Отделение"
+                                name="post_NumberPost"
+                                placeholder="Город, отделение почты"
+                                required
+                                fullWidth
+                                {...register('post_NumberPost')}
+                                error={errors.post_NumberPost ? true : false}
+                                inputProps={{ autocomplete: 'new-password', form: { autocomplete: 'off' } }}
+                                margin="dense"
+                                className={s.textField}
+                                onChange={chengeHendler}
+                                value={postInfoPeople.post_NumberPost}
+                            />
+                            <Typography variant="inherit" color="textSecondary">
+                                {errors.post_NumberPost?.message}
+                            </Typography>
+                        </div>
+                    </div>
                 }
             </div>
 
@@ -179,16 +190,17 @@ const PayAndMarch = (props) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={()=>{props.handleCreate()}}
+                        type="submit"
+                        onClick={() => {delivery === 'Самовывоз' ? props.handleCreate() : console.log('req send data') }}
                         className={classes.button}
                     >
                         {'Оформить заказ'}
                     </Button>
-        
+
                 </div>
             </div>
 
-        </div>
+        </form>
     )
 }
 
