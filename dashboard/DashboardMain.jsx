@@ -4,6 +4,9 @@ import DashboardSidebar from './layoutsDashbord/DashboardSidebar';
 import DashboardNavbar from './layoutsDashbord/DashboardNavbar';
 import { Container, makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import clsx from 'clsx';
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,12 +25,23 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   },
 }));
 
@@ -35,7 +49,7 @@ const DashboardMain = ({ children, titleHome = 'Main Dashboard' }) => {
 
   const classes = useStyles();
    
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -57,7 +71,9 @@ const DashboardMain = ({ children, titleHome = 'Main Dashboard' }) => {
       <DashboardNavbar handleDrawer={() => { handleDrawer() }} open={open} />
       <DashboardSidebar handleDrawer={() => { handleDrawer() }} open={open} />
       
-      <main className={classes.content}>
+      <main  className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}>
         <div className={classes.toolbar} />
         <Container className={classes.Container} maxWidth="lg">
           {children}

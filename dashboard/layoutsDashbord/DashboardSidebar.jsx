@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
@@ -17,23 +16,25 @@ import { removeCookie } from '../../components/common/session';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: theme.spacing(2),
   },
   hide: {
     display: 'none',
@@ -41,34 +42,17 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
   },
-  drawerOpen: {
+  drawerPaper: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
+  drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-  }
+    justifyContent: 'flex-end',
+  },
 }));
 
 export default function DashboardSidebar({ open, handleDrawer }) {
@@ -78,7 +62,7 @@ export default function DashboardSidebar({ open, handleDrawer }) {
   let auch = useContext(AuchContext)
   let dispatch = useDispatch()
 
-  let Logout = () =>{
+  let Logout = () => {
     removeCookie('auth')
     auch.logout()
     dispatch(deleteToken())
@@ -86,21 +70,17 @@ export default function DashboardSidebar({ open, handleDrawer }) {
 
   return (
     <Drawer
-      variant="permanent"
-      className={clsx(classes.drawer, {
-        [classes.drawerOpen]: open,
-        [classes.drawerClose]: !open,
-      })}
+      className={classes.drawer}
+      variant="persistent"
+      anchor="left"
+      open={open}
       classes={{
-        paper: clsx({
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        }),
+        paper: classes.drawerPaper,
       }}
     >
-      <div className={classes.toolbar}>
+      <div className={classes.drawerHeader}>
         <IconButton onClick={handleDrawer}>
-          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </div>
       <Divider />
