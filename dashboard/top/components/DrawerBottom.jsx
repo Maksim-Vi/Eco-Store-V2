@@ -47,7 +47,7 @@ export default function DrawerBottomTop(props) {
             >
                 {props.products.length > 0 &&
                     props.products.map(item=>{
-                        return <List item={item} addPopularItem={addPopularItem} popularItems={props.popularItems}/>
+                        return <List key={item.id} item={item} addPopularItem={addPopularItem} popularItems={props.popularItems}/>
                     })
                 }
             </div>

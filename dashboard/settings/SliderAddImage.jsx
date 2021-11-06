@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const Slider = (props) => {
+export const SliderAddImage = (props) => {
 
     const classes = useStyles();
     const [Images, setImages] = React.useState([]);
@@ -94,4 +94,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Slider)
+export default connect(mapStateToProps, mapDispatchToProps)(SliderAddImage)

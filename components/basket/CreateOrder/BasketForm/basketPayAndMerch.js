@@ -38,7 +38,6 @@ const PayAndMarch = (props) => {
     };
 
     let onSubmit = (value) => {
-        console.log('ANSWER');
         props.handleCreate()
     }
 

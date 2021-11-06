@@ -1,4 +1,4 @@
-const SET_REVIEWS = 'SRM/SET_REVIEWS'
+const SET_REVIEWS = 'SET_REVIEWS'
 
 let initialState = {
     reviewsStore: [],
@@ -7,7 +7,6 @@ let initialState = {
 const reviewsStoreReducer = (state = initialState, action) =>{
     switch (action.type) {
         case SET_REVIEWS:{
-            console.log(`ANSWER redux`, action.reviews);
             return {...state, reviewsStore: action.reviews}
         } 
         default:

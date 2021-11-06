@@ -109,10 +109,7 @@ export default authenticated(async function getProducts(req, res) {
         }
         case 'PUT':{
             let body = req.body
-            let ImgData = JSON.stringify(body.ImgData)
-        
-            console.log(`ANSWER products data`, body);
-             
+            let ImgData = JSON.stringify(body.ImgData)             
             try{
                 let UPDATE_DESC = 'UPDATE descriptionproducts SET nameDescription = ?, description = ?, imagesDescription = ?, ImgData = ? WHERE id = ?'
                 await sql_query(UPDATE_DESC,[

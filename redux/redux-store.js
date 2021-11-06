@@ -19,6 +19,9 @@ import productsReducer from "./reducers/SRM/products/products-reducer";
 import topReducer from "./reducers/SRM/top/top-reducer";
 import reviewsReducer from "./reducers/SRM/reviews/reviews-redicer";
 import reviewsStoreReducer from "./reducers/reviewsStore-reducer";
+import settingsReducer from "./reducers/SRM/settings/settings-reducer";
+import settingsStoreReducer from "./reducers/settingsStore-redicer";
+
 
 const persistConfig = {
   key: 'state',
@@ -35,11 +38,13 @@ let reducers = combineReducers({
   filter: FilterReducer,
   answerForm: AnswerFormReducer,
   reviews: reviewsStoreReducer,
+  settings: settingsStoreReducer,
 
   CRM_user: userReducer,
   CRM_products: productsReducer,
   CRM_top: topReducer,
   CRM_reviews: reviewsReducer,
+  CRM_settings: settingsReducer
 }
 );
 

@@ -50,15 +50,14 @@ Reviews.getInitialProps = async (ctx) => {
             },
         })
 
-        if(res.status === 500 || res.status === 401){
-            return { reviews: [] };
+        if(res.status === 200){
+            reviews = await res.json()
         }
-
-        reviews = await res.json()
-        
     } 
     
-    return {reviews: reviews}
+    return {
+        reviews: reviews
+    }
 }
 
 export default Reviews

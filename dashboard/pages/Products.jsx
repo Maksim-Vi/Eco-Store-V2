@@ -62,7 +62,7 @@ const Product = () => {
     <>
     <Container className={classes.productContainer} maxWidth={false}>
     <CardHeader subheader="На этой вкладке можно отредактировать или добавить товар" title="Товары"/>
-      <DashboardAddButton openDialog={()=>{handleClickOpen()}} textButton={'Добавить Товар'}/>
+      <DashboardAddButton open={()=>{handleClickOpen()}} text={'Добавить Товар'}/>
       <Box sx={{ pt: 3 }}>
         <Grid container spacing={3}>
           {products.map((product) => (

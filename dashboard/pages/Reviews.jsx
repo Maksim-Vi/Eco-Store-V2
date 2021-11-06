@@ -211,7 +211,7 @@ const Reviews = () => {
     return (
         <Container className={classes.Container} maxWidth="lg">
             <CardHeader className={classes.reviewsHeader} subheader="На этой вкладке можно добавить или отредактировать отзывы в CRM" title="Отзывы" />
-            <DashboardAddButton openDialog={() => { openReviewsDialog() }} textButton={'Добавить новый отзыв'} />
+            <DashboardAddButton open={() => { openReviewsDialog() }} text={'Добавить новый отзыв'} />
             <ReviewsContainer reviews={ReviewsData}
                 openDialog={() => { openReviewsDialog() }}
                 deleteReview={deleteReview}

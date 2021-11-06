@@ -61,19 +61,17 @@ ProductsDashboard.getInitialProps = async (ctx) => {
             },
         })
         
-        if(res.status === 500 || res.status === 401 || res2.status === 500 || res2.status === 401){
-            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
-            ctx.res.end();
-            return;
+        if(res.status === 200){
+            products = await res.json()
         }
-
-        top = await res2.json()
-        products = await res.json()
+        if(res2.status === 200){
+            top = await res2.json()
+        }
     }  
     
     return {
-        products:products || [],
-        top:top || []
+        products:products,
+        top:top
     }
 }
 

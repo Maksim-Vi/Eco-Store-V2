@@ -61,7 +61,7 @@ export default function List({item,addPopularItem,popularItems}) {
                         <Checkbox
                             disabled
                             checked={selected}
-                            name={item.id}
+                            name={`top_check${item.id}`}
                             color="primary"
                         />
                     }

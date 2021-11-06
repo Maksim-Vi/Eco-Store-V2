@@ -15,7 +15,6 @@ export const useAuch = () =>{
     }, []) 
 
     const logout = useCallback(() =>{ 
-        console.log(`ANSWER logout`, token, userID);
         setToken(null)
         setUserID(null)
         sessionStorage.removeItem(storageName)
