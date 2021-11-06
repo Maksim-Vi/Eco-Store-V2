@@ -1,6 +1,5 @@
 import NextCors from 'nextjs-cors';
 let nodemailer = require('nodemailer')
-const smtpTransport = require('nodemailer-smtp-transport')
 
 export default async function setContactForm(req, res) {
 
@@ -12,15 +11,15 @@ export default async function setContactForm(req, res) {
 
     switch (req.method) {
         case 'POST': {
-            const transporter = nodemailer.createTransport(smtpTransport({
-                service: 'gmail',
+            const transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
+                secure: false, // true for 465, false for other ports
                 auth: {
                     user: process.env.EMAIL_NODEMAILER,
                     pass: process.env.EMAIL_PASSWORD
                 }
-            }))
+            });
 
             let message = {
                 from: req.body.Email,

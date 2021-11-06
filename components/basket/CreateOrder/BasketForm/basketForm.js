@@ -77,7 +77,7 @@ const BasketForm = (props) => {
                 name="phone" 
                 id="phone"
                 placeholder="+38(0xx)xxx-xx-xx"
-                inputProps={{ form: { autocomplete: 'off' } }}
+                inputProps={{form: { autocomplete: 'off' } }}
                 required
                 {...register('phone')}
                 error={errors.phone ? true : false}
@@ -95,6 +95,7 @@ const BasketForm = (props) => {
                 placeholder="Введите Ваш email"
                 {...register('email')}
                 inputProps={{
+                    autocomplete: 'new-password',
                     form: {
                       autocomplete: 'off',
                     },
