@@ -37,7 +37,6 @@ const ProductsImgData = (props) => {
                             <img className={s.img} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem()}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
-                                <span>{item.count} шт</span>
                             </div>
                            
                         </div> 

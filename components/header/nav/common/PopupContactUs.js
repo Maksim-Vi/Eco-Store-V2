@@ -16,6 +16,9 @@ const useStyles = makeStyles({
         '& .MuiDialog-paperWidthSm': {
             width: '100%',
             maxWidth: '800px'
+        },
+        '& .MuiDialog-paper':{
+            margin: 5
         }
     },
     ItemClose: {

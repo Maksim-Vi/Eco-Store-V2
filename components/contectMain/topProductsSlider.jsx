@@ -19,7 +19,7 @@ const TopProductsSlider = (props) => {
                 ? TopSlider(props.popular)
                 : TopCard(props.popular)
             }
-
+            <Link href="/products" ><button className={stl.btnBottom}>смотреть все товары</button></Link>
         </div>
     )
 }
@@ -37,7 +37,6 @@ const TopSlider = (popular) => {
                     </Link>
                 })}
             </CarouselWithButtons>
-            <Link href="/products" ><button className={stl.btnBottom}>смотреть все товары</button></Link>
         </>
     )
 }
@@ -53,7 +52,6 @@ const TopCard = (popular) => {
                     </div>
                 </Link>
             })}
-            <Link href="/products" ><button className={stl.btnBottom}>смотреть все товары</button></Link>
         </div>
     )
 }
