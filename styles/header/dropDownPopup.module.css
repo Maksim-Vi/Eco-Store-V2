@@ -10,7 +10,7 @@
     position: absolute;
     margin-top: 5px;
     left: 14%;
-    z-index: 1;
+    z-index: 1001;
     width: 600px;
     height: 320px;
     border: 1px solid #949494a2;

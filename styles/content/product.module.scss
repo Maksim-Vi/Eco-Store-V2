@@ -1,50 +1,66 @@
-@import '../media.scss';
+@import "../media.scss";
 
-.sectionProduct{
+.sectionProduct {
     margin: 0 auto;
     height: 105%;
     background-color: #eaeaead9;
     padding-bottom: 10px;
-    .ProductContainer{
+    .ProductContainer {
         width: 70%;
         margin: 0 auto;
         padding-top: 10px;
-        @include lg { width: 90%;}
-        .ContainerHeader{
+        @include lg {
+            width: 90%;
+        }
+        .ContainerHeader {
             display: flex;
             justify-content: space-between;
             flex-direction: row;
             padding-top: 10px;
-            @include lg {  
+            @include lg {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
             }
-            .CaruselProduct{
+            .CaruselProduct {
                 max-width: 60%;
                 width: 100%;
                 height: auto;
-                @include lg { max-width: 70%; }
-                @include md { max-width: 80%; }
-                @include sm{ max-width: 100%;}
+                @include lg {
+                    max-width: 70%;
+                }
+                @include md {
+                    max-width: 80%;
+                }
+                @include sm {
+                    max-width: 100%;
+                }
             }
         }
-        .TitleProduct{
+        .TitleProduct {
             display: flex;
             flex-direction: column;
-            align-items: center;  
+            align-items: center;
             text-align: center;
             width: 40%;
-            @include lg { width: 70%; }
-            @include md { width: 70%; }
-            @include sm{ width: 100%; }
-            & h2{
+            @include lg {
+                width: 70%;
+            }
+            @include md {
+                width: 70%;
+            }
+            @include sm {
+                width: 100%;
+            }
+            & h2 {
                 margin-left: 5%;
                 font-size: 32px;
-                @include md { font-size: 26px;}
+                @include md {
+                    font-size: 26px;
+                }
             }
 
-            & .ProductBayCard{
+            & .ProductBayCard {
                 padding: 20px;
                 width: 70%;
                 height: auto;
@@ -52,39 +68,39 @@
                 // margin-top: 2%;
                 background: #fff;
                 border-radius: 10px;
-                @include xl { 
+                @include xl {
                     margin-left: 0;
                 }
-                @include  sm{
+                @include sm {
                     width: 100%;
                 }
-                & .CardCode{
+                & .CardCode {
                     text-align: center;
                     margin-top: 2%;
                     font-size: 12px;
                 }
-                & .CardPriceContainer{
+                & .CardPriceContainer {
                     display: flex;
                     justify-content: space-between;
-                    & .CardSale{
-                        font-size: 16px; 
-                        & span{
+                    & .CardSale {
+                        font-size: 16px;
+                        & span {
                             color: rgba(128, 128, 128, 0.788);
                         }
                     }
-                    & .CardInStore{
+                    & .CardInStore {
                         font-size: 16px;
                         color: rgb(27, 155, 27);
                     }
                 }
             }
 
-            .CardBottomContainer{
+            .CardBottomContainer {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 margin-top: 5%;
-                .CardBtn{
+                .CardBtn {
                     border: 1px solid green;
                     border-radius: 5px;
                     padding: 10px;
@@ -93,67 +109,85 @@
                     justify-content: center;
                     position: relative;
                     cursor: pointer;
-                    .BtnInBasket{
+                    .BtnInBasket {
                         display: block;
                         margin-right: 5px;
                     }
-                    & .BtnImg{
+                    & .BtnImg {
                         width: 13px;
                     }
-                    & span{
+                    & span {
                         color: green;
                         font-size: 12px;
                         margin-left: 1px;
                         align-self: flex-end;
                     }
-                    &:hover, &:active, &:focus{
+                    &:hover,
+                    &:active,
+                    &:focus {
                         outline: none;
                         border: 1px solid green;
                     }
-                    &:active{
+                    &:active {
                         transform: scale(0.98);
                     }
                 }
             }
-            .ListColorItem{
+            .ListColorItem {
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
                 margin-top: 5%;
-                .colorContainerItem{
+                .colorContainerItem {
+                    position: relative;
                     display: flex;
                     width: 100%;
                     height: 100%;
                     flex-direction: column;
                     align-items: center;
-                    .img{
+                    .img {
                         width: 100px;
                         height: auto;
                     }
-                    .textContainer{
+                    .disable{
+                        opacity: 0.7;
+                        cursor: auto;
+                    }
+                    .textContainer {
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         flex-direction: column;
                         width: 100%;
-                        & span{
-                            font-size: 11px;
+                        & span {
+                            cursor: auto;
+                            font-family: 'Work Sans', sans-serif;
+                            font-size: 14px;
                         }
                     }
-                    
+                    .enable {
+                        position: absolute;
+                        font-family: 'Work Sans', sans-serif;
+                        top: 25%;
+                        left: 0;
+                        right: 0;
+                        text-align: center;
+                        color: red;
+                    }
                 }
-                & div{
+                & div {
                     width: 45px;
                     height: 45px;
                     margin: 5px;
                     border-radius: 10%;
-                    &:hover{
+                    transition: .5ms;
+                    &:hover {
                         transform: scale(1.02);
                         cursor: pointer;
                     }
                 }
-                .active{
-                    background: url('../../public/contentImg/succes.png');
+                .active {
+                    background: url("../../public/contentImg/succes.png");
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: 50%;
@@ -161,17 +195,17 @@
             }
         }
 
-        .ContainerMiddle{
+        .ContainerMiddle {
             margin-top: 3%;
-            & p{
+            & p {
                 padding: 10px;
-                text-align:justify;
+                text-align: justify;
             }
         }
 
-        .ContainerFooter{
+        .ContainerFooter {
             margin-top: 3%;
-            & .SameProducts{
+            & .SameProducts {
                 margin-top: 1%;
                 width: 100%;
                 height: 200px;
@@ -180,11 +214,5 @@
                 border-radius: 5px;
             }
         }
-
     }
-
 }
-
-
-
-

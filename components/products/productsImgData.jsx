@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import s from '../../styles/content/product.module.scss'
+import clsx from 'clsx';
 
 const ProductsImgData = (props) => {
     let [ImgDesc, setImgDesc] = useState([])
 
-    let hendlerBuyItem = () =>{
-        if(props.item.inStock !== false){
+    let hendlerBuyItem = (isEnable) =>{
+        if(props.item.inStock !== false && isEnable && isEnable !== 'false'){
             props.hendlerOpenBuyMenu(props.item)
         }
     }
@@ -18,7 +19,7 @@ const ProductsImgData = (props) => {
                     let data = {
                         url: imgData.url,
                         imgName: props.item.ImgData[index].imgName,
-                        count: props.item.ImgData[index].count
+                        isEnable: props.item.ImgData[index].isEnable
                     }
                     imagesDescription.push(data)
                 }
@@ -34,34 +35,14 @@ const ProductsImgData = (props) => {
                    {ImgDesc.map((item, index)=>{
                        return (
                         <div key={index} className={s.colorContainerItem}>
-                            <img className={s.img} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem()}}/>
+                            <img className={clsx(s.img, { [s.disable]: item.isEnable === 'false'})} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem(item.isEnable)}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
                             </div>
-                           
+                            {item.isEnable === 'false' && <span className={s.enable}>нет в наличии</span>}
                         </div> 
                        )
                    })}
-                    {/* <div className={s.colorContainerItem}>
-                        <div className={s.active} style={{ backgroundColor: 'red', border: '1px solid #800000' }}></div>
-                        <span>red</span>
-                    </div>
-                    <div className={s.colorContainerItem}>
-                        <div style={{ backgroundColor: 'yellow', border: '1px solid #FFA500' }}></div>
-                        <span>yellow</span>
-                    </div>
-                    <div className={s.colorContainerItem}>
-                        <div style={{ backgroundColor: 'white', border: '1px solid black' }}></div>
-                        <span>white</span>
-                    </div>
-                    <div className={s.colorContainerItem}>
-                        <div style={{ backgroundColor: 'green', border: '1px solid #008000' }}></div>
-                        <span>green</span>
-                    </div>
-                    <div className={s.colorContainerItem}>
-                        <div style={{ backgroundColor: 'blue', border: '1px solid #00008B' }}></div>
-                        <span>blue</span>
-                    </div> */}
                 </div>
                 : null
             }
