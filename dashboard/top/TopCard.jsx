@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,6 +13,8 @@ import { getCookie } from '../../components/common/session';
 import { useDispatch } from 'react-redux';
 import { setTop } from '../../redux/reducers/SRM/top/action';
 import { useToasts } from 'react-toast-notifications';
+import { useRouter } from 'next/router';
+import { AuchContext } from '../../components/common/Context/context.hook';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,6 +73,8 @@ const TopCard = ({ top, products }) => {
     let URL = process.env.SERVER_URL
     const classes = useStyles();
     const dispatch = useDispatch()
+    let router = useRouter()
+    const auch = useContext(AuchContext)
 
     let [topArr, setTopArr] = React.useState(top)
     let [popularItems, setPopularItems] = React.useState([])
@@ -117,9 +121,18 @@ const TopCard = ({ top, products }) => {
                     'authorization': cookie,
                     'Accept': 'application/json',
                 },
+            }).catch((err) => {
+                console.log(`add popular ERROR TopCard`, err);
+                error('Crit Error, TopCard При добавлении топ что то пошло не так!')
+                return
             })
 
-            if (res.status === 200) {
+            if (res && res.status === 200) {
+                if(res.data && res.data.isAuch === false){
+                    error('Ошибка авторизации, истекла сессия токена')
+                    dispatch(setTop([]))
+                    return auch.logout(router)
+                }
                 message('Добавление в топ товары прошло успешно! =)')
                 dispatch(setTop(res.data.tops))
                 setTopArr(res.data.tops)
@@ -138,11 +151,23 @@ const TopCard = ({ top, products }) => {
                     'authorization': cookie,
                     'Accept': 'application/json',
                 },
+            }).catch((err) => {
+                console.log(`delete popular ERROR TopCard`, err);
+                error('Crit Error, TopCard При удалении топ что то пошло не так!')
+                return
             })
-            setPopularItems([])
-            setTopArr([])
-            dispatch(setTop([]))
-            message('Удаление всех топ товаров прошло успешно! =)')
+
+            if(res && res.status === 200){
+                if(res.data && res.data.isAuch === false){
+                    error('Ошибка авторизации, истекла сессия токена')
+                    dispatch(setTop([]))
+                    return auch.logout(router)
+                }
+                setPopularItems([])
+                setTopArr([])
+                dispatch(setTop([]))
+                message('Удаление всех топ товаров прошло успешно! =)')
+            }
         } else {
             error('Удаление невозможно, по скольку топ или 0 или больше 4')
         }

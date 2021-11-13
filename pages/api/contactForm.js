@@ -39,7 +39,7 @@ export default async function setContactForm(req, res) {
                 console.log(`Data send gmail err`, err);
                 console.log(`Data Gmail`, info);
                 if (err) {
-                    return res.status(401).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
+                    return res.status(400).json({ massage: 'Нету связи с Gmail, обратитесь к менеджеру да более детальной информацией!' })
                 } else {
                     return res.status(200).json({ message: 'Данные успешно переданы!' })
                 }

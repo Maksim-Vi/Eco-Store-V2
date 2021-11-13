@@ -1,19 +1,28 @@
 
 
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { AuchContext } from '../../components/common/Context/context.hook'
 import { getCookie } from '../../components/common/session'
 import DashboardMain from '../../dashboard/DashboardMain'
 import ReviewsContent from '../../dashboard/pages/Reviews'
 import { setReviews } from '../../redux/reducers/SRM/reviews/action'
 import { checkisVerifyToken } from '../../utility/middlware'
 
-const Reviews = ({reviews}) => {
+const Reviews = ({reviews,token}) => {
 
     const dispatch = useDispatch()
-   
+    let router = useRouter()
+    const auth = useContext(AuchContext)
+
     useEffect(() => {
+        let checkToken = token ? token : getCookie('auth')
+        if(!checkisVerifyToken(checkToken)){
+            return auth.logout(router)
+        }
+
         if(reviews.length > 0){
             dispatch(setReviews(reviews))
         }
@@ -36,13 +45,7 @@ Reviews.getInitialProps = async (ctx) => {
         ctx.res.end();
         return;
     } else {
-        let isVerivy = checkisVerifyToken(cookie)
-        if(!isVerivy){
-            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
-            ctx.res.end();
-            return; 
-        }
-
+        
         const res = await fetch(`${process.env.SERVER_URL}/reviews`,{
             headers: {
                 'authorization': cookie,
@@ -56,7 +59,8 @@ Reviews.getInitialProps = async (ctx) => {
     } 
     
     return {
-        reviews: reviews
+        reviews: reviews,
+        token: cookie
     }
 }
 

@@ -13,7 +13,7 @@ const CarouselProduct = ({ children, images }) => {
             arrows
             centerMode={false}
             className=""
-            containerClass="container"
+            containerClass={s.container}
             dotListClass={s.SliderProductCustomDots}
             draggable={false}
             focusOnSelect={false}

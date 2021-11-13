@@ -1,11 +1,12 @@
 import {useState, useCallback, useEffect} from 'react';
+import { getCookie, removeCookie } from '../session';
 
 const storageName = 'UserData'
 
 export const useAuch = () =>{
     const [token, setToken] = useState(null)
     const [userID, setUserID] = useState(null)
-
+    
     const login = useCallback((jwtToken, id) =>{
         setToken(jwtToken)
         setUserID(id)
@@ -14,12 +15,15 @@ export const useAuch = () =>{
         }))
     }, []) 
 
-    const logout = useCallback(() =>{ 
+    const logout = useCallback((router = null) =>{ 
         setToken(null)
         setUserID(null)
+        removeCookie('auth')
         sessionStorage.removeItem(storageName)
+        if(router !== null){
+            router.push('/AdminPanel/SignIn')
+        }
     }, []) 
-
 
     // проверка есть ли данные о пользователи в локальном сторе
     useEffect(()=>{

@@ -18,10 +18,14 @@ let uploadData = (req,res) =>{
         })
     }
 
-    return res.status(200).json({success: true, images: imagesUrl, imagesDesc: imagesDescUrl})
+    if(images.length > 0 || imagesDescUrl.length > 0){
+        return res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
+    } else {
+        return res.status(401).json({success: false, images: [], imagesDesc: [] })
+    }
 }
 
-let updateData = (req,res) =>{
+let updateData = (req,res, next) =>{
     let body =  typeof req.body.product === "string" ? JSON.parse(req.body.product) : req.body.product;
    
     let images = []
@@ -57,8 +61,11 @@ let updateData = (req,res) =>{
         })
     }
 
-    // console.log(`RES`, images, imagesDescUrl);
-    return res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
+    if(images.length > 0 || imagesDescUrl.length > 0){
+        return res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
+    } else {
+        return res.status(400).json({success: false, images: [], imagesDesc: [] })
+    }
 }
 
 let deleteData = (req,res) =>{
@@ -70,14 +77,14 @@ let deleteData = (req,res) =>{
         }
         return res.status(200).json({success: true })
     } catch(err){
-        return res.status(401).json({success: false, err: err})
+        return res.status(400).json({success: false, err: err})
     }
 }
 
 
 module.exports = (app) => {     
-    app.post('/uploadImagesProducts', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), uploadData);
-    app.put('/uploadImageProduct', upload.fields([{ name: 'images', maxCount: 10 }, { name: 'imagesDesc', maxCount: 10 }]), updateData);
+    app.post('/uploadImagesProducts', upload.fields([{ name: 'images', maxCount: 30 }, { name: 'imagesDesc', maxCount: 30 }]), uploadData);
+    app.put('/uploadImageProduct', upload.fields([{ name: 'images', maxCount: 30 }, { name: 'imagesDesc', maxCount: 30 }]), updateData);
     app.delete('/removeImagesProduct', deleteData);
 
     app.post('/contactForm',form);

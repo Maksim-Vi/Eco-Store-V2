@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { CardHeader, Container } from '@material-ui/core';
 import SettingsAdvertisingSlider from '../settings/SettingsAdvertisingSlider';
 import SettingsNotifications from '../settings/SettingsNotifications';
@@ -8,10 +8,15 @@ import { getCookie } from '../../components/common/session';
 import { useToasts } from 'react-toast-notifications';
 import { useDispatch } from 'react-redux';
 import { setSettings } from '../../redux/reducers/SRM/settings/action';
+import { AuchContext } from '../../components/common/Context/context.hook';
+import { useRouter } from 'next/router';
 
 const Settings = ({ settings }) => {
-
+ 
+  let router = useRouter()
+  const auch = useContext(AuchContext)
   const dispatch = useDispatch()
+
   let [settings_data, setSettings_data] = useState({
     isShowNavSlider: settings.isShowNavSlider ? settings.isShowNavSlider : false,
     isShowTopSlider: settings.isShowTopSlider ? settings.isShowTopSlider : false,
@@ -42,11 +47,17 @@ const Settings = ({ settings }) => {
         'authorization': getCookie('auth'),
       }
     }).catch((err) => {
-      console.log(`update settings ERROR AddProduct`, err);
+      console.log(`update settings ERROR Settings`, err);
+      error('Crit Error, Settings При обновлении настроек что то пошло не так!')
       return
     })
 
     if (res && res.status === 200) {
+      if(res.data && res.data.isAuch === false){
+        error('Ошибка авторизации, истекла сессия токена')
+        dispatch(setSettings([]))
+        return auch.logout(router)
+    }
       message('Редактирование настроек прошло успешно! =)')
       dispatch(setSettings(res.data.settings))
       pushDataLocal(res.data.settings)

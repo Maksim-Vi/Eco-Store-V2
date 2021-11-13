@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,9 +14,11 @@ import classNames from 'classnames';
 import axios from 'axios';
 import { getCookie } from '../../components/common/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { editProductTabs, resetNeedToDeleteImages, resetProductTabs, setNeedToDeleteImages, setProducts } from '../../redux/reducers/SRM/products/action';
+import { editProductTabs, resetNeedToDeleteImages, resetProductTabs, setProducts } from '../../redux/reducers/SRM/products/action';
 import { ImagesDeleteDataUrl } from '../utilits/products/ProductsUtils';
 import { useToasts } from 'react-toast-notifications';
+import { useRouter } from 'next/router';
+import { AuchContext } from '../../components/common/Context/context.hook';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -58,7 +60,8 @@ export default function EditProduct(props) {
     const classes = useStyles();
     let URL = process.env.SERVER_URL
     let products = useSelector(state => state.CRM_products.products)
-
+    let router = useRouter()
+    const auch = useContext(AuchContext)
 
     let Images = useSelector(state => state.CRM_products.Images)
     let genetalTabs = useSelector(state => state.CRM_products.genetalTabs)
@@ -70,30 +73,30 @@ export default function EditProduct(props) {
     const { addToast, removeAllToasts } = useToasts()
 
     let message = (mes) => {
-      removeAllToasts()
-      addToast(mes, { appearance: 'success', autoDismiss: true })
+        removeAllToasts()
+        addToast(mes, { appearance: 'success', autoDismiss: true })
     }
-  
+
     let error = (mes) => {
-      removeAllToasts()
-      addToast(mes, { appearance: 'error', autoDismiss: true })
+        removeAllToasts()
+        addToast(mes, { appearance: 'error', autoDismiss: true })
     }
 
     let deleteProduct = async () => {
         let cookie = getCookie('auth')
 
         let url = []
-        if(Images.length > 0){
-            Images.forEach(img=>{
-                if(img.url){
+        if (Images.length > 0) {
+            Images.forEach(img => {
+                if (img.url) {
                     url.push(img.url)
                 }
             })
         }
-      
-        if(descriptionProductTabs.descriptionImages.length > 0){
-            descriptionProductTabs.descriptionImages.forEach(img=>{
-                if(img.url){
+
+        if (descriptionProductTabs.descriptionImages.length > 0) {
+            descriptionProductTabs.descriptionImages.forEach(img => {
+                if (img.url) {
                     url.push(img.url)
                 }
             })
@@ -105,6 +108,8 @@ export default function EditProduct(props) {
             data: { url }
         }).catch((err) => {
             console.log(`delete images ERROR EditProduct`, err);
+            error('Crit Error, EditProduct При удалении товара что то пошло не так!')
+            return
         })
 
         let res = await axios.delete(`${URL}/product/${props.productId}`, {
@@ -112,11 +117,17 @@ export default function EditProduct(props) {
         })
 
         if (res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setProducts([]))
+                return auch.logout(router)
+            }
             message('Удаление продукта выполнено успешно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         } else {
             error('При удалении товара что то пошло не так! =(')
+            props.closeDialog()
         }
     }
 
@@ -170,39 +181,45 @@ export default function EditProduct(props) {
         }
 
         await axios.put(`${process.env.SERVER_UPLOAD_URL}/uploadImageProduct`, formData)
-        .then((response) => {
-            if (response.status === 200 && response.data.success === true) {
-                data['Images'] = response.data.images
-                data['descriptionImages'] = response.data.imagesDesc
-            }
-        }).catch((err) => {
-            console.log(`uploadProducts ERROR EditProduct`, err);
-            //props.closeDialog()
-            return
-        })
+            .then((response) => {
+                if (response.status === 200 && response.data.success === true) {
+                    data['Images'] = response.data.images
+                    data['descriptionImages'] = response.data.imagesDesc
+                }
+            }).catch((err) => {
+                console.log(`uploadProducts ERROR EditProduct`, err);
+                error('Crit error! не смогли загрузить картинки на сервер!')
+                props.closeDialog()
+                return
+            })
 
-        let res = await axios.put(`${URL}/products`, data , {
-            headers: { 
+        let res = await axios.put(`${URL}/products`, data, {
+            headers: {
                 'authorization': cookie,
             }
         }).catch((err) => {
             console.log(`createProduct ERROR AddProduct`, err);
-            //props.closeDialog()
-            return
+            return 
         })
 
-        if(res !== undefined && res.status === 200){
+        if (res && res !== undefined && res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setProducts([]))
+                return auch.logout(router)
+            }
             message('Редактирование товара прошло успешно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         } else {
             error('Ошибка pедактирования товара! =(')
+            props.closeDialog()
         }
     }
 
-    let deleteImages = async () =>{
+    let deleteImages = async () => {
         let url = needToDeleteImages
-        if(needToDeleteImages.length > 0){
+        if (needToDeleteImages.length > 0) {
             await axios({
                 method: 'DELETE',
                 url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
@@ -210,7 +227,7 @@ export default function EditProduct(props) {
             }).catch((err) => {
                 console.log(`delete images ERROR EditProduct`, err);
                 //props.closeDialog()
-                return 
+                return
             })
         }
     }

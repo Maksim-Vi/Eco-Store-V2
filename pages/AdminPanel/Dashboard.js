@@ -1,12 +1,25 @@
 
 
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import DashboardMain from '../../dashboard/DashboardMain'
 import DashboardContent from '../../dashboard/pages/Dashboard'
 import { getCookie } from '../../components/common/session';
 import { checkisVerifyToken } from '../../utility/middlware';
+import { useRouter } from 'next/router';
+import { AuchContext } from '../../components/common/Context/context.hook';
 
-const Dashboard = () => {
+const Dashboard = ({token}) => {
+
+    let router = useRouter()
+    const auth = useContext(AuchContext)
+
+    useEffect(() => {
+        let checkToken = token ? token : getCookie('auth')
+        if(!checkisVerifyToken(checkToken)){
+            return auth.logout(router)
+        }
+    }, [])
+
     return (
         <DashboardMain title="Dashboard Login">
             <DashboardContent />
@@ -22,17 +35,9 @@ Dashboard.getInitialProps = async (ctx) => {
         ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
         ctx.res.end();
         return;
-    } else {
-        let isVerivy = checkisVerifyToken(cookie)
-
-        if(!isVerivy && ctx){
-            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
-            ctx.res.end();
-            return; 
-        }
     }
      
-    return {data:{}}
+    return {token: cookie}
 }
 
 export default Dashboard

@@ -1,7 +1,9 @@
 
 
-import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { AuchContext } from '../../components/common/Context/context.hook'
 import { getCookie } from '../../components/common/session'
 import DashboardMain from '../../dashboard/DashboardMain'
 import ProductsContent from '../../dashboard/pages/Products'
@@ -9,11 +11,18 @@ import { setProducts } from '../../redux/reducers/SRM/products/action'
 import { setTop } from '../../redux/reducers/SRM/top/action'
 import { checkisVerifyToken } from '../../utility/middlware'
 
-const ProductsDashboard = ({products,top}) => {
+const ProductsDashboard = ({products,top,token}) => {
     
     const dispatch = useDispatch()
+    let router = useRouter()
+    const auth = useContext(AuchContext)
    
     useEffect(() => {
+        let checkToken = token ? token : getCookie('auth')
+        if(!checkisVerifyToken(checkToken)){
+            return auth.logout(router)
+        }
+
         if(products.length > 0){
             dispatch(setTop(top))
             dispatch(setProducts(products))
@@ -38,13 +47,6 @@ ProductsDashboard.getInitialProps = async (ctx) => {
         ctx.res.end();
         return;
     } else {
-
-        let isVerify = checkisVerifyToken(cookie)
-        if(isVerify === false){
-            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
-            ctx.res.end();
-            return
-        }
 
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/products`,{
@@ -71,7 +73,8 @@ ProductsDashboard.getInitialProps = async (ctx) => {
     
     return {
         products:products,
-        top:top
+        top:top,
+        token: cookie
     }
 }
 

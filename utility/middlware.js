@@ -18,9 +18,7 @@ export const authenticated = (fn) => async (req, res) => {
         return await fn(req, res)
       } else {
         console.log(`VERIFY is invalid`);
-        console.log(`decoded`, decoded);
-        console.log(`err`, err);
-        return res.status(401).json({message: 'Sorry Token is invalid'})
+        return res.json({isAuch: false , message: 'Sorry Token is invalid'})
       }
     });
   }

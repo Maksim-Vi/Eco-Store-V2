@@ -1,7 +1,8 @@
 import { sql_query } from "../../../../database_connection";
 import NextCors from 'nextjs-cors';
+import { authenticated } from "../../../../utility/middlware";
 
-export default async function getPopularById(req, res) {
+export default authenticated(async function getPopularById(req, res) {
 
     await NextCors(req, res, {
         methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -42,4 +43,4 @@ export default async function getPopularById(req, res) {
             return res.status(500).json({ message: `Sorry but you use ${req.method} request!` })
         }
     }
-}
+})

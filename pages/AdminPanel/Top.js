@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import DashboardMain from '../../dashboard/DashboardMain'
 import TopContainer from '../../dashboard/pages/Top'
 import { getCookie } from '../../components/common/session';
@@ -6,12 +6,21 @@ import { useDispatch } from 'react-redux';
 import { setTop } from '../../redux/reducers/SRM/top/action';
 import { setProducts } from '../../redux/reducers/SRM/products/action';
 import { checkisVerifyToken } from '../../utility/middlware';
+import { AuchContext } from '../../components/common/Context/context.hook';
+import { useRouter } from 'next/router';
 
-const TopDashboard = ({top,products}) => {
+const TopDashboard = ({top,products,token}) => {
 
     const dispatch = useDispatch()
-   
+    let router = useRouter()
+    const auth = useContext(AuchContext)
+
     useEffect(() => {
+        let checkToken = token ? token : getCookie('auth')
+        if(!checkisVerifyToken(checkToken)){
+            return auth.logout(router)
+        }
+
         if(top.length > 0){
             dispatch(setTop(top))
         }
@@ -39,13 +48,6 @@ TopDashboard.getInitialProps = async (ctx) => {
         return;
     } else {
 
-        let isVerify = checkisVerifyToken(cookie)
-        if(isVerify === false){
-            ctx.res.writeHead(302, {Location: '/AdminPanel/SignIn'});
-            ctx.res.end();
-            return
-        }
-
         let URL = process.env.SERVER_URL
         const res = await fetch(`${URL}/products`,{
             headers: {
@@ -71,7 +73,8 @@ TopDashboard.getInitialProps = async (ctx) => {
     
     return {
         products:products,
-        top:top
+        top:top,
+        token: cookie
     }
 }
 

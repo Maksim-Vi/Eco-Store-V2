@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { CardHeader, Container, makeStyles } from '@material-ui/core';
 import DashboardAddButton from '../utilits/DashboardAddButton';
 import ReviewsContainer from '../reviews/ReviewsContainer';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews } from '../../redux/reducers/SRM/reviews/action';
 import { useToasts } from 'react-toast-notifications';
+import { useRouter } from 'next/router';
+import { AuchContext } from '../../components/common/Context/context.hook';
 
 const useStyles = makeStyles((theme) => ({
     Container: {
@@ -28,9 +30,10 @@ const Reviews = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     let reviews = useSelector(state => state.CRM_reviews.reviews)
+    let router = useRouter()
+    const auch = useContext(AuchContext)
 
     let [open, setOpen] = React.useState(false)
-    const сookieRef = useRef()
     const stateIsEditOrCreateRef = useRef()
     const [ReviewsData, setReviewsData] = React.useState(reviews)
     const [stateReviews, setStateReviews] = React.useState({
@@ -95,17 +98,21 @@ const Reviews = () => {
 
         let res = await axios.post(`${process.env.SERVER_URL}/reviews`, data, {
             headers: {
-                'authorization': сookieRef.current,
+                'authorization': getCookie('auth'),
                 'Accept': 'application/json',
             }
-        }).then((response) => {
-            return response
         }).catch((err) => {
             console.log(`post ERROR reviews`, err);
+            error('Crit Error, Reviews При добавлении отзыва что то пошло не так!')
             return
         })
 
         if (res && res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setReviews([]))
+                return auch.logout(router)
+            }
             message('Добавление отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
@@ -130,14 +137,22 @@ const Reviews = () => {
             method: 'DELETE',
             url: `${process.env.SERVER_URL}/reviews`,
             headers: {
-                'authorization': сookieRef.current,
+                'authorization': getCookie('auth'),
+                'Accept': 'application/json',
             },
             data: data
         }).catch((err) => {
             console.log(`delete review ERROR Reviews`, err);
+            error('Crit Error, Reviews При удалении отзыва что то пошло не так!')
+            return 
         })
         
         if (res && res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setReviews([]))
+                return auch.logout(router)
+            }
             message('Удаление отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
@@ -160,17 +175,21 @@ const Reviews = () => {
 
         let res = await axios.put(`${process.env.SERVER_URL}/reviews`, data, {
             headers: {
-                'authorization': сookieRef.current,
+                'authorization': getCookie('auth'),
                 'Accept': 'application/json',
             }
-        }).then((response) => {
-            return response
         }).catch((err) => {
             console.log(`post ERROR reviews`, err);
+            error('Crit Error, Reviews При редактировании отзыва что то пошло не так!')
             return
         })
 
         if (res && res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setReviews([]))
+                return auch.logout(router)
+            }
             message('Редактирование отзыва прошло удачно! =)')
             dispatch(setReviews(res.data.reviews))
             setReviewsData(res.data.reviews)
@@ -189,7 +208,6 @@ const Reviews = () => {
     }
 
     React.useEffect(() => {
-        сookieRef.current = getCookie('auth')
         return () => {
             setStateReviews({
                 id:'',

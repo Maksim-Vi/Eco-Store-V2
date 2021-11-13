@@ -1,6 +1,6 @@
-import { sql_query } from "../../../database_connection";
-import { authenticated } from "../../../utility/middlware";
-import { formateDataReviews } from "../../../utility/utils";
+import { sql_query } from "../../database_connection";
+import { authenticated } from "../../utility/middlware";
+import { formateDataReviews } from "../../utility/utils";
 import NextCors from 'nextjs-cors';
 
 export default authenticated(async function getReviews(req, res) {

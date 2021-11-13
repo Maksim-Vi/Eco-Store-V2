@@ -122,14 +122,31 @@ export const useBuyMenu = makeStyles((theme) => ({
         flexDirection:'column',
         justifyContent:'space-between',
         alignItems: 'center',
-        width: '95%',
+        width: '100%',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        height: '200px',
+        "&::-webkit-scrollbar": {
+            width: '5px',
+            backgroundColor: "#f9f9fd"
+        },
+        "&::-webkit-scrollbar-thumb": {
+            borderRadius: "10px",
+            backgroundColor: "#1b9b1b"
+        },
+        "&::-webkit-scrollbar-track": {
+            borderRadius: "10px",
+            backgroundColor: "#f9f9fd48",
+        },
         '& .MuiBox-root':{
             fontFamily: 'Montserrat, sans-serif',   
         },
         [theme.breakpoints.down('sm')]: {
             flexDirection:'row',
-            // flexWrap: 'wrap',
+            flexWrap: 'wrap',
             width: '100%',
+            overflowY: 'auto',
+            height: '250px'
         },
     },
     image:{
@@ -139,10 +156,11 @@ export const useBuyMenu = makeStyles((theme) => ({
     },
     itemDesc:{
         display: 'flex',
-        width:' 100%',
+        width:' 95%',
         alignItems: 'center',
         justifyContent: 'space-between',
         [theme.breakpoints.down('sm')]: {
+            width: 'auto',
             flexDirection:'column'
         },
     },
@@ -167,8 +185,13 @@ export const useBuyMenu = makeStyles((theme) => ({
    
     divider:{
         margin: 10
+    },
+    disable:{
+        opacity: '0.7'
+    },
+    disableBtn:{
+        cursor: 'default'
     }
-   
 }));
 
 // display: flex;

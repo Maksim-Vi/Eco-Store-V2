@@ -30,7 +30,7 @@ export default async function SignIn (req, res) {
                 let jwt = sign(data, process.env.jwtSecret, { expiresIn: '1d' });
                 return res.status(200).json({token: jwt, userId: user.id});
             } else {
-                return res.status(401).json({message: 'signin.js POST req, Login is failed: Something was wrong!', err, result});
+                return res.status(400).json({message: 'signin.js POST req, Login is failed: Something was wrong!', err, result});
             }
         });
     } else {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,6 +15,8 @@ import axios from 'axios';
 import { setProducts } from '../../redux/reducers/SRM/products/action';
 import { getCookie } from '../../components/common/session';
 import { useToasts } from 'react-toast-notifications';
+import { useRouter } from 'next/router';
+import { AuchContext } from '../../components/common/Context/context.hook';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -45,7 +47,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function AddProduct(props) {
     let URL = process.env.SERVER_URL
     const classes = useStyles();
-    
+    let router = useRouter()
+    const auch = useContext(AuchContext)
+
     let Images = useSelector(state => state.CRM_products.Images)
     let genetalTabs = useSelector(state => state.CRM_products.genetalTabs)
     let descriptionProductTabs = useSelector(state => state.CRM_products.descriptionProductTabs)
@@ -141,7 +145,8 @@ export default function AddProduct(props) {
             }
         }).catch((err) => {
             console.log(`uploadProducts ERROR AddProduct`, err);
-            // props.closeDialog()
+            error('Crit error! AddProduct не смогли загрузить картинки на сервер!')
+            props.closeDialog()
             return
         })
 
@@ -151,16 +156,22 @@ export default function AddProduct(props) {
             }
         }).catch((err) => {
             console.log(`createProduct ERROR AddProduct`, err);
-            // props.closeDialog()
+            error('Crit error! AddProduct  не смогли получить данные о товаре!')
             return
         })
 
         if (res !== undefined && res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setProducts([]))
+                return auch.logout(router)
+            }
             message('Товар был создан удачно! =)')
             dispatch(setProducts(res.data.products))
             props.closeDialog()
         } else {
             error('Ошибка создания товара! =(')
+            props.closeDialog()
         }
 
     }

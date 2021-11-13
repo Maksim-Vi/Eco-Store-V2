@@ -179,7 +179,7 @@ export default authenticated(async function getProducts(req, res) {
                             
                 let productsData = formateProductsData(response)
 
-                return res.status(401).json({ messages: 'unsuccess', products: productsData, err: err });    
+                return res.status(400).json({ messages: 'unsuccess', products: productsData, err: err });    
             }
         }
         default: {

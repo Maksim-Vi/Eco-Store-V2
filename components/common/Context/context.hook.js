@@ -5,6 +5,7 @@ const noop = () =>{}
 export const AuchContext = createContext({
     token: null,
     userId: null,
+    isAuth: false,
     login: noop,
     logout: noop,
     isAuthorization: false

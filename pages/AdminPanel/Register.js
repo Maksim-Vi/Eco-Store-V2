@@ -1,8 +1,9 @@
-import React from 'react'
 import Register from '../../dashboard/pages/Register'
+import React from 'react'
 
-const SingIn = () =>{
+
+const SingUp = () =>{
     return (<Register />)
 }
 
-export default SingIn
+export default SingUp
