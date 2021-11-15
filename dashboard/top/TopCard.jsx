@@ -143,6 +143,58 @@ const TopCard = ({ top, products }) => {
         }
     }
 
+    let updatePopular = async (item) => {
+        let res = await axios.put(`${process.env.SERVER_URL}/popular/${item.id}`, item, {
+            headers: {
+                'authorization': getCookie('auth'),
+                'Accept': 'application/json',
+            },
+        }).catch((err) => {
+            console.log(`update popular ERROR Button`, err);
+            error('Crit Error, Button При удалении топ что то пошло не так!')
+            return
+        })
+
+        if (res.status === 200) {
+            if(res.data && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setTop([]))
+                return auch.logout(router)
+            }
+            message('Обновление топ товара прошло успешно! =)')
+        } else {
+            error('Что то пошло не так при обновлении! =(')
+        }
+    }
+
+    let deletePopular = async (item) => {
+        let cookie = getCookie('auth')
+        let res = await axios.delete(`${process.env.SERVER_URL}/popular/${item.id}`, {
+            headers: {
+                'authorization': cookie,
+                'Accept': 'application/json',
+            },
+        }).catch((err) => {
+            console.log(`delete once popular ERROR Button`, err);
+            error('Crit Error, Button При удалении одного топа что то пошло не так!')
+            return
+        })
+
+        if(res && res.status === 200) {
+            if(res.data && res.data.isAuch && res.data.isAuch === false){
+                error('Ошибка авторизации, истекла сессия токена')
+                dispatch(setTop([]))
+                return auch.logout(router)
+            }
+            message('Удаление топ товара прошло успешно! =)')
+            dispatch(setTop(res.data.tops))
+            setTopArr(res.data.tops)
+            setPopularItems(res.data.tops)
+        } else {
+            error('Что то пошло не так при удалении! =(')
+        }
+    }
+
     let deleteAll = async () => {
         let cookie = getCookie('auth')
         if (popularItems.length > 0 && popularItems.length <= 4) {
@@ -180,17 +232,17 @@ const TopCard = ({ top, products }) => {
         }
     }, [])
 
-    //topArr.length === 0 && popularItems.length > 0 && popularItems.length <= 4
+
     return (
         <Grid container spacing={3}>
             <Grid className={classes.gridButtonContainer} item xs={12}>
                 <AddTop toggleDrawer={toggleDrawer} />
-                {popularItems.length > 0 &&
+                {popularItems && popularItems.length > 0 &&
                     <Button className={classes.save} variant="contained" color="primary" onClick={() => { savePopularAll() }}>
                         сохранить
                     </Button>
                 }
-                {popularItems.length > 0 &&
+                {popularItems && popularItems.length > 0 &&
                     <Button className={classes.save} variant="contained" color="secondary" onClick={() => { deleteAll() }}>
                         удалить все
                     </Button>
@@ -198,13 +250,13 @@ const TopCard = ({ top, products }) => {
             </Grid>
 
             <List dense={false} className={classes.root}>
-                {popularItems.length > 0 &&
+                {popularItems && popularItems.length > 0 &&
                     popularItems.map(item => {
                         return (
                             <ListItem key={item.id} className={classes.container}>
                                 <Image url={item.image} />
                                 <Text id={item.id} text={item.text} addTextPopular={addTextPopular} />
-                                <ButtonsList item={item} top={topArr} setTopArr={setTopArr} setPopularItems={setPopularItems}/>
+                                <ButtonsList item={item} top={topArr} updatePopular={updatePopular} deletePopular={deletePopular}/>
                             </ListItem>
                         )
                     })

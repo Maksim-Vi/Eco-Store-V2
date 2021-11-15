@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,7 +12,7 @@ import Slide from '@material-ui/core/Slide';
 import AddProductTabs from './components/add_product_tabs/AddProductTabs';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { setProducts } from '../../redux/reducers/SRM/products/action';
+import { resetProductTabs, setProducts } from '../../redux/reducers/SRM/products/action';
 import { getCookie } from '../../components/common/session';
 import { useToasts } from 'react-toast-notifications';
 import { useRouter } from 'next/router';
@@ -175,6 +175,12 @@ export default function AddProduct(props) {
         }
 
     }
+
+    useEffect(()=>{
+        return () =>{
+            dispatch(resetProductTabs())
+        }
+    },[])
 
     return (
         <Dialog fullScreen open={props.open} onClose={() => { props.closeDialog() }} TransitionComponent={Transition}>

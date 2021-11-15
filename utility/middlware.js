@@ -1,9 +1,10 @@
 import { verify } from "jsonwebtoken";
 import NextCors from 'nextjs-cors';
+import { getCookie } from "../components/common/session";
 
 export const authenticated = (fn) => async (req, res) => {
   let isCrm = req.headers.iscrm ? req.headers.iscrm : false
-  
+
   await NextCors(req, res, {
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     origin: '*',
@@ -13,7 +14,7 @@ export const authenticated = (fn) => async (req, res) => {
   if(req.method === 'GET' && !isCrm){
     return await fn(req, res)
   } else {
-    verify(req.headers.authorization, process.env.jwtSecret, async function(err, decoded) {
+    verify(req.headers.authorization || getCookie('auth'), process.env.jwtSecret, async function(err, decoded) {
       if(!err && decoded){
         return await fn(req, res)
       } else {

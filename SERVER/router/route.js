@@ -17,9 +17,9 @@ let uploadData = (req,res) =>{
             imagesDescUrl.push(file.path)
         })
     }
-
-    if(images.length > 0 || imagesDescUrl.length > 0){
-        return res.status(200).json({success: true, images: images, imagesDesc: imagesDescUrl })
+    
+    if(imagesUrl.length > 0 || imagesDescUrl.length > 0){
+        return res.status(200).json({success: true, images: imagesUrl, imagesDesc: imagesDescUrl })
     } else {
         return res.status(401).json({success: false, images: [], imagesDesc: [] })
     }
@@ -69,16 +69,12 @@ let updateData = (req,res, next) =>{
 }
 
 let deleteData = (req,res) =>{
-    try{
-        if(req.body.url.length > 0){
-            req.body.url.forEach(i=>{
-                fs.unlinkSync(String(i))
-            })
-        }
-        return res.status(200).json({success: true })
-    } catch(err){
-        return res.status(400).json({success: false, err: err})
+    if(req.body.url.length > 0){
+        req.body.url.forEach(i=>{
+            fs.unlinkSync(String(i))
+        })
     }
+    return res.status(200).json({success: true })
 }
 
 

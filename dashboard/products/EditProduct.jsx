@@ -102,16 +102,19 @@ export default function EditProduct(props) {
             })
         }
 
-        await axios({
-            method: 'DELETE',
-            url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
-            data: { url }
-        }).catch((err) => {
-            console.log(`delete images ERROR EditProduct`, err);
-            error('Crit Error, EditProduct При удалении товара что то пошло не так!')
-            return
-        })
-
+        if(url.length > 0){
+            console.log(`ANSWER delete url`, url);
+            await axios({
+                method: 'DELETE',
+                url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,
+                data: { url }
+            }).catch((err) => {
+                console.log(`delete images ERROR EditProduct`, err);
+                error('Crit Error, EditProduct При удалении товара что то пошло не так!')
+                return
+            })
+        }
+       
         let res = await axios.delete(`${URL}/product/${props.productId}`, {
             headers: { 'authorization': cookie }
         })
