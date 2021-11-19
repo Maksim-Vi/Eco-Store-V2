@@ -8,7 +8,7 @@ import { addItemToBasket, removeOneItemToBasket } from '../../../../redux/reduce
 import { connect } from 'react-redux';
 import clsx from 'clsx';
 
-const Item = (props) => {
+const ItemFromSlider = () => {
 
     const classes = useBuyMenu();
     let dispatch = useDispatch()
@@ -18,19 +18,6 @@ const Item = (props) => {
     let addToBascketItem = (item = null, index = null, isEnable) => {
         if (isEnable === 'false') return
 
-        let data = {
-            id: props.item.id,
-            name: props.item.name,
-            price: props.item.price,
-            salePrice: props.item.salePrice,
-            url: props.item.images[0].url,
-            countAddItems: 0,
-            ImgDesc: {
-                id: item !== null ? item.id : '',
-                imgName: item !== null ? item.imgName : '',
-                imgUrl: item !== null ? item.url : '',
-            }
-        }
         let countPrice = props.item.price - props.item.salePrice + priceItems
         setPriceItems(countPrice)
         dispatch(addItemToBasket(data))
@@ -46,27 +33,6 @@ const Item = (props) => {
         dispatch(removeOneItemToBasket(itemId, imgDescId))
     }
 
-    let getBuyBtn = () => {
-        if (props.item.ImgDesc.length > 0 && props.item.isItemfromSlider) {
-            let item = props.item.ImgDesc[props.item.ImgDataId]
-            return <Box className={classes.cardItemUpDown} component='div'>
-                <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })}
-                    onClick={() => { removeToBascketItem(props.item.id, item.id, item.isEnable) }}>-</p>
-                {countImgData(props.itemBasket, item.id)}
-                <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })}
-                    onClick={() => { addToBascketItem(item, item.id, item.isEnable) }}>+</p>
-            </Box>
-        } else if (props.item.ImgDesc.length === 0) {
-            return <Box className={classes.cardItemUpDown} component='div'>
-                <p className={classes.UpDown}
-                    onClick={() => { removeToBascketItem(props.item.id) }}>-</p>
-                {count(props.itemBasket, props.item.id)}
-                <p className={classes.UpDown}
-                    onClick={() => { addToBascketItem() }}>+</p>
-            </Box>
-        }
-    }
-
     useEffect(() => {
         if (props.itemBasket.length > 0) {
             let countPrice = (props.item.price - props.item.salePrice) * count(props.itemBasket, props.item.id)
@@ -76,24 +42,27 @@ const Item = (props) => {
 
     return (
         <Card className={classes.card} xs={12}>
-            <Box component='div' className={classNames(`${classes.cardItem}`, { [`${classes.cardItemJustify}`]: props.item.ImgDesc.length === 0 })}>
-                <Avatar variant="square" className={classes.imageProductMain} src={`${process.env.SERVER_UPLOAD_URL}/${props.item.url}`} alt="item" />
+            <Box component='div' className={classNames(`${classes.cardItem}`, { [`${classes.cardItemJustify}`]: ImgDesc.length === 0 })}>
+                <Avatar variant="square" className={classes.imageProductMain} src={`${process.env.SERVER_UPLOAD_URL}/${props.item.images[0].url}`} alt="item" />
                 <Box component='div' className={classes.textItemContainer}>
                     <Typography className={classes.cardItemName} variant="body1" component="h4" >{props.item.name}</Typography>
                     <Typography className={classes.itemId} variant="body1" component="span">Артикул: 100{props.item.id}</Typography>
                     <Typography className={classes.descItem} variant="body1" component="h4">Комплектация:</Typography>
                     <Typography className={classes.itemId} variant="body1" component="span">{props.item.equipment}</Typography>
                 </Box>
-                {getBuyBtn()}
+                {ImgDesc.length === 0 &&
+                    <Box className={classes.cardItemUpDown} component='div'>
+                        <p className={classes.UpDown} onClick={() => { removeToBascketItem(props.item.id) }}>-</p>
+                        {count(props.itemBasket, props.item.id)}
+                        <p className={classes.UpDown} onClick={() => { addToBascketItem() }}>+</p>
+                    </Box>
+                }
             </Box>
             {props.item.ImgDesc.length > 0 &&
                 <>
                     <Divider className={classes.divider} />
                     <Box className={classes.itemDescContainer} component='div'>
                         {props.item.ImgDesc.map((item, index) => {
-                            if (item.id === props.item.ImgDataId) return
-
-                            console.log(`ANSWER`, item);
                             return (
                                 <Box className={clsx(classes.itemDesc, { [classes.disable]: item.isEnable === 'false' })} key={index} display='flex' alignItems='center' margin='10px'>
                                     <Avatar variant="square" className={clsx(classes.image, { [classes.disable]: item.isEnable === 'false' })} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" />
@@ -101,7 +70,7 @@ const Item = (props) => {
                                     <Box className={classes.cardItemUpDown} component='div'>
                                         <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { removeToBascketItem(props.item.id, item.id, item.isEnable) }}>-</p>
                                         {countImgData(props.itemBasket, item.id)}
-                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { addToBascketItem(item, index, item.isEnable) }}>+</p>
+                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { addToBascketItem(item.isEnable) }}>+</p>
                                     </Box>
                                 </Box>
                             )

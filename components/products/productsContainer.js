@@ -12,6 +12,7 @@ import { setFilter } from '../../redux/reducers/filter-reducer';
 import { sortBy } from '../common/utilits';
 import ABS from '../common/abs';
 import BuyMenuItem from './component/BuyMenu/BuyMenuItem';
+import { formateItamDataBuyDialog } from '../../utility/utils';
 
 const ProductsContainer = ({items}) => {
 
@@ -38,11 +39,12 @@ const ProductsContainer = ({items}) => {
     };
 
     let hendlerOpenBuyMenu = (item) =>{
-        setOpenBuyMenu({isOpen: true,item: item})
+        let newItamData = formateItamDataBuyDialog(item)
+        setOpenBuyMenu({isOpen: true, item: newItamData})
     }
 
     let hendlerCloseBuyMenu = () =>{
-        setOpenBuyMenu({isOpen: false,item: {}})
+        setOpenBuyMenu({isOpen: false, item: {}})
     }
 
     useEffect(() => {

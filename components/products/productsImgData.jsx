@@ -5,9 +5,14 @@ import clsx from 'clsx';
 const ProductsImgData = (props) => {
     let [ImgDesc, setImgDesc] = useState([])
 
-    let hendlerBuyItem = (isEnable) =>{
-        if(props.item.inStock !== false && isEnable && isEnable !== 'false'){
-            props.hendlerOpenBuyMenu(props.item)
+    let hendlerBuyItem = (item) =>{
+        if(props.item.inStock !== false && item.isEnable && item.isEnable !== 'false'){
+            let changeItem = {}
+            Object.assign(changeItem,  props.item)
+            changeItem['isItemfromSlider'] = true
+            changeItem['ImgDataId'] = item.id
+            changeItem['ImgData'] = ImgDesc
+            props.hendlerOpenBuyMenu(changeItem)
         }
     }
 
@@ -17,6 +22,7 @@ const ProductsImgData = (props) => {
             props.item.imagesDescription.forEach((imgData,index)=>{
                 if(props.item.ImgData){
                     let data = {
+                        id: index,
                         url: imgData.url,
                         imgName: props.item.ImgData[index].imgName,
                         isEnable: props.item.ImgData[index].isEnable
@@ -35,7 +41,7 @@ const ProductsImgData = (props) => {
                    {ImgDesc.map((item, index)=>{
                        return (
                         <div key={index} className={s.colorContainerItem}>
-                            <img className={clsx(s.img, { [s.disable]: item.isEnable === 'false'})} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem(item.isEnable)}}/>
+                            <img className={clsx(s.img, { [s.disable]: item.isEnable === 'false'})} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" onClick={()=>{hendlerBuyItem(item)}}/>
                             <div className={s.textContainer}>
                                 <span>{item.imgName}</span>
                             </div>

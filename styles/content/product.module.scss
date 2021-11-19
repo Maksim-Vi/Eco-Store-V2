@@ -160,7 +160,6 @@
                     position: relative;
                     display: flex;
                     max-width: 100px;
-                    max-height: 100px;
                     width: 100%;
                     height: auto;
                     flex-direction: column;
@@ -186,6 +185,7 @@
                         }
                     }
                     .enable {
+                        cursor: auto;
                         position: absolute;
                         font-family: 'Work Sans', sans-serif;
                         top: 25%;

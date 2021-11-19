@@ -9,10 +9,10 @@ import { addedCountItem } from '../common/utilits';
 import ABS from '../common/abs';
 import ProductsImgData from './productsImgData';
 import BuyMenuItem from './component/BuyMenu/BuyMenuItem'
+import { formateItamDataBuyDialog } from '../../utility/utils';
 
 const ProductId = (props) => {
 
-    let dispatch = useDispatch()
     let [tableData, setTableData] = useState({
         typeName: '',
         countPeople: '',
@@ -21,14 +21,14 @@ const ProductId = (props) => {
         equipment: '',
         structure: ''
     })
-    let [selectedImgData, setSelectedImgData] = useState()
     const [openBuyMenu, setOpenBuyMenu] = React.useState({
         isOpen: false,
         item: {}
     })
 
     let hendlerOpenBuyMenu = (item) => {
-        setOpenBuyMenu({ isOpen: true, item: item })
+        let newItamData = formateItamDataBuyDialog(item)
+        setOpenBuyMenu({ isOpen: true, item: newItamData })
     }
 
     let hendlerCloseBuyMenu = () => {
@@ -44,7 +44,6 @@ const ProductId = (props) => {
             equipment: props.item.equipment,
             structure: props.item.structure
         })
-        setSelectedImgData(props.item)
     }, [])
 
 

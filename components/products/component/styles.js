@@ -12,9 +12,9 @@ export const useBuyMenu = makeStyles((theme) => ({
         padding: theme.spacing(2),
         margin: 'auto',
         width:'800px',
-        height: '650px',
+        // height: '650px',
         maxWidth: '100%',
-        maxHeight: '100%',
+        maxHeight: '650px',
         [theme.breakpoints.down('sm')]: {
             width:'800px',
             height: '700px',
@@ -40,7 +40,7 @@ export const useBuyMenu = makeStyles((theme) => ({
     cardItem:{
         display: 'flex',
         flexDirection: 'row',
-        width: '95%',
+        width: '97%',
         padding: '10px 0 10px 0',
         [theme.breakpoints.down('sm')]: {
             alignItems:'center',

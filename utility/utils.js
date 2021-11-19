@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { v4 as uuid } from 'uuid';
 
 export const deleteAndUpload = (arr,imagesFile) =>{
     let images = []
@@ -112,4 +113,48 @@ export const formateDataReviews = (reviews) =>{
     });
 
     return reviewsData
+}
+
+export const formateItamDataBuyDialog = (data) =>{
+    let newItamData = {}
+    if(data && data.isItemfromSlider && data.isItemfromSlider === true){
+        newItamData = { 
+            ImgDataId: data.ImgDataId,
+            isItemfromSlider: data.isItemfromSlider,
+            url: data.imagesDescription[data.ImgDataId].url,
+            ImgDesc: data.ImgData
+        }
+    } else {
+        let ImgDesc = []
+        if(data.imagesDescription){
+            data.imagesDescription.forEach((item,index)=>{
+                ImgDesc.push({
+                    id: uuid(),
+                    uid: index,
+                    url: item.url,
+                    imgName: data.ImgData[index].imgName,
+                    isEnable: data.ImgData[index].isEnable
+                })
+            })
+        }
+        newItamData = {
+            isItemfromSlider: false,
+            url: data.images[0].url,
+            ImgDesc: ImgDesc
+        }
+    }
+
+    newItamData = {...newItamData,
+        id: data.id,
+        name: data.name,
+        price: data.price,
+        images: data.images,
+        salePrice: data.salePrice,
+        equipment: data.equipment,
+        countAddItems: 0,
+        imagesDescription: data.imagesDescription,
+    }
+
+    return newItamData
+
 }
