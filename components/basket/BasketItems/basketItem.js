@@ -30,7 +30,7 @@ const BasketItem = (props) => {
                 <Avatar className={classes.ImgMain} variant="square" src={`${process.env.SERVER_UPLOAD_URL}/${props.item.url}`} alt='img'/>
                 <div className={s.ItemContentContainer}>
                     <h3>{props.item.name}</h3>
-                    <span className={s.articl}>Артикул: 1000{props.item.id}</span>
+                    <span className={s.articl}>Артикул: 100{props.item.id}</span>
                     <div className={s.PriceContainer}>
                         <div className={s.ItemPrice}>
                             <span>Цена:</span>

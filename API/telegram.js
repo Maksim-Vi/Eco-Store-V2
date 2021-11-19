@@ -34,7 +34,7 @@ const formatText = (dataLid) => {
     let firstString = `*Новый заказ:* ${dataLid.namLid}\n\n*Имя:* ${dataLid.firstName}\n*Телефон:* ${dataLid.phone}\n*Емейл:* ${dataLid.Email}\n*Промокол:* ${dataLid.promocode}`
     let secondSting = `\n\n*Оплата:* ${dataLid.pay}\n*Доставка:* ${dataLid.post}\n\n*Iнформация по доставкe:*\n\n*Имя Отправляемого:* ${dataLid.postInfo.post_FirstName}, ${dataLid.postInfo.post_LastName};\n*Телефон Отправляемого:* ${dataLid.postInfo.post_Phone};\n*Отделение почты:* ${dataLid.postInfo.post_NumberPost};\n\n*Товары:*\n`
     let items = dataLid.items.map(item => {
-        return `\n*id:* ${item.id};\n*Название товара:* ${item.name};\n*типо товара:* ${item.type};\n*количество:* ${item.count};\n*цена товара:* ${item.cost} = ${item.cost * item.count};\n`
+        return `\n*id:* ${item.id};\n*Название товара:* ${item.name};\n*тип товара:* ${item.type};\n*количество:* ${item.count};\n*цена товара:* ${item.cost} = ${item.cost * item.count};\n`
     })
     let countCostItems = `\n--------------------------------\n*Общая цена:* ${dataLid.items.reduce((count, item) => {return count + item.cost * item.count}, 0)}`
 
