@@ -191,7 +191,15 @@ export const useBuyMenu = makeStyles((theme) => ({
     },
     disableBtn:{
         cursor: 'default'
+    },
+    notInStock:{
+        color: 'red',
+        marginLeft: 50,
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 0,
+        },
     }
+
 }));
 
 // display: flex;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import s from '../../styles/content/product.module.scss'
 import clsx from 'clsx';
+import { v4 as uuid } from 'uuid';
 
 const ProductsImgData = (props) => {
     let [ImgDesc, setImgDesc] = useState([])
@@ -22,6 +23,7 @@ const ProductsImgData = (props) => {
             props.item.imagesDescription.forEach((imgData,index)=>{
                 if(props.item.ImgData){
                     let data = {
+                        uid: props.item.ImgData[index].uid,
                         id: index,
                         url: imgData.url,
                         imgName: props.item.ImgData[index].imgName,

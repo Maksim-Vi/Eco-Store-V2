@@ -103,7 +103,6 @@ export default function EditProduct(props) {
         }
 
         if(url.length > 0){
-            console.log(`ANSWER delete url`, url);
             await axios({
                 method: 'DELETE',
                 url: `${process.env.SERVER_UPLOAD_URL}/removeImagesProduct`,

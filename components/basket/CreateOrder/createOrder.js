@@ -17,16 +17,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: '75%',
-    // left: '10%',
-    // top: '5%',
-    // zIndex: '10',
-    // position: 'relative',
-    // [theme.breakpoints.down('sm')]: {
-    //   top: '5%',
-    //   left: '3%',
-    //   width: '93%',
-    // },
     margin: 20,
     '& .MuiPaper-root': {
       backgroundColor: '#ececec',
@@ -34,20 +24,6 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiStepper-vertical': {
       borderRadius: '10px',
-      // [theme.breakpoints.down('sm')]: {
-      //   overflowY: 'scroll',
-      //   height: '500px',
-      //   '&::-webkit-scrollbar': {
-      //     width: '0.1em'
-      //   },
-      //   '&::-webkit-scrollbar-track': {
-      //     '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-      //   },
-      //   '&::-webkit-scrollbar-thumb': {
-      //     backgroundColor: 'rgba(0,0,0,.1)',
-      //     outline: '1px solid slategrey'
-      //   }
-      // },
       '& .MuiStepConnector-root': {
         display: 'none',
         flex: 'none',
@@ -117,8 +93,7 @@ function getSteps() {
 }
 
 const CreateOrder = ({ setCreateOrder }) => {
-  let isOldRender = false
-
+ 
   const classes = useStyles();
 
   const dispatch = useDispatch()
@@ -150,13 +125,14 @@ const CreateOrder = ({ setCreateOrder }) => {
   };
 
   let sortBasketItem = (items) => {
-    return uniqBy(items, i => {
-      if (i.ImgDesc.id !== '') {
-        return i.id && i.ImgDesc.id
-      } else {
-        return i.id
-      }
-    })
+    // return uniqBy(items, i => {
+    //   if (i.ImgDesc.id !== '') {
+    //     return i.id && i.ImgDesc.id
+    //   } else {
+    //     return i.id
+    //   }
+    // })
+    return uniqBy(items, i => [i.id, i.ImgDesc.id].join())
   }
 
   let sortBasketItemToOrder = () => {
@@ -180,7 +156,7 @@ const CreateOrder = ({ setCreateOrder }) => {
     } else {
       let namLid = currentOrder
       let data = await dispatch(postFormBasket(namLid, form.firstName, form.Email, form.phone, form.promocode, form.pay, form.post, form.postInfo, itemsToOrder))
-      
+
       if (data && (data.status === 200 || data.status === 201) && data.err === false) {
         message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
         dispatch(addItemToProduct(itemsToOrder))
@@ -201,55 +177,27 @@ const CreateOrder = ({ setCreateOrder }) => {
     }
   }, [])
 
-  const oldRenderData = () => {
-    return (
-      <div className={classes.root}>
-        <span className={classes.ItemClose} onClick={() => { setCreateOrder(false) }}>{
-          <p>&times;</p>
-        }</span>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-              <StepContent>
-                <div>
-                  {index === 0
-                    ? <BasketForm handleNext={handleNext} />
-                    : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
-                  }
-                </div>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-      </div>
-    );
-  }
 
-  let newRender = () => {
-    return (
-      <div className={classes.root}>
-        <h3>Заказ № {currentOrder}</h3>
-        <p>Спасибо что выбрали именно нас!</p>
-        <Divider />
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-              <StepContent>
-                {index === 0
-                  ? <BasketForm handleNext={handleNext} />
-                  : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
-                }
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-      </div>
-    )
-  }
-
-  return (isOldRender ? oldRenderData() : newRender())
+  return (
+    <div className={classes.root}>
+      <h3>Заказ № {currentOrder}</h3>
+      <p>Спасибо что выбрали именно нас!</p>
+      <Divider />
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+            <StepContent>
+              {index === 0
+                ? <BasketForm handleNext={handleNext} />
+                : <PayAndMarch activeStep={activeStep} handleCreate={handleCreate} handleBack={handleBack} />
+              }
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+    </div>
+  )
 }
 
 export default CreateOrder

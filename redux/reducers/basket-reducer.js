@@ -44,9 +44,9 @@ const removeOneSortItem = (items,id,imgDescId) =>{
 
     items.forEach((item) => {
         if(imgDescId !== ''){
-            if(imgDescId === item.ImgDesc.id){
+            if(imgDescId === item.ImgDesc.uid){
                 secondArr.push(item)
-            } else if (imgDescId !== item.ImgDesc.id){
+            } else if (imgDescId !== item.ImgDesc.uid){
                 firstArr.push(item)
             }
         } else {
@@ -61,14 +61,6 @@ const removeOneSortItem = (items,id,imgDescId) =>{
     secondArr.splice(0,1)
     let filtItems = secondArr.concat(firstArr)
   
-    // let sortArr = items.reduce( (a,c,i) => {
-    //     if(c.ImgDesc.id !== ''){
-    //         a[c.ImgDesc.id] = i; return a 
-    //     } else {
-    //         a[c.id] = i; return a 
-    //     }
-    // }, {});
-    // let sortItem = filtItems.sort( (a,b) => {return sortArr[a.ImgDesc.id] - sortArr[b.ImgDesc.id] || sortArr[a.id] - sortArr[b.id] } );
     let sortItem = filtItems.sort( (a,b) => {return a.id - b.id || a.ImgDesc.id - b.ImgDesc.id} );
     
     return sortItem
@@ -76,7 +68,7 @@ const removeOneSortItem = (items,id,imgDescId) =>{
 
 let removeItem = (items,removeItem) =>{
     if(removeItem.ImgDesc.id !== ''){
-        return items.filter(i=> i.ImgDesc.id !== removeItem.ImgDesc.id )
+        return items.filter(i=> i.ImgDesc.uid !== removeItem.ImgDesc.uid )
     } else {
         return items.filter(i=> i.id !== removeItem.id )
     }

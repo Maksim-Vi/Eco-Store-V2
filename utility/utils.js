@@ -44,7 +44,7 @@ export const deleteImageIfErr = (arr) =>{
 
 export const checkIsHaveDopDesc = (checkId,item,allItemsBasket) =>{
     if(checkId !== ''){
-        return countImgData(allItemsBasket, item.ImgDesc.id)
+        return countImgData(allItemsBasket, item.ImgDesc.id, item.id)
     } else {
         return count(allItemsBasket, item.id)
     }
@@ -56,9 +56,9 @@ export const count = (item, itemId) => {
     }, 0)
 }
 
-export const countImgData = (item, itemId) => {
+export const countImgData = (item, itemId, productId) => {
     return item.reduce((count, item) => {
-        return count + (item.ImgDesc.id === itemId ? 1 : 0)
+        return count + (item.id === productId && item.ImgDesc.id === itemId ? 1 : 0)
     }, 0)
 }
 
@@ -115,6 +115,28 @@ export const formateDataReviews = (reviews) =>{
     return reviewsData
 }
 
+// export const updateDataStoreAddUuid = (items) =>{
+//     let updateItems = []
+
+//     items.forEach(item => {
+//         if(item.ImgData && item.ImgData.length > 0){
+//             let newData = item.ImgData.map(i=>{
+//                 return {
+//                     id: i.id,
+//                     uid: uuid(),
+//                     isEnable: i.isEnable,
+//                     imgName: i.imgName,
+//                 }
+//             })
+//             updateItems.push(newData)
+//         } else {
+//             updateItems.push(item)
+//         }
+//     });
+
+//     return updateItems
+// }
+
 export const formateItamDataBuyDialog = (data) =>{
     let newItamData = {}
     if(data && data.isItemfromSlider && data.isItemfromSlider === true){
@@ -129,8 +151,8 @@ export const formateItamDataBuyDialog = (data) =>{
         if(data.imagesDescription){
             data.imagesDescription.forEach((item,index)=>{
                 ImgDesc.push({
-                    id: uuid(),
-                    uid: index,
+                    uid: data.ImgData[index].uid,
+                    id: index,
                     url: item.url,
                     imgName: data.ImgData[index].imgName,
                     isEnable: data.ImgData[index].isEnable

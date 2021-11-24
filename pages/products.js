@@ -1,7 +1,6 @@
 import { sortItemByType } from '../components/common/utilits';
 import HeaderMain from '../components/header/headerMain';
 import ProductsContainer from '../components/products/productsContainer';
-import { getAllProducts } from '../lib/db/DbRequestGet';
 
 const Products = ({ items }) => {
     return (
@@ -9,7 +8,6 @@ const Products = ({ items }) => {
             <ProductsContainer items={sortItemByType(items)}/>
         </HeaderMain>)
 }
-
 
 Products.getInitialProps = async () => {
     let URL = process.env.SERVER_URL
@@ -21,7 +19,6 @@ Products.getInitialProps = async () => {
         json = await res.json()
     }
     
-
     return { items: json }
 }
 

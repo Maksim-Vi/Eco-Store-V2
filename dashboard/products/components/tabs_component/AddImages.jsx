@@ -4,6 +4,7 @@ import ImageUploading from 'react-images-uploading';
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { setImagesDescriptionProductData, setNeedToDeleteImages } from '../../../../redux/reducers/SRM/products/action';
+import { v4 as uuid } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     CardWrapper: {
@@ -60,8 +61,9 @@ export const AddImages = () => {
 
                 ImgDataDesc.push({
                     id: index,
+                    uid: desc[index] ? desc[index].uid : uuid(),
                     imgName: desc[index] ? desc[index].imgName : "",
-                    count: desc[index] ? desc[index].count : ""
+                    isEnable: desc[index] ? desc[index].isEnable : ""
                 })
 
             })
@@ -80,6 +82,7 @@ export const AddImages = () => {
 
                 ImgDataDesc.push({
                     id: index,
+                    uid: desc[index] ? desc[index].uid : uuid(),
                     imgName: desc[index] ? desc[index].imgName : "",
                     isEnable: desc[index] ? desc[index].isEnable : ""
                 })
@@ -92,7 +95,7 @@ export const AddImages = () => {
     };
 
     let onRemove = (index, url) => {
-        setDesc(desc.map(item => {
+        setDesc(desc.filter(item => {
             if (item.id !== index) {
                 return item
             }

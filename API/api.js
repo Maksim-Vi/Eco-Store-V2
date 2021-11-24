@@ -38,32 +38,6 @@ export const getStoreApi = (token) => {
     
     }
 
-
-// export const postFormStoreApi = (token,firstName,LastName,Email,subject,phone) => { 
-//     try {
-//         return InstenceAPI2({
-//             url: `/MainLink/form` ,
-//             method: 'POST',
-//             headers: {
-//                 'Authorization': token,
-//                 'Access-Control-Allow-Headers':'application/json',
-// 				'Content-Type': 'text/javascript' 
-//             },
-//             data: {firstName,LastName,Email,subject,phone}
-//         })
-//         .then (response => {
-//             return response.data;
-//         })  
-//         .catch(err =>{
-//             console.log(`data not found`);
-//         }) 
-//     } catch (error) {
-//         console.log(`data not found`);
-//         return data = []
-//     }
-  
-// }
-
 export const postFormStoreBasketApi = (token,firstName,Email,phone,promocode,pay,post,postInfo,items) => { 
     try {
         return InstenceAPI2({

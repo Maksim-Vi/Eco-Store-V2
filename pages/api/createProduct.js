@@ -147,8 +147,6 @@ apiRoute.post(async (req, res) => {
 
     let body = JSON.parse(req.product)
     let ImgData = JSON.stringify(body.ImgData)
-
-    console.log(`ANSWER`, body,ImgData);
    
     // let body = JSON.parse(req.body.product)
     // let ImgData = JSON.stringify(body.ImgData)

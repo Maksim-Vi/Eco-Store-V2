@@ -68,8 +68,8 @@ const ItemFromSlider = () => {
                                     <Avatar variant="square" className={clsx(classes.image, { [classes.disable]: item.isEnable === 'false' })} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" />
                                     <Box component='span'>{item.imgName}</Box>
                                     <Box className={classes.cardItemUpDown} component='div'>
-                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { removeToBascketItem(props.item.id, item.id, item.isEnable) }}>-</p>
-                                        {countImgData(props.itemBasket, item.id)}
+                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { removeToBascketItem(props.item.id, item.uid, item.isEnable) }}>-</p>
+                                        {countImgData(props.itemBasket, item.id, props.item.id)}
                                         <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { addToBascketItem(item.isEnable) }}>+</p>
                                     </Box>
                                 </Box>

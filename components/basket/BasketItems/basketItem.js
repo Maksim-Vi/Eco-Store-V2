@@ -40,7 +40,7 @@ const BasketItem = (props) => {
                         <div className={s.CountPriceContainer}>
                             <div className={s.ChangeItemPrice}>
                                 {/* <a className={s.addSubtract} onClick={() => { props.removeOneItemToBasket(props.item.id) }}>-</a> */}
-                                <a className={s.addSubtract} onClick={() => { props.removeOneItemToBasket(props.item.id,props.item.ImgDesc.id) }}>-</a>
+                                <a className={s.addSubtract} onClick={() => { props.removeOneItemToBasket(props.item.id,props.item.ImgDesc.uid) }}>-</a>
                                 {checkIsHaveDopDesc(props.item.ImgDesc.id,props.item,props.itemsAll) > 0 && checkIsHaveDopDesc(props.item.ImgDesc.id,props.item,props.itemsAll)}
                                 <a className={s.addSubtract} onClick={() => { props.addItemToBasket(props.item) }} >+</a>
                             </div>

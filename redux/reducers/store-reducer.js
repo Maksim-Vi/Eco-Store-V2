@@ -10,6 +10,28 @@ let initialState ={
     itemDropdownMenu: null
 }
 
+// let updateDataStore = (items) =>{
+//     let updateItems = []
+
+//     items.forEach(item => {
+//         if(item.ImgData && item.ImgData.length > 0){
+//             let newData = item.ImgData.map(i=>{
+//                 return {
+//                     id: i.id,
+//                     uid: uuid(),
+//                     isEnable: i.isEnable,
+//                     imgName: i.imgName,
+//                 }
+//             })
+//             updateItems.push(newData)
+//         } else {
+//             updateItems.push(item)
+//         }
+//     });
+
+//     return updateItems
+// }
+
 const StoreReducer = (state=initialState,action) => {
     switch (action.type) {
         case TOGGLE_IS_FETCHING:{
@@ -17,6 +39,7 @@ const StoreReducer = (state=initialState,action) => {
         }
         case SET_STORE:{
             return {...state, items:action.store}
+            //return {...state, items: updateDataStore(action.store)}
         }
         case ITEM_DROPDOWN_MENU:{
             return {...state, itemDropdownMenu:action.itemDropdownMenu}

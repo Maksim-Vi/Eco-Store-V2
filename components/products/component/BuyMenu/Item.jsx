@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addItemToBasket, removeOneItemToBasket } from '../../../../redux/reducers/basket-reducer';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
+import { v4 as uuid } from 'uuid';
 
 const Item = (props) => {
 
@@ -26,6 +27,7 @@ const Item = (props) => {
             url: props.item.images[0].url,
             countAddItems: 0,
             ImgDesc: {
+                uid: item !== null ? item.uid : '',
                 id: item !== null ? item.id : '',
                 imgName: item !== null ? item.imgName : '',
                 imgUrl: item !== null ? item.url : '',
@@ -43,6 +45,7 @@ const Item = (props) => {
             let countPrice = priceItems - (props.item.price - props.item.salePrice)
             setPriceItems(countPrice)
         }
+        console.log(imgDescId);
         dispatch(removeOneItemToBasket(itemId, imgDescId))
     }
 
@@ -51,8 +54,8 @@ const Item = (props) => {
             let item = props.item.ImgDesc[props.item.ImgDataId]
             return <Box className={classes.cardItemUpDown} component='div'>
                 <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })}
-                    onClick={() => { removeToBascketItem(props.item.id, item.id, item.isEnable) }}>-</p>
-                {countImgData(props.itemBasket, item.id)}
+                    onClick={() => { removeToBascketItem(props.item.id, item.uid, item.isEnable) }}>-</p>
+                {countImgData(props.itemBasket, item.id, props.item.id)}
                 <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })}
                     onClick={() => { addToBascketItem(item, item.id, item.isEnable) }}>+</p>
             </Box>
@@ -93,14 +96,14 @@ const Item = (props) => {
                         {props.item.ImgDesc.map((item, index) => {
                             if (item.id === props.item.ImgDataId) return
 
-                            console.log(`ANSWER`, item);
                             return (
                                 <Box className={clsx(classes.itemDesc, { [classes.disable]: item.isEnable === 'false' })} key={index} display='flex' alignItems='center' margin='10px'>
                                     <Avatar variant="square" className={clsx(classes.image, { [classes.disable]: item.isEnable === 'false' })} src={`${process.env.SERVER_UPLOAD_URL}/${item.url}`} alt="item" />
                                     <Box component='span'>{item.imgName}</Box>
+                                    {item.isEnable === 'false' && <Box className={classes.notInStock} component='span'>нет в наличии</Box>}
                                     <Box className={classes.cardItemUpDown} component='div'>
-                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { removeToBascketItem(props.item.id, item.id, item.isEnable) }}>-</p>
-                                        {countImgData(props.itemBasket, item.id)}
+                                        <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { removeToBascketItem(props.item.id, item.uid, item.isEnable) }}>-</p>
+                                        {countImgData(props.itemBasket, item.id, props.item.id)}
                                         <p className={clsx(classes.UpDown, { [classes.disableBtn]: item.isEnable === 'false' })} onClick={() => { addToBascketItem(item, index, item.isEnable) }}>+</p>
                                     </Box>
                                 </Box>

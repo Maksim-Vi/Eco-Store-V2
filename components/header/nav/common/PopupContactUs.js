@@ -63,7 +63,6 @@ const PopupContactUs = ({ open, handleClose, ...props }) => {
         if(data && (data.status === 200 || data.status === 201) && data.err === false){
             message('Данные были переданы. Ожидайте, с вами свяжется менеджер')
         } else if(data.status !== 200 && data.err === true){
-            console.log(data);
             error(data ? data.text : 'Что то пошло не так, попробуйте снова!')
         } else {
             error('Прооблема с подключением к базе данных, обратитесь к менеджеру')
