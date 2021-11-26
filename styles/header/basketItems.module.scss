@@ -77,7 +77,7 @@
                         padding: 0.5em;
                         font-size: 0.75em;
                     }
-                    a {
+                    span {
                         color: #000;
                         text-decoration: none;
                         &:hover{
@@ -174,17 +174,100 @@
                     }
                 }
             }
-            .imgDescContainer{
+            .imgDescWrapper{
+                position: relative;
                 display: flex;
-                flex-direction: column;
-                .imageText{
+                align-items: center;
+                .imgDescContainer{
+                    display: flex;
+                    flex-direction: column;
+                    .imageText{
+                        display: flex;
+                        align-items: center;
+                        p{
+                            margin-left: 10px;
+                        }
+                       
+                    }
+                }
+                .ChangeItemPrice{
                     display: flex;
                     align-items: center;
-                    p{
-                        margin-left: 10px;
+                    margin-left: auto;
+                    margin-right: 10px;
+                    a.addSubtract {
+                        position: relative;
+                        font-size: 12px;
+                        text-decoration: none;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #fff;
+                        font-weight: bold;
+                        background: rgba(119, 119, 119, 0.637);
+                        padding: 7px 15px;
+                        margin: 0 3% 0 3%;
+                        font-size: 0.75em;
+                        display: inline-block;
+                        border-radius: 20%;
+                        line-height: 0.85;
+                        cursor: pointer;
+                        -webkit-transition: all 0.25s linear;
+                        -moz-transition: all 0.25s linear;
+                        -ms-transition: all 0.25s linear;
+                        -o-transition: all 0.25s linear;
+                        transition: all 0.25s linear;
                     }
-                   
+                    a.addSubtract:hover {
+                        background: #82ca9c;
+                        text-decoration: none;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #fff;
+                        font-weight: bold;
+                        padding: 7px 15px;
+                        margin: 0 3% 0 3%;
+                        font-size: 0.75em;
+                        cursor: pointer;
+                    }
                 }
+                .ItemClose{
+                    position: absolute;
+                    cursor: pointer;
+                    top: 5px;
+                    right: 0;
+                    font-family: 'Montserrat', sans-serif;
+                    color: #fff;
+                    font-weight: bold;
+                    background: #e0e0e0;
+                    padding: 0.5em;
+                    font-size: 0.75em;
+                    display: inline-block;
+                    border-radius: 20%;
+                    line-height: 0.85;
+                    -webkit-transition: all 0.25s linear;
+                    -moz-transition: all 0.25s linear;
+                    -ms-transition: all 0.25s linear;
+                    -o-transition: all 0.25s linear;
+                    transition: all 0.25s linear;
+                    &:hover{
+                        background: #f30;
+                        font-family: 'Montserrat', sans-serif;
+                        color: #fff;
+                        font-weight: bold;
+                        padding: 0.5em;
+                        font-size: 0.75em;
+                    }
+                    span {
+                        color: #000;
+                        text-decoration: none;
+                        &:hover{
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+            .totalImgDesc{
+                text-align: end;
+                margin-left: auto;
+                margin-right: 10px;
             }
         }
         

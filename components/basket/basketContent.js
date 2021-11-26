@@ -30,8 +30,31 @@ const BasketContent = (props) => {
 }
 
 let sortBasketItem = (items) => {
-    let data = _.uniqBy(items, i => [i.id, i.ImgDesc.id].join())
-    return data
+    const data = _.uniqBy(items, i => [i.id, i.ImgDesc.id].join())  
+    const updateData = sortSameItems(data)
+    return updateData
+}
+
+let sortSameItems = (items) =>{
+    let data = []
+    let prevId = -1
+    items.forEach(item => {
+        if(prevId === item.id){
+            data.find(i=>{
+                if(i.id === item.id && i.ImgDesc.uid !== item.ImgDesc.uid){
+                    let updateImgDesc = i.ImgDesc
+                    updateImgDesc.push(item.ImgDesc)
+                    return {...i, ImgDesc: updateImgDesc}
+                }
+            })
+        } else {
+            prevId = item.id
+            let imgDesc = item.ImgDesc && item.ImgDesc.id !== '' ? [item.ImgDesc] : item.ImgDesc
+            let updateItem = {...item,ImgDesc: imgDesc}
+            data.push(updateItem)
+        }
+    });
+   return data
 }
 
 let mapStateToProps = (state) => {

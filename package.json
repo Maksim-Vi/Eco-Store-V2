@@ -7,14 +7,10 @@
     "startServer": "nodemon SERVER/index.js",
     "startProd": "next start -p 4000",
     "build": "next build",
-    "export": "next export",
     "developStart": "cross-env NODE_ENV=development next -p 4000",
-    "developStartAsServer": "cross-env NODE_ENV=development node server.js",
     "productionStart": "cross-env NODE_ENV=production next start -p 4000",
-    "productionStartAsServer": "cross-env NODE_ENV=production node server.js",
     "development": "concurrently \"npm run developStart\" \"npm run startServer\"",
-    "production": "concurrently \"npm run productionStart\" \"npm run startServer\"",
-    "productionAsServer": "concurrently \"npm run productionStartAsServer\" \"npm run startServer\""
+    "production": "concurrently \"npm run productionStart\" \"npm run startServer\""
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.1",

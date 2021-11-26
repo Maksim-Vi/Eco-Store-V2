@@ -15,9 +15,21 @@ export const useBuyMenu = makeStyles((theme) => ({
         // height: '650px',
         maxWidth: '100%',
         maxHeight: '650px',
+        "&::-webkit-scrollbar": {
+            width: '5px',
+            backgroundColor: "#f9f9fd"
+        },
+        "&::-webkit-scrollbar-thumb": {
+            borderRadius: "10px",
+            backgroundColor: "#1b9b1b"
+        },
+        "&::-webkit-scrollbar-track": {
+            borderRadius: "10px",
+            backgroundColor: "#f9f9fd48",
+        },
         [theme.breakpoints.down('sm')]: {
             width:'800px',
-            height: '700px',
+            height: 'auto',
         },
     },
     closeBtn:{
@@ -52,9 +64,13 @@ export const useBuyMenu = makeStyles((theme) => ({
         justifyContent:'space-around',
     },
     imageProductMain:{
-        width: theme.spacing(20),
-        height: theme.spacing(20),
-        marginLeft: 10
+        width: theme.spacing(30),
+        height: 'auto',
+        marginLeft: 10,
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            height: 'auto',
+        },
     },
     textItemContainer:{
         display: 'flex',
@@ -107,7 +123,7 @@ export const useBuyMenu = makeStyles((theme) => ({
         fontFamily: 'Montserrat, sans-serif',  
     },
     cardToBascketContainer:{
-        marginTop: 40,
+        marginTop: 10,
         padding: 10,
         '& .MuiCardActions-root':{
             justifyContent: 'space-between',
@@ -150,9 +166,12 @@ export const useBuyMenu = makeStyles((theme) => ({
         },
     },
     image:{
-        width: '70px',
+        width: '120px',
         height:'auto',
-        margin: '0 10px 0 10px'
+        margin: '0 10px 0 10px',
+        [theme.breakpoints.down('sm')]: {
+            width: '95px',
+        },
     },
     itemDesc:{
         display: 'flex',
@@ -177,6 +196,7 @@ export const useBuyMenu = makeStyles((theme) => ({
     },
     BtnInBasket:{
         display: 'block',
+        whiteSpace:'nowrap',
         marginRight: '5px'
     },
     BtnImg:{

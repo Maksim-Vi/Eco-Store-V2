@@ -51,7 +51,7 @@ const ListProduct = (props) => {
                         </Typography>
                         {/* dispatch(addItemToBasket(props.item)) */}
                         <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => {props.OpenBuyMenu(props.item)}}>
-                            <p className={s.BtnInBasket} style={{ display: props.open === true ? 'block' : '' }}>в корзину</p>
+                            <p className={s.BtnInBasket} style={{ display: props.open === true ? 'block' : '' }}>добавить товар</p>
                             <img className={s.BtnImg} src="/contentImg/products/buy2.png" alt="" />
                             <span>{addedCountItem(props.itemBasket, props.item.id) > 0 && `(${addedCountItem(props.itemBasket, props.item.id)})`}</span>
                         </button>

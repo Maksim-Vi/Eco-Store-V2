@@ -19,7 +19,7 @@ let initialState ={
     subject:'',
     promocode:'',
     pay:'Оплата на карту', // способ оплаты 
-    post:'Самовывоз', // способ доставки 
+    post:'Новой почтой', // способ доставки 
     postInfo:{
         post_FirstName: '',
         post_LastName: '',

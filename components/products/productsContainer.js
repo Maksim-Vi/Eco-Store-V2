@@ -13,6 +13,7 @@ import { sortBy } from '../common/utilits';
 import ABS from '../common/abs';
 import BuyMenuItem from './component/BuyMenu/BuyMenuItem';
 import { formateItamDataBuyDialog } from '../../utility/utils';
+import ConfirmAddToBasket from './component/popups/ConfirmAddToBasket';
 
 const ProductsContainer = ({items}) => {
 
@@ -26,7 +27,12 @@ const ProductsContainer = ({items}) => {
         item: {}
     })
     const [inLine, setInLine] = React.useState(false)
+    const [openConfirm, setOpenConfirm] = React.useState(false);
 
+    const toggleOpenConfirm = (toggle) => {
+        setOpenConfirm(toggle);
+    };
+  
     let handleChange = (event, newValue) => {
         setValue(newValue);
         if(newValue === 0){
@@ -78,16 +84,23 @@ const ProductsContainer = ({items}) => {
                 })}>
                     {items.length > 0
                         ? <>{sortBy(items,filter.Filter).map(item => { 
-                                return <ListProduct key={item.id} item={item} OpenBuyMenu={hendlerOpenBuyMenu}/> 
+                                return <ListProduct key={item.id} 
+                                                    item={item} 
+                                                    OpenBuyMenu={hendlerOpenBuyMenu}
+                                                    toggleOpenConfirm={toggleOpenConfirm} /> 
                             })}
                         </>
                         : null
                     }
-
                 </ul>
             </div>
-            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item}/>}
-
+            
+            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} 
+                                                open={openBuyMenu.isOpen} 
+                                                toggleOpenConfirm={toggleOpenConfirm} 
+                                                item={openBuyMenu.item}/>}
+            {openConfirm && <ConfirmAddToBasket openConfirm={openConfirm} 
+                                                toggleOpenConfirm={toggleOpenConfirm}/>}
             <ABS slotId={'1045'} width={100} height={100} />
         </section>
     )

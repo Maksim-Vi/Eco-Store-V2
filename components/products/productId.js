@@ -10,6 +10,7 @@ import ABS from '../common/abs';
 import ProductsImgData from './productsImgData';
 import BuyMenuItem from './component/BuyMenu/BuyMenuItem'
 import { formateItamDataBuyDialog } from '../../utility/utils';
+import ConfirmAddToBasket from './component/popups/ConfirmAddToBasket';
 
 const ProductId = (props) => {
 
@@ -25,6 +26,11 @@ const ProductId = (props) => {
         isOpen: false,
         item: {}
     })
+    const [openConfirm, setOpenConfirm] = React.useState(false);
+
+    const toggleOpenConfirm = (toggle) => {
+        setOpenConfirm(toggle);
+    }
 
     let hendlerOpenBuyMenu = (item) => {
         let newItamData = formateItamDataBuyDialog(item)
@@ -86,7 +92,7 @@ const ProductId = (props) => {
                                 </Typography>
 
                                 <button className={s.CardBtn} disabled={props.item.inStock === false} onClick={() => { hendlerOpenBuyMenu(props.item) }}>
-                                    <p className={s.BtnInBasket}>в корзину</p>
+                                    <p className={s.BtnInBasket}>добавить товар</p>
                                     <img className={s.BtnImg} src="/contentImg/products/buy2.png" alt="buy" />
                                     <span>{addedCountItem(props.itemBasket, props.item.id) > 0 && `(${addedCountItem(props.itemBasket, props.item.id)})`}</span>
                                 </button>
@@ -112,8 +118,12 @@ const ProductId = (props) => {
                 </div>
             </div>
 
-            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} open={openBuyMenu.isOpen} item={openBuyMenu.item} />}
-
+            {openBuyMenu.isOpen && <BuyMenuItem CloseBuyMenu={hendlerCloseBuyMenu} 
+                                                open={openBuyMenu.isOpen} 
+                                                item={openBuyMenu.item} 
+                                                toggleOpenConfirm={toggleOpenConfirm}/>}
+            {openConfirm && <ConfirmAddToBasket openConfirm={openConfirm} 
+                                                toggleOpenConfirm={toggleOpenConfirm}/>}
         </section>)
 }
 

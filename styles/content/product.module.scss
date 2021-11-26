@@ -111,6 +111,7 @@
                     cursor: pointer;
                     .BtnInBasket {
                         display: block;
+                        white-space: nowrap;
                         margin-right: 5px;
                     }
                     & .BtnImg {

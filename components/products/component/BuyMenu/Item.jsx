@@ -36,6 +36,7 @@ const Item = (props) => {
         let countPrice = props.item.price - props.item.salePrice + priceItems
         setPriceItems(countPrice)
         dispatch(addItemToBasket(data))
+        props.toggleOpenConfirm(true)
     }
 
     let removeToBascketItem = (itemId, imgDescId = '', isEnable) => {

@@ -76,7 +76,7 @@
                     .BtnInBasket{
                         display: none;
                         margin-right: 5px;
-                        @include lg { display: block; }
+                        @include lg { display: block;  white-space: nowrap; }
                     }
                     & .BtnImg{
                         width: 13px;

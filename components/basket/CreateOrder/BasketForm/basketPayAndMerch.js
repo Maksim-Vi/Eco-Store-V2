@@ -35,6 +35,9 @@ const PayAndMarch = (props) => {
 
     const handleChangeDelivery = (event) => {
         setDelivery(event.target.value)
+        if(currency === 'Оплата наличными' && (event.target.value === 'Новой почтой' || event.target.value === 'Укр почтой')){
+            setCurrency('Оплата на карту')
+        }
     };
 
     let onSubmit = (value) => {
@@ -66,11 +69,23 @@ const PayAndMarch = (props) => {
                     value={currency}
                     onChange={handleChangePay} >
 
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
+                    {currencies.map((option) => {
+                        if(option.value === 'Оплата наличными' && (delivery === 'Новой почтой' || delivery === 'Укр почтой')){
+                            return (
+                                <MenuItem disabled={true}
+                                          key={option.value}
+                                          value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ) 
+                        }
+                        return (
+                            <MenuItem key={option.value}
+                                      value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ) 
+                    })}
 
                 </TextField>
 
@@ -83,7 +98,8 @@ const PayAndMarch = (props) => {
                     onChange={handleChangeDelivery} >
 
                     {deliverys.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <MenuItem key={option.value}
+                            value={option.value}>
                             {option.label}
                         </MenuItem>
                     ))}
@@ -190,7 +206,7 @@ const PayAndMarch = (props) => {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        onClick={() => {delivery === 'Самовывоз' ? props.handleCreate() : console.log('req send data') }}
+                        onClick={() => { delivery === 'Самовывоз' ? props.handleCreate() : console.log('req send data') }}
                         className={classes.button}
                     >
                         {'Оформить заказ'}

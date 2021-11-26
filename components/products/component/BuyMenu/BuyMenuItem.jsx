@@ -21,14 +21,14 @@ const BuyMenuItem = (props) => {
             <DialogContent className={classes.dialogContent}>
                 <CloseIcon className={classes.closeBtn} onClick={() => { props.CloseBuyMenu() }} />
     
-                <Item item={props.item}/>
+                <Item item={props.item} toggleOpenConfirm={props.toggleOpenConfirm}/>
                                          
                 <Card className={classes.cardToBascketContainer} xs={12}>
                     <CardActions className={classes.cardToBascket}>
                         <Button color="primary" onClick={()=>{props.CloseBuyMenu()}}>назад к товару</Button>
                         <Link href="/basket" as={'/basket'}>
                             <button className={classes.CardBtn}>
-                                <p className={classes.BtnInBasket} style={{display: 'block'}}>в корзину</p>
+                                <p className={classes.BtnInBasket} style={{display: 'block'}}>перейти в корзину</p>
                                 <img className={classes.BtnImg} src="/contentImg/products/buy2.png" alt="" />
                             </button>
                         </Link>
