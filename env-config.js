@@ -16,12 +16,11 @@ module.exports = {
   'process.env.MYSQL_DATABASE': 'ecostore',
   'process.env.MYSQL_USERNAME': 'root',
   'process.env.MYSQL_PASSWORD': 'root',
-  'process.env.jwtSecret':'Eco-Choice store kay! 167413ec-040f-45af-95e2-20fede0b7894',
+  'process.env.jwtSecret':'',
 
 
-  'process.env.EMAIL_NODEMAILER': 'maksdev01panel@gmail.com',
-  'process.env.EMAIL_PASSWORD': 'Vfrcbv1996!',
-  //'process.env.TELEGRAM_TOKEN': '2011610237:AAHhqAxePZ4RVZXIca0I0IjCjeoH-E3jm04',
-  'process.env.TELEGRAM_TOKEN': '2065373657:AAFYPKjhGaKppVj4HpEPvqRby40Mpmuh0iQ',
-  'process.env.TELEGRAM_CHAT_ID': '776918618'
+  'process.env.EMAIL_NODEMAILER': '',
+  'process.env.EMAIL_PASSWORD': '',
+  'process.env.TELEGRAM_TOKEN': '',
+  'process.env.TELEGRAM_CHAT_ID': ''
 }
